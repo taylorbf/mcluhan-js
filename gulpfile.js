@@ -10,7 +10,7 @@ var gulp = require('gulp')
 var path = require('path');
 var jsdox = require("jsdox");
 
-var watcher = gulp.watch(['./lib/**/*.js', './lib/*.js'], ['default'])
+var watcher = gulp.watch(['index.js','./lib/**/*.js', './lib/*.js'], ['default'])
 watcher.on('change', function(event) {
   console.log('File '+event.path+' was '+event.type+', running tasks...')
 })
