@@ -53,7 +53,6 @@ util.inherits(manager, EventEmitter)
   */
 manager.prototype.add = function(type,arr,params) {
 
-  //separate item constructor "Medium" with properties for placement, animation, remove, make dom element, styling element based on json
   arr.push( new (require("../media")[type])(params) )
   var i = arr.length-1;
   return i;
@@ -63,7 +62,7 @@ manager.prototype.add = function(type,arr,params) {
 manager.prototype.film = function(src,params) {
     !window.films ? window.films = new Array() : null;
     var i = this.add("film",films,params)
-    films[i].src = src;
+    src ? films[i].load(src) : false;
 }
 
 },{"../media":5,"events":7,"util":11}],3:[function(require,module,exports){
@@ -72,6 +71,22 @@ var Medium = module.exports = function(params) {
 
 	this.element = document.createElement(this.type)
 	document.body.appendChild(this.element);
+
+	this.size(params)
+}
+
+Medium.prototype.size = function(params) {
+	console.log(params)
+	params.w ? this.element.style.width = params.w+"px" : false;
+	params.width ? this.element.style.width = params.width+"px" : false;
+	params.h ? this.element.style.width = params.h+"px" : false;
+	params.height ? this.element.style.width = params.height+"px" : false;
+}
+
+Medium.prototype.move = function(params) {
+	this.element.style.position = "absolute";
+	params.x ? this.element.style.left = params.x+"px" : false;
+	params.y ? this.element.style.top = params.y+"px" : false;
 }
 },{}],4:[function(require,module,exports){
 var util = require('util');
@@ -92,9 +107,26 @@ var Film = module.exports = function(params) {
 
 util.inherits(Film, Medium);
 
-Film.prototype.play = function() {
-
+Film.prototype.load = function(src) {
+	src ? this.element.src = src : false;
 }
+
+Film.prototype.play = function() {
+	this.element.play()
+}
+
+Film.prototype.stop = function() {
+	this.element.stop()
+}
+
+Film.prototype.loop = function(on) {
+	if (on===false || on===0) {
+		this.element.loop = false;
+	} else {
+		this.element.loop = true;
+	}
+}
+
 
 },{"../core/medium":3,"util":11}],5:[function(require,module,exports){
 module.exports = {
