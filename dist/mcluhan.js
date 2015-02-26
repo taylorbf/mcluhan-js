@@ -8,7 +8,8 @@ var extend = require('extend');
 *       INSTANTIATE MAJOR CONSTRUCTORS
 ************************************************/
 
-window.M = new manager(); 
+window.m = new manager(); 
+window.spaces = new Array();
 //window.films = new Array();
 //window.film = new FilmManager();
 // ... new Film()
@@ -16,9 +17,9 @@ window.M = new manager();
 // window.img = new GlitchManager()
 
 window.onload = function() {
-
+   m.init();
 };
-},{"./lib/core/manager":2,"./lib/media/film":4,"./lib/utils/math":6,"extend":12}],2:[function(require,module,exports){
+},{"./lib/core/manager":2,"./lib/media/film":4,"./lib/utils/math":7,"extend":13}],2:[function(require,module,exports){
 
  var util = require('util');
  var EventEmitter = require('events').EventEmitter;
@@ -31,32 +32,41 @@ window.onload = function() {
   @license MIT
  */ 
 
+var spacer = false;
 
-var manager = module.exports = function() {
 
 /** 
 
-  @class mc
+  @class m
   @description 
   
 */
 
+var manager = module.exports = function() {
+
+  this.spaceLimit = 3;
+
+  // Will use eventually
   // EventEmitter.apply(this)
 
 }
 
 util.inherits(manager, EventEmitter)
 
+manager.prototype.init = function() {
+  for (var i=0;i<this.spaceLimit;i++) {
+    m.makeSpace()
+  }
+}
+
 
 /** 
   @method add 
   */
 manager.prototype.add = function(type,arr,params) {
-
   arr.push( new (require("../media")[type])(params) )
   var i = arr.length-1;
   return i;
-  
 }
 
 manager.prototype.film = function(src,params) {
@@ -65,7 +75,13 @@ manager.prototype.film = function(src,params) {
     src ? films[i].load(src) : false;
 }
 
-},{"../media":5,"events":7,"util":11}],3:[function(require,module,exports){
+manager.prototype.makeSpace = function(params) {
+    var i = this.add("window",spaces,params)
+}
+
+//peer
+
+},{"../media":5,"events":8,"util":12}],3:[function(require,module,exports){
 var Medium = module.exports = function(params) {
 	this.test = true;
 
@@ -128,11 +144,47 @@ Film.prototype.loop = function(on) {
 }
 
 
-},{"../core/medium":3,"util":11}],5:[function(require,module,exports){
+},{"../core/medium":3,"util":12}],5:[function(require,module,exports){
 module.exports = {
-  film: require('./film')
+  film: require('./film'),
+  window: require('./window')
 }
-},{"./film":4}],6:[function(require,module,exports){
+},{"./film":4,"./window":6}],6:[function(require,module,exports){
+var util = require('util');
+
+
+var Window = module.exports = function(params) {
+	
+	this.defaultSize = { w: 100, h: 100, x:0, y:0 }
+	this.element = window.open("space.html","_blank","height=100,width=100,left:0,top:0,menubar=0,status=0,")
+
+}
+
+Window.prototype.load = function(src) {
+	src ? this.element.src = src : false;
+}
+
+Window.prototype.scroll = function() {
+}
+
+Window.prototype.move = function() {
+}
+
+Window.prototype.size = function() {
+}
+
+Window.prototype.kill = function() {
+}
+
+Window.prototype.empty = function() {
+}
+
+Window.prototype.empty = function() {
+}
+
+
+
+},{"util":12}],7:[function(require,module,exports){
 
 
 /** @method toPolar 
@@ -270,7 +322,7 @@ exports.random = function(scale) {
 exports.interp = function(loc,min,max) {
   return loc * (max - min) + min;  
 }
-},{}],7:[function(require,module,exports){
+},{}],8:[function(require,module,exports){
 // Copyright Joyent, Inc. and other Node contributors.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a
@@ -573,7 +625,7 @@ function isUndefined(arg) {
   return arg === void 0;
 }
 
-},{}],8:[function(require,module,exports){
+},{}],9:[function(require,module,exports){
 if (typeof Object.create === 'function') {
   // implementation from standard node.js 'util' module
   module.exports = function inherits(ctor, superCtor) {
@@ -598,7 +650,7 @@ if (typeof Object.create === 'function') {
   }
 }
 
-},{}],9:[function(require,module,exports){
+},{}],10:[function(require,module,exports){
 // shim for using process in browser
 
 var process = module.exports = {};
@@ -663,14 +715,14 @@ process.chdir = function (dir) {
     throw new Error('process.chdir is not supported');
 };
 
-},{}],10:[function(require,module,exports){
+},{}],11:[function(require,module,exports){
 module.exports = function isBuffer(arg) {
   return arg && typeof arg === 'object'
     && typeof arg.copy === 'function'
     && typeof arg.fill === 'function'
     && typeof arg.readUInt8 === 'function';
 }
-},{}],11:[function(require,module,exports){
+},{}],12:[function(require,module,exports){
 (function (process,global){
 // Copyright Joyent, Inc. and other Node contributors.
 //
@@ -1245,7 +1297,7 @@ function hasOwnProperty(obj, prop) {
 }
 
 }).call(this,require('_process'),typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"./support/isBuffer":10,"_process":9,"inherits":8}],12:[function(require,module,exports){
+},{"./support/isBuffer":11,"_process":10,"inherits":9}],13:[function(require,module,exports){
 var hasOwn = Object.prototype.hasOwnProperty;
 var toString = Object.prototype.toString;
 var undefined;

@@ -7,7 +7,8 @@ var extend = require('extend');
 *       INSTANTIATE MAJOR CONSTRUCTORS
 ************************************************/
 
-window.M = new manager(); 
+window.m = new manager(); 
+window.spaces = new Array();
 //window.films = new Array();
 //window.film = new FilmManager();
 // ... new Film()
@@ -15,5 +16,5 @@ window.M = new manager();
 // window.img = new GlitchManager()
 
 window.onload = function() {
-
+   m.init();
 };
