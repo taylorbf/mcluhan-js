@@ -10,6 +10,7 @@ var extend = require('extend');
 
 window.m = new manager(); 
 window.spaces = new Array();
+window.windex = 0;
 //window.films = new Array();
 //window.film = new FilmManager();
 // ... new Film()
@@ -82,21 +83,32 @@ manager.prototype.makeSpace = function(params) {
 //peer
 
 },{"../media":5,"events":8,"util":12}],3:[function(require,module,exports){
-var Medium = module.exports = function(params) {
-	this.test = true;
 
-	this.element = document.createElement(this.type)
-	document.body.appendChild(this.element);
+// Template for all DOM-based items (video, audio, divs, embeds)
+
+var Medium = module.exports = function(params) {
+
+	// handle parameters
+	this.params = params ? params : new Object()
+
+	// define space
+	this.spaces = this.params.spaces ? this.params.spaces : 0;
+
+	// make element
+	this.element = [];
+	for (var i = 0; i<this.spaces.length; i++) {
+		this.element.push(document.createElement(this.type))
+		spaces[this.spaces[i]].element.document.body.appendChild(this.element[i])
+	}
 
 	this.size(params)
 }
 
 Medium.prototype.size = function(params) {
-	console.log(params)
-	params.w ? this.element.style.width = params.w+"px" : false;
-	params.width ? this.element.style.width = params.width+"px" : false;
-	params.h ? this.element.style.width = params.h+"px" : false;
-	params.height ? this.element.style.width = params.height+"px" : false;
+	this.params.w ? this.element.style.width = this.params.w+"px" : false;
+	this.params.width ? this.element.style.width = this.params.width+"px" : false;
+	this.params.h ? this.element.style.width = this.params.h+"px" : false;
+	this.params.height ? this.element.style.width = this.params.height+"px" : false;
 }
 
 Medium.prototype.move = function(params) {
@@ -110,6 +122,7 @@ var Medium = require('../core/medium')
 
 
 var Film = module.exports = function(params) {
+
 	this.defaultSize = { w: 300 }
 	this.src = false;
 	this.type = "video"
@@ -124,11 +137,15 @@ var Film = module.exports = function(params) {
 util.inherits(Film, Medium);
 
 Film.prototype.load = function(src) {
-	src ? this.element.src = src : false;
+	for (var i=0;i<this.element.length;i++) {
+		src ? this.element[i].src = src : false;
+	}
 }
 
 Film.prototype.play = function() {
-	this.element.play()
+	for (var i=0;i<this.element.length;i++) {
+		this.element[i].play();
+	}
 }
 
 Film.prototype.stop = function() {
@@ -154,10 +171,11 @@ var util = require('util');
 
 
 var Window = module.exports = function(params) {
-	
-	this.defaultSize = { w: 100, h: 100, x:0, y:0 }
-	this.element = window.open("space.html","_blank","height=100,width=100,left:0,top:0,menubar=0,status=0,")
 
+	this.defaultSize = { w: 100, h: 100, x:0, y:0 }
+	this.element = window.open("space.html","win"+windex,"height=100,width=100,left:0,top:0,menubar=0,status=0,")
+	windex++;
+	
 }
 
 Window.prototype.load = function(src) {

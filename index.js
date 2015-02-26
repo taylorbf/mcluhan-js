@@ -9,6 +9,7 @@ var extend = require('extend');
 
 window.m = new manager(); 
 window.spaces = new Array();
+window.windex = 0;
 //window.films = new Array();
 //window.film = new FilmManager();
 // ... new Film()

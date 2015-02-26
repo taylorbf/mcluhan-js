@@ -3,7 +3,7 @@
 </head>
 <body>
 
-<canvas id="c" style="height:3000px;width:1500px"></canvas>
+<canvas id="c" style="position:absolute;height:3000px;width:1500px;z-index:100"></canvas>
 
 <style>
 
@@ -23,7 +23,7 @@ var context = canvas.getContext("2d");
 canvas.width = 1500;
 canvas.height = 3000;
 
-opener.console.log("heard");
+opener.console.log(name+ " says hello");
 
 
 </script>
