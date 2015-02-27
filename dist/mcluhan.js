@@ -9,8 +9,10 @@ var extend = require('extend');
 ************************************************/
 
 window.m = new manager(); 
+window._spaces = new Array();
 window.spaces = new Array();
 window.windex = 0;
+
 //window.films = new Array();
 //window.film = new FilmManager();
 // ... new Film()
@@ -45,7 +47,7 @@ var spacer = false;
 
 var manager = module.exports = function() {
 
-  this.spaceLimit = 3;
+  this.spaceLimit = 5;
 
   // Will use eventually
   // EventEmitter.apply(this)
@@ -77,10 +79,30 @@ manager.prototype.film = function(src,params) {
 }
 
 manager.prototype.makeSpace = function(params) {
-    var i = this.add("window",spaces,params)
+    var i = this.add("window",_spaces,params)
 }
 
-//peer
+manager.prototype.peer = function(x,y,w,h) {
+  if (windex >= _spaces.length) {
+    windex = 0;
+  }
+  var params = {
+    x: x ? x : false,
+    y: y ? y : false,
+    w: w ? w : false,
+    h: h ? h : false
+  }
+  _spaces[windex].show(params);
+  windex++;
+}
+
+manager.prototype.pare = function(size) {
+  size = size ? size : 1;
+  for (var i=0;i<size;i++) {
+    spaces[0].hide()
+  }
+  
+}
 
 },{"../media":5,"events":8,"util":12}],3:[function(require,module,exports){
 
@@ -102,6 +124,17 @@ var Medium = module.exports = function(params) {
 	}
 
 	this.size(params)
+}
+
+Medium.prototype.setAll = function(prop,val) {
+	for (var i = 0; i<this.element.length; i++) {
+		this.element[i][prop] = val;
+	}
+}
+Medium.prototype.all = function(method) {
+	for (var i = 0; i<this.element.length; i++) {
+		this.element[i][method]()
+	}
 }
 
 Medium.prototype.size = function(params) {
@@ -130,33 +163,30 @@ var Film = module.exports = function(params) {
 	//separate item constructor "Medium" with properties for placement, animation, remove, make dom element, styling element based on json
 	Medium.call(this, params);
 
-	this.element.controls = true;
+	this.setAll("controls", true);
+	//this.element.controls = true;
 
 }
 
 util.inherits(Film, Medium);
 
 Film.prototype.load = function(src) {
-	for (var i=0;i<this.element.length;i++) {
-		src ? this.element[i].src = src : false;
-	}
+	src ? this.setAll("src",src) : false;
 }
 
 Film.prototype.play = function() {
-	for (var i=0;i<this.element.length;i++) {
-		this.element[i].play();
-	}
+	this.all("play");
 }
 
 Film.prototype.stop = function() {
-	this.element.stop()
+	this.all("pause");
 }
 
 Film.prototype.loop = function(on) {
 	if (on===false || on===0) {
-		this.element.loop = false;
+		this.setAll("loop",false);
 	} else {
-		this.element.loop = true;
+		this.setAll("loop",true);
 	}
 }
 
@@ -172,10 +202,56 @@ var util = require('util');
 
 var Window = module.exports = function(params) {
 
-	this.defaultSize = { w: 100, h: 100, x:0, y:0 }
+	this.defaultSize = { w: 300, h: 200, x: window.screen.width/2 - 150, y: window.screen.height/2 - 100 }
 	this.element = window.open("space.html","win"+windex,"height=100,width=100,left:0,top:0,menubar=0,status=0,")
+	with (this.element) {
+		resizeTo(100,100)
+		moveTo(0,0)
+	}
+	this.index = windex;
 	windex++;
+	this.visible = false;
 	
+}
+
+Window.prototype.show = function(params) {
+
+	this.element.close();
+	this.element = window.open("space.html","win"+this.index,"height=100,width=100,left:0,top:0,menubar=0,status=0,")
+	
+	params = params ? params : new Object()
+	params.w = params.w ? params.w : this.defaultSize.w
+	params.h = params.h ? params.h : this.defaultSize.h
+	params.x = params.x ? params.x : this.defaultSize.x
+	params.y = params.y ? params.y : this.defaultSize.y
+
+	with (this.element) {
+		resizeTo(params.w,params.h)
+		moveTo(params.x,params.y)
+	}
+
+	this.visible = true;
+	this.element.focus()
+
+	// spaces can access us
+	spaces.push(this)
+
+	// the new window can access us
+	this.element.space = this;
+
+	// this.canvas and this.context
+	// are then created by the new window when loading
+
+}
+
+Window.prototype.hide = function() {
+	with (this.element) {
+		resizeTo(100,100)
+		moveTo(0,0)
+	}
+	spaces.splice(spaces.indexOf(this),1)
+	this.element.close();
+	this.visible = false;
 }
 
 Window.prototype.load = function(src) {
@@ -197,8 +273,12 @@ Window.prototype.kill = function() {
 Window.prototype.empty = function() {
 }
 
-Window.prototype.empty = function() {
+Window.prototype.testDraw = function() {
+	this.context.fillStyle = "#0af"
+	this.context.fillRect(0,0,100,100)
 }
+
+
 
 
 
