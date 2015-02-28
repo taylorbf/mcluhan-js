@@ -101,7 +101,13 @@ manager.prototype.pare = function(size) {
   for (var i=0;i<size;i++) {
     spaces[0].hide()
   }
-  
+}
+
+
+manager.prototype.peerX = function(num) {
+  for (var i=0;i<num;i++) {
+    this.peer(200*(i+1),50,200,200)
+  }
 }
 
 },{"../media":5,"events":8,"util":12}],3:[function(require,module,exports){
@@ -114,7 +120,7 @@ var Medium = module.exports = function(params) {
 	this.params = params ? params : new Object()
 
 	// define space
-	this.spaces = this.params.spaces ? this.params.spaces : 0;
+	this.spaces = this.params.spaces ? this.params.spaces : [0];
 
 	// make element
 	this.element = [];
@@ -163,8 +169,11 @@ var Film = module.exports = function(params) {
 	//separate item constructor "Medium" with properties for placement, animation, remove, make dom element, styling element based on json
 	Medium.call(this, params);
 
+	this.interval = false;
+
+
 	this.setAll("controls", true);
-	//this.element.controls = true;
+	this.loop();
 
 }
 
@@ -188,6 +197,31 @@ Film.prototype.loop = function(on) {
 	} else {
 		this.setAll("loop",true);
 	}
+}
+
+
+Film.prototype.jumpTo = function(start) {
+	start = start ? start : this.start;
+	this.setAll("currentTime",start);
+}
+
+Film.prototype.skip = function(start,stop) {
+	this.start = start ? start : 1;
+	this.stop = stop ? stop : 1.2;
+	if (this.interval) {
+		clearInterval(this.boundJump);
+	}
+	this.boundJump = this.jumpTo.bind(this)
+	this.interval = setInterval(this.boundJump,(this.stop-this.start)*1000)
+	this.skipping = true;
+}
+
+Film.prototype.unskip = function() {
+	this.skipping = false;
+	this.start = false;
+	this.stop = false
+	clearInterval(this.boundJump);
+	this.interval = false;
 }
 
 
