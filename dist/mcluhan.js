@@ -5,13 +5,14 @@ var math = require('./lib/utils/math');
 var extend = require('extend');
 
 /************************************************
-*       INSTANTIATE MAJOR CONSTRUCTORS
+*      MAKE GLOBAL COMPONENTS + INSTANCES
 ************************************************/
 
 window.m = new manager(); 
 window._spaces = new Array();
 window.spaces = new Array();
 window.windex = 0;
+window.walls = new Array();
 
 //window.films = new Array();
 //window.film = new FilmManager();
@@ -94,6 +95,7 @@ manager.prototype.peer = function(x,y,w,h) {
   }
   _spaces[windex].show(params);
   windex++;
+  return _spaces[windex-1]
 }
 
 manager.prototype.pare = function(size) {
@@ -105,9 +107,11 @@ manager.prototype.pare = function(size) {
 
 
 manager.prototype.peerX = function(num) {
+  var wall = new Array()
   for (var i=0;i<num;i++) {
-    this.peer(200*(i+1),50,200,200)
+    wall.push(this.peer(200*(i+1),50,200,400))
   }
+  walls.push(wall)
 }
 
 },{"../media":5,"events":8,"util":12}],3:[function(require,module,exports){
@@ -170,6 +174,7 @@ var Film = module.exports = function(params) {
 	Medium.call(this, params);
 
 	this.interval = false;
+	this.rate = 1;
 
 
 	this.setAll("controls", true);
@@ -181,10 +186,13 @@ util.inherits(Film, Medium);
 
 Film.prototype.load = function(src) {
 	src ? this.setAll("src",src) : false;
+	this.all("play");
 }
 
-Film.prototype.play = function() {
+Film.prototype.play = function(rate) {
+	this.rate = rate ? rate : this.rate;
 	this.all("play");
+	this.speed(this.rate)
 }
 
 Film.prototype.stop = function() {
@@ -209,7 +217,7 @@ Film.prototype.skip = function(start,stop) {
 	this.start = start ? start : 1;
 	this.stop = stop ? stop : 1.2;
 	if (this.interval) {
-		clearInterval(this.boundJump);
+		clearInterval(this.interval);
 	}
 	this.boundJump = this.jumpTo.bind(this)
 	this.interval = setInterval(this.boundJump,(this.stop-this.start)*1000)
@@ -220,8 +228,13 @@ Film.prototype.unskip = function() {
 	this.skipping = false;
 	this.start = false;
 	this.stop = false
-	clearInterval(this.boundJump);
+	clearInterval(this.interval);
 	this.interval = false;
+}
+
+Film.prototype.speed = function(rate) {
+	this.setAll("playbackRate",rate);
+	this.rate = rate;
 }
 
 
@@ -310,6 +323,14 @@ Window.prototype.empty = function() {
 Window.prototype.testDraw = function() {
 	this.context.fillStyle = "#0af"
 	this.context.fillRect(0,0,100,100)
+}
+
+Window.prototype.scroll = function(x,y) {
+	this.element.scrollTo(x,y)
+}
+
+Window.prototype.scrollSight = function() {
+	this.scroll(this.element.screenX,this.element.screenY)
 }
 
 

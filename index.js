@@ -4,13 +4,14 @@ var math = require('./lib/utils/math');
 var extend = require('extend');
 
 /************************************************
-*       INSTANTIATE MAJOR CONSTRUCTORS
+*      MAKE GLOBAL COMPONENTS + INSTANCES
 ************************************************/
 
 window.m = new manager(); 
 window._spaces = new Array();
 window.spaces = new Array();
 window.windex = 0;
+window.walls = new Array();
 
 //window.films = new Array();
 //window.film = new FilmManager();
