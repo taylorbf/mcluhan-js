@@ -3,6 +3,7 @@ var manager = require('./lib/core/manager');
 var FilmManager = require('./lib/media/film');
 var math = require('./lib/utils/math');
 var extend = require('extend');
+// var nexusui = require('nexusui');
 
 /************************************************
 *      MAKE GLOBAL COMPONENTS + INSTANCES
@@ -83,7 +84,7 @@ manager.prototype.makeSpace = function(params) {
     var i = this.add("window",_spaces,params)
 }
 
-manager.prototype.peer = function(x,y,w,h) {
+manager.prototype.useSpace = function(x,y,w,h) {
   if (windex >= _spaces.length) {
     windex = 0;
   }
@@ -106,12 +107,14 @@ manager.prototype.pare = function(size) {
 }
 
 
-manager.prototype.peerX = function(num) {
+manager.prototype.peer = function(num,config) {
   var wall = new Array()
   for (var i=0;i<num;i++) {
-    wall.push(this.peer(200*(i+1),50,200,400))
+    wall.push(this.useSpace(200*(i+1),50,200,400))
   }
   walls.push(wall)
+
+//  return 
 }
 
 },{"../media":5,"events":8,"util":12}],3:[function(require,module,exports){
@@ -185,7 +188,7 @@ var Film = module.exports = function(params) {
 util.inherits(Film, Medium);
 
 Film.prototype.load = function(src) {
-	src ? this.setAll("src",src) : false;
+	src ? this.setAll("src","media/"+src+".mp4") : false;
 	this.all("play");
 }
 
@@ -233,8 +236,10 @@ Film.prototype.unskip = function() {
 }
 
 Film.prototype.speed = function(rate) {
-	this.setAll("playbackRate",rate);
-	this.rate = rate;
+	if (rate) {
+		this.setAll("playbackRate",rate);
+		this.rate = rate;
+	}
 }
 
 
@@ -250,7 +255,7 @@ var util = require('util');
 var Window = module.exports = function(params) {
 
 	this.defaultSize = { w: 300, h: 200, x: window.screen.width/2 - 150, y: window.screen.height/2 - 100 }
-	this.element = window.open("space.html","win"+windex,"height=100,width=100,left:0,top:0,menubar=0,status=0,")
+	this.element = window.open("space.html","win"+windex,"height=100,width=100,left:0,top:0,menubar=0,status=0,location=0,titlebar=0,toolbar=0")
 	with (this.element) {
 		resizeTo(100,100)
 		moveTo(0,0)
@@ -264,7 +269,7 @@ var Window = module.exports = function(params) {
 Window.prototype.show = function(params) {
 
 	this.element.close();
-	this.element = window.open("space.html","win"+this.index,"height=100,width=100,left:0,top:0,menubar=0,status=0,")
+	this.element = window.open("space.html","win"+this.index,"height=100,width=100,left:0,top:0,menubar=0,status=0,location=0,titlebar=0,toolbar=0")
 	
 	params = params ? params : new Object()
 	params.w = params.w ? params.w : this.defaultSize.w
@@ -285,6 +290,7 @@ Window.prototype.show = function(params) {
 
 	// the new window can access us
 	this.element.space = this;
+	this.element.defineCanvas();
 
 	// this.canvas and this.context
 	// are then created by the new window when loading
@@ -305,7 +311,9 @@ Window.prototype.load = function(src) {
 	src ? this.element.src = src : false;
 }
 
-Window.prototype.scroll = function() {
+Window.prototype.scroll = function(x,y) {
+	this.element.scroll.x = x
+	this.element.scroll.x = y
 }
 
 Window.prototype.move = function() {
@@ -331,6 +339,10 @@ Window.prototype.scroll = function(x,y) {
 
 Window.prototype.scrollSight = function() {
 	this.scroll(this.element.screenX,this.element.screenY)
+}
+
+
+Window.prototype.refresh = function() {
 }
 
 

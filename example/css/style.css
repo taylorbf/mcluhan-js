@@ -1,0 +1,12 @@
+body {
+	margin:0;
+	padding:0;
+	height:100%;
+}
+
+#terminal {
+	height:200px;
+	border:solid 1px #333;
+	width:400px;
+	margin:20px auto;
+}

@@ -1,0 +1,43 @@
+<!doctype html>
+<html>
+  <head>
+  <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="viewport" content="width=device-width">
+	<script src="../dist/mcluhan.js"></script>
+	<link href='http://fonts.googleapis.com/css?family=Nixie+One' rel='stylesheet' type='text/css'>
+	<link href='http://fonts.googleapis.com/css?family=Anonymous+Pro' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <link href="./jcubic/css/jquery.terminal.css" rel="stylesheet"/>
+    <script src="./jcubic/js/jquery-1.7.1.min.js"></script>
+    <script src="./jcubic/js/jquery.mousewheel-min.js"></script>
+    <script src="./jcubic/js/jquery.terminal-min.js"></script>
+  </head>
+  <body>
+
+	<div id="terminal">
+    </div>
+
+	<script>
+
+		$('#terminal').terminal(function(command) {
+	        try {
+	            eval.apply(window, [command]);
+	        } catch (e) {
+	            $("#terminal").terminal().set_command(command);
+	            return e.message;
+	        }
+	        return command;
+	    }, {
+	        completion: ["add","addsamples","adsr","adsr32","beat","beat32","bounce","bp","chorus","clamp","clshift","delay","destroy","dfb","dlevel","dtime","eval","famt","fenv","ffreq","fres","group","hp","loop","lp","merge","nl","nl32","notch","notes","pan","play","remove","render","render32","reverse","rf","ri","root","sample","saw","select","shift","sine","speed","square","sseq","step","stretch","sync","track","trans","tremolo","tri","type","vol"],
+	        greetings: "",
+	        prompt: "~ ",
+	        keypress: function() {
+	        //  socket.emit('typing',$("#terminal .cmd span")[1].innerHTML)
+	        }
+	    });
+
+	</script>
+
+  </body>
+</html>

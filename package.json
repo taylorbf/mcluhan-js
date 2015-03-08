@@ -2,7 +2,9 @@
   "name": "mcluhan.js",
   "description": "Live web art performance platform",
   "author": "Ben Taylor <taylorbf@gmail.com>",
-  "dependencies": {},
+  "dependencies": {
+    "nexusui": "1.0.x"
+  },
   "devDependencies": {
     "gulp": "3.8.x",
     "gulp-rename": "1.2.x",

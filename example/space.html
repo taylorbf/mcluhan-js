@@ -22,8 +22,11 @@
 	canvas.width = 1500;
 	canvas.height = 3000;
 
-	space.canvas = canvas;
-	space.context = context;
+
+	function defineCanvas() {
+		space.canvas = canvas;
+		space.context = context;
+	}
 
 	opener.console.log(name+ " says hello");
 

@@ -2,6 +2,7 @@ var manager = require('./lib/core/manager');
 var FilmManager = require('./lib/media/film');
 var math = require('./lib/utils/math');
 var extend = require('extend');
+// var nexusui = require('nexusui');
 
 /************************************************
 *      MAKE GLOBAL COMPONENTS + INSTANCES
