@@ -4,6 +4,7 @@ var math = require('./lib/utils/math');
 var extend = require('extend');
 // var nexusui = require('nexusui');
 
+
 /************************************************
 *      MAKE GLOBAL COMPONENTS + INSTANCES
 ************************************************/
@@ -13,6 +14,11 @@ window._spaces = new Array();
 window.spaces = new Array();
 window.windex = 0;
 window.walls = new Array();
+
+window.components = require("./lib/media")
+for (var key in window.components) {
+	window[key] = window.components[key]
+}
 
 //window.films = new Array();
 //window.film = new FilmManager();

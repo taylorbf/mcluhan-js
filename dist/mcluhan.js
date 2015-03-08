@@ -5,6 +5,7 @@ var math = require('./lib/utils/math');
 var extend = require('extend');
 // var nexusui = require('nexusui');
 
+
 /************************************************
 *      MAKE GLOBAL COMPONENTS + INSTANCES
 ************************************************/
@@ -15,6 +16,11 @@ window.spaces = new Array();
 window.windex = 0;
 window.walls = new Array();
 
+window.components = require("./lib/media")
+for (var key in window.components) {
+	window[key] = window.components[key]
+}
+
 //window.films = new Array();
 //window.film = new FilmManager();
 // ... new Film()
@@ -24,7 +30,7 @@ window.walls = new Array();
 window.onload = function() {
    m.init();
 };
-},{"./lib/core/manager":2,"./lib/media/film":4,"./lib/utils/math":7,"extend":13}],2:[function(require,module,exports){
+},{"./lib/core/manager":2,"./lib/media":5,"./lib/media/film":4,"./lib/utils/math":8,"extend":14}],2:[function(require,module,exports){
 
  var util = require('util');
  var EventEmitter = require('events').EventEmitter;
@@ -84,7 +90,7 @@ manager.prototype.makeSpace = function(params) {
     var i = this.add("window",_spaces,params)
 }
 
-manager.prototype.useSpace = function(x,y,w,h) {
+manager.prototype.peer = function(x,y,w,h) {
   if (windex >= _spaces.length) {
     windex = 0;
   }
@@ -107,7 +113,7 @@ manager.prototype.pare = function(size) {
 }
 
 
-manager.prototype.peer = function(num,config) {
+manager.prototype.makeWall = function(num,config) {
   var wall = new Array()
   for (var i=0;i<num;i++) {
     wall.push(this.useSpace(200*(i+1),50,200,400))
@@ -117,7 +123,7 @@ manager.prototype.peer = function(num,config) {
 //  return 
 }
 
-},{"../media":5,"events":8,"util":12}],3:[function(require,module,exports){
+},{"../media":5,"events":9,"util":13}],3:[function(require,module,exports){
 
 // Template for all DOM-based items (video, audio, divs, embeds)
 
@@ -243,12 +249,169 @@ Film.prototype.speed = function(rate) {
 }
 
 
-},{"../core/medium":3,"util":12}],5:[function(require,module,exports){
+},{"../core/medium":3,"util":13}],5:[function(require,module,exports){
 module.exports = {
   film: require('./film'),
-  window: require('./window')
+  window: require('./window'),
+  wall: require('./wall')
 }
-},{"./film":4,"./window":6}],6:[function(require,module,exports){
+},{"./film":4,"./wall":6,"./window":7}],6:[function(require,module,exports){
+var util = require('util');
+
+
+var Wall = module.exports = function(setting,limit) {
+
+	this.elements = []
+	this.setting = setting ? setting : "default"
+	console.log(this.patterns[this.setting].length)
+	this.limit = limit ? limit : this.patterns[this.setting].length
+	this.patt = this.patterns[this.setting];
+	for (var i=0;i<this.limit;i++) {
+		this.elements.push(m.peer(this.patt[i].x, this.patt[i].y, this.patt[i].w, this.patt[i].h))
+	}
+	//console.log(this.elements)
+	//this.show();
+
+
+//	this.element = window.open("space.html","win"+windex,"height=100,width=100,left:0,top:0,menubar=0,status=0,location=0,titlebar=0,toolbar=0")
+//	with (this.element) {
+//		resizeTo(100,100)
+//		moveTo(0,0)
+//	}
+	this.index = windex;
+//	windex++;
+	this.visible = false;
+	
+}
+
+Wall.prototype.show = function(params) {
+
+	for (var i=0;i<this.limit;i++) {
+		this.elements[i].show()
+	}
+
+	this.visible = true;
+/*
+	this.element.close();
+	this.element = window.open("space.html","win"+this.index,"height=100,width=100,left:0,top:0,menubar=0,status=0,location=0,titlebar=0,toolbar=0")
+	
+	params = params ? params : new Object()
+	params.w = params.w ? params.w : this.defaultSize.w
+	params.h = params.h ? params.h : this.defaultSize.h
+	params.x = params.x ? params.x : this.defaultSize.x
+	params.y = params.y ? params.y : this.defaultSize.y
+
+	with (this.element) {
+		resizeTo(params.w,params.h)
+		moveTo(params.x,params.y)
+	}
+
+	this.element.focus()
+
+	// spaces can access us
+	spaces.push(this)
+
+	// the new window can access us
+	this.element.space = this;
+	this.element.defineCanvas();
+
+	// this.canvas and this.context
+	// are then created by the new window when loading
+
+	*/
+
+}
+
+Wall.prototype.hide = function() {
+	with (this.element) {
+		resizeTo(100,100)
+		moveTo(0,0)
+	}
+	spaces.splice(spaces.indexOf(this),1)
+	this.element.close();
+	this.visible = false;
+}
+
+Wall.prototype.load = function(src) {
+	src ? this.element.src = src : false;
+}
+
+Wall.prototype.scroll = function(x,y) {
+	this.element.scroll.x = x
+	this.element.scroll.x = y
+}
+
+Wall.prototype.move = function() {
+}
+
+Wall.prototype.size = function() {
+}
+
+Wall.prototype.kill = function() {
+}
+
+Wall.prototype.empty = function() {
+}
+
+Wall.prototype.testDraw = function() {
+	this.context.fillStyle = "#0af"
+	this.context.fillRect(0,0,100,100)
+}
+
+Wall.prototype.scroll = function(x,y) {
+	this.element.scrollTo(x,y)
+}
+
+Wall.prototype.scrollSight = function() {
+	this.scroll(this.element.screenX,this.element.screenY)
+}
+
+
+Wall.prototype.refresh = function() {
+}
+
+Wall.prototype.patterns = {
+	"default": [
+		{
+			x: ~~(Math.random()*1000),
+			y: ~~(Math.random()*600),
+			w: 200,
+			h: 100
+		}
+	],
+	"line": [
+		{
+			x: 100,
+			y: 100,
+			w: 100,
+			h: 100
+		},
+		{
+			x: 200,
+			y: 100,
+			w: 100,
+			h: 100
+		},
+		{
+			x: 300,
+			y: 100,
+			w: 100,
+			h: 100
+		},
+		{
+			x: 400,
+			y: 100,
+			w: 100,
+			h: 100
+		}
+	]
+}
+
+
+
+
+
+},{"util":13}],7:[function(require,module,exports){
 var util = require('util');
 
 
@@ -290,7 +453,7 @@ Window.prototype.show = function(params) {
 
 	// the new window can access us
 	this.element.space = this;
-	this.element.defineCanvas();
+	//this.element.defineCanvas();
 
 	// this.canvas and this.context
 	// are then created by the new window when loading
@@ -349,7 +512,7 @@ Window.prototype.refresh = function() {
 
 
 
-},{"util":12}],7:[function(require,module,exports){
+},{"util":13}],8:[function(require,module,exports){
 
 
 /** @method toPolar 
@@ -487,7 +650,7 @@ exports.random = function(scale) {
 exports.interp = function(loc,min,max) {
   return loc * (max - min) + min;  
 }
-},{}],8:[function(require,module,exports){
+},{}],9:[function(require,module,exports){
 // Copyright Joyent, Inc. and other Node contributors.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a
@@ -790,7 +953,7 @@ function isUndefined(arg) {
   return arg === void 0;
 }
 
-},{}],9:[function(require,module,exports){
+},{}],10:[function(require,module,exports){
 if (typeof Object.create === 'function') {
   // implementation from standard node.js 'util' module
   module.exports = function inherits(ctor, superCtor) {
@@ -815,7 +978,7 @@ if (typeof Object.create === 'function') {
   }
 }
 
-},{}],10:[function(require,module,exports){
+},{}],11:[function(require,module,exports){
 // shim for using process in browser
 
 var process = module.exports = {};
@@ -880,14 +1043,14 @@ process.chdir = function (dir) {
     throw new Error('process.chdir is not supported');
 };
 
-},{}],11:[function(require,module,exports){
+},{}],12:[function(require,module,exports){
 module.exports = function isBuffer(arg) {
   return arg && typeof arg === 'object'
     && typeof arg.copy === 'function'
     && typeof arg.fill === 'function'
     && typeof arg.readUInt8 === 'function';
 }
-},{}],12:[function(require,module,exports){
+},{}],13:[function(require,module,exports){
 (function (process,global){
 // Copyright Joyent, Inc. and other Node contributors.
 //
@@ -1462,7 +1625,7 @@ function hasOwnProperty(obj, prop) {
 }
 
 }).call(this,require('_process'),typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"./support/isBuffer":11,"_process":10,"inherits":9}],13:[function(require,module,exports){
+},{"./support/isBuffer":12,"_process":11,"inherits":10}],14:[function(require,module,exports){
 var hasOwn = Object.prototype.hasOwnProperty;
 var toString = Object.prototype.toString;
 var undefined;

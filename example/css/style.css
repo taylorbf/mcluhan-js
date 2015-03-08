@@ -4,9 +4,19 @@ body {
 	height:100%;
 }
 
+h1 {
+	font-family:"Anonymous Pro";
+	font-weight:800;
+	font-size:11pt;
+	text-align:center;
+	letter-spacing:0.2em;
+	padding:5px;
+
+}
+
 #terminal {
 	height:200px;
 	border:solid 1px #333;
 	width:400px;
-	margin:20px auto;
+	margin:5px auto;
 }
