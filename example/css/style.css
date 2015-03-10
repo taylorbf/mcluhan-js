@@ -17,6 +17,7 @@ h1 {
 #terminal {
 	height:200px;
 	border:solid 1px #333;
+	border-width: 1px 0px;
 	width:400px;
 	margin:5px auto;
 }

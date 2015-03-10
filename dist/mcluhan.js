@@ -139,7 +139,7 @@ var Medium = module.exports = function(params) {
 	this.element = [];
 	for (var i = 0; i<this.spaces.length; i++) {
 		this.element.push(document.createElement(this.type))
-		spaces[this.spaces[i]].element.document.body.appendChild(this.element[i])
+		this.spaces[i].element.document.body.appendChild(this.element[i])
 	}
 
 	this.size(params)
@@ -257,6 +257,7 @@ module.exports = {
 }
 },{"./film":4,"./wall":6,"./window":7}],6:[function(require,module,exports){
 var util = require('util');
+var units = require("../media")
 
 
 var Wall = module.exports = function(setting,limit) {
@@ -281,13 +282,18 @@ var Wall = module.exports = function(setting,limit) {
 	this.index = windex;
 //	windex++;
 	this.visible = false;
+
+	return this;
 	
 }
 
 Wall.prototype.show = function(params) {
 
-	for (var i=0;i<this.limit;i++) {
-		this.elements[i].show()
+	for (var i=0;i<this.elements.length;i++) {
+		with (this.elements[i].element) {
+			resizeTo(this.patt[i].w, this.patt[i].h)
+			moveTo(this.patt[i].x, this.patt[i].y)
+		}
 	}
 
 	this.visible = true;
@@ -323,17 +329,38 @@ Wall.prototype.show = function(params) {
 }
 
 Wall.prototype.hide = function() {
-	with (this.element) {
-		resizeTo(100,100)
-		moveTo(0,0)
+	for (var i=0;i<this.elements.length;i++) {
+		with (this.elements[i].element) {
+			resizeTo(100,100)
+			moveTo(0,0)
+		}
+		this.visible = false;
 	}
-	spaces.splice(spaces.indexOf(this),1)
-	this.element.close();
-	this.visible = false;
 }
 
-Wall.prototype.load = function(src) {
-	src ? this.element.src = src : false;
+Wall.prototype.add = function(type,name,params) {
+  this.media.push(new ([type])(params) )
+  var i = arr.length-1;
+  return i;
+}
+
+Wall.prototype.film = function(src,params) {
+    !window.films ? window.films = new Array() : null;
+    var i = this.add("film",films,params)
+    src ? films[i].load(src) : false;
+}
+
+
+Wall.prototype.see = function(src) {
+	console.log(0)
+	var fff = new film({ spaces: this.elements });
+	console.log(1)
+	fff.load(src)
+	//for (var i=0;i<this.elements.length;i++) {
+	//	console.log(2)
+	//	this.elements[i].load(src)
+	//}
+	return fff;
 }
 
 Wall.prototype.scroll = function(x,y) {
@@ -363,7 +390,9 @@ Wall.prototype.scroll = function(x,y) {
 }
 
 Wall.prototype.scrollSight = function() {
-	this.scroll(this.element.screenX,this.element.screenY)
+	for (var i=0;i<this.elements.length;i++) {
+		this.elements[i].scrollSight()
+	}
 }
 
 
@@ -381,28 +410,28 @@ Wall.prototype.patterns = {
 	],
 	"line": [
 		{
-			x: 100,
+			x: 1,
 			y: 100,
-			w: 100,
-			h: 100
+			w: 200,
+			h: 400
 		},
 		{
 			x: 200,
 			y: 100,
-			w: 100,
-			h: 100
-		},
-		{
-			x: 300,
-			y: 100,
-			w: 100,
-			h: 100
+			w: 200,
+			h: 400
 		},
 		{
 			x: 400,
 			y: 100,
-			w: 100,
-			h: 100
+			w: 200,
+			h: 400
+		},
+		{
+			x: 600,
+			y: 100,
+			w: 200,
+			h: 400
 		}
 	]
 }
@@ -411,7 +440,7 @@ Wall.prototype.patterns = {
 
 
 
-},{"util":13}],7:[function(require,module,exports){
+},{"../media":5,"util":13}],7:[function(require,module,exports){
 var util = require('util');
 
 
@@ -479,7 +508,8 @@ Window.prototype.scroll = function(x,y) {
 	this.element.scroll.x = y
 }
 
-Window.prototype.move = function() {
+Window.prototype.move = function(x,y) {
+	this.element.moveTo(x,y)
 }
 
 Window.prototype.size = function() {
