@@ -54,7 +54,7 @@
         color: #aaa;
   }
   50% {
-        background-color: #eee;
+        background-color: #000;
         color: #000;
   }
 }
@@ -88,10 +88,11 @@
 }
 .terminal, .cmd {
     font-family: 'Anonymous Pro', monospace;
-    color: #333;
-    background-color: #fff;
+    color: #000;
+    background-color: #FFF;
     font-size: 15px;
     line-height: 20px;
+    opacity:0.8;
 }
 .terminal-output > div {
     min-height: 14px;

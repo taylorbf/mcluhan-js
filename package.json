@@ -3,7 +3,8 @@
   "description": "Live web art performance platform",
   "author": "Ben Taylor <taylorbf@gmail.com>",
   "dependencies": {
-    "nexusui": "1.0.x"
+    "nexusui": "1.0.x",
+    "tone": "0.4.x"
   },
   "devDependencies": {
     "gulp": "3.8.x",
