@@ -14,6 +14,7 @@ window._spaces = new Array();
 window.spaces = new Array();
 window.windex = 0;
 window.walls = new Array();
+window.journal = { "hello": "Hello Digital World" }
 
 window.components = require("./lib/media")
 for (var key in window.components) {

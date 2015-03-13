@@ -15,6 +15,7 @@ window._spaces = new Array();
 window.spaces = new Array();
 window.windex = 0;
 window.walls = new Array();
+window.journal = { "hello": "Hello Digital World" }
 
 window.components = require("./lib/media")
 for (var key in window.components) {
@@ -368,6 +369,10 @@ var Paper = module.exports = function(params) {
 	//separate item constructor "Medium" with properties for placement, animation, remove, make dom element, styling element based on json
 	Medium.call(this, params);
 
+	this.flipSpace = 0
+	this.flipWord = 0
+	this.time = 100;
+
 	for (var i=0;i<this.element.length;i++) {
 		this.element[i].className = "normal"
 	}
@@ -377,41 +382,115 @@ var Paper = module.exports = function(params) {
 
 util.inherits(Paper, Medium);
 
-Paper.prototype.write = function(msg) {
+Paper.prototype.read = function(text) {
+	console.log(journal, text)
+	if (journal[text]) {
+		this.text = journal[text];
+	} else {
+		this.text = text ? text : "null"
+	}
+	this.words = this.text.split(" ");
+	this.letters = this.text.split("");
+	return this;
+}
+
+/* eventually move this to happen at start up for all files in
+/media/text folder, and to make them stored in journals object
+with filname as object key */
+Paper.prototype.readFile = function(file,callback) {
+	file = file ? file : "hello"
+	this.text
+	$.get("text/"+file+'.txt', function(text) {
+		this.text = text ? text : "null"
+		this.words = this.text.split(" ");
+		this.letters = this.text.split("");
+		var bc = callback.bind(this)
+	    bc(data);
+	}.bind(this), 'text');
+}
+
+Paper.prototype.write = function() {
 	for (var i=0;i<this.element.length;i++) {
-		this.element[i].innerHTML = msg
+		this.element[i].innerHTML = this.text
 	}
 	return this;
 }
 
-Paper.prototype.and = function(rate) {
+Paper.prototype.and = function() {
 	for (var i=0;i<this.element.length;i++) {
-		this.element[i].innerHTML = this.elements[i].innerHTML + msg
+		this.element[i].innerHTML = this.elements[i].innerHTML + this.text
 	}
 }
 
-Paper.prototype.read = function(file) {
-	file = file ? file : "hello"
-	$.get("text/"+file+'.txt', function(data) {
-	   this.write(data);
-	}.bind(this), 'text');
+Paper.prototype.writeAcross = function() {
+	for (var i=0;i<this.element.length;i++) {
+		this.element[i].className = "fullScreen"
+		this.element[i].style.width = this.spaces[i].element.innerWidth+"px"
+		this.element[i].style.height = this.spaces[i].element.innerHeight+"px"
+		this.element[i].style.lineHeight = this.spaces[i].element.innerHeight+"px"
+		if (i<this.words.length) {	
+			this.element[i].innerHTML = this.words[i]
+		}
+	}
 }
 
-Paper.prototype.flutter = function(file) {
-	file = file ? file : "hello"
-	$.get("text/"+file+'.txt', function(data) {
-		this.words = data.split(" ");
-		for (var i=0;i<this.element.length;i++) {
-			this.element[i].className = "fullScreen"
-			console.log(this.spaces[i].element.innerWidth)
-			this.element[i].style.width = this.spaces[i].element.innerWidth+"px"
-			this.element[i].style.height = this.spaces[i].element.innerHeight+"px"
-			this.element[i].style.lineHeight = this.spaces[i].element.innerHeight+"px"
-			if (i<this.words.length) {	
-				this.element[i].innerHTML = this.words[i]
-			}
+Paper.prototype.flip = function(time) {
+	time ? this.time = time : null;
+	this.flipint = setInterval(this.flipOne.bind(this), time)
+}
+
+Paper.prototype.flipOne = function() {
+	this.element[this.flipSpace].innerHTML = this.words[this.flipWord];
+	this.flipSpace++;
+	if (this.flipSpace>=this.spaces.length) {
+		this.flipSpace=0;
+	}
+	this.flipWord++;
+	if (this.flipWord>=this.words.length) {
+		this.flipWord=0;
+	}
+}
+
+Paper.prototype.unflip = function(file) {
+	clearInterval(this.flipint);
+}
+
+
+Paper.prototype.wash = function(time) {
+	time ? this.time = time : null;
+	this.washWord = 0;
+	for (var i=0;i<this.element.length;i++) {
+		this.element[i].className = "fullScreen"
+		this.element[i].style.width = this.spaces[i].element.innerWidth+"px"
+		this.element[i].style.height = this.spaces[i].element.innerHeight+"px"
+		this.element[i].style.lineHeight = this.spaces[i].element.innerHeight+"px"
+	}
+	this.washint = setInterval(this.washOne.bind(this), time)
+}
+
+Paper.prototype.washOne = function() {
+	for (var i=0;i<this.element.length;i++) {
+		if (!this.strobe) {
+			this.element[i].style.backgroundColor = "black"
+		} else {
+			this.element[i].style.backgroundColor = "white"
 		}
-	}.bind(this), 'text');
+		this.element[i].innerHTML = this.words[this.washWord];
+	}
+	if (!this.strobe) {
+		this.strobe = true;
+	} else {
+		this.strobe = false;
+	}
+	this.washWord++;
+	if (this.washWord>=this.words.length) {
+		this.washWord = 0;
+		//this.unwash()
+	}
+}
+
+Paper.prototype.unwash = function(file) {
+	clearInterval(this.washint);
 }
 
 
@@ -564,28 +643,35 @@ Wall.prototype.add = function(type,name,params) {
 }
 
 Wall.prototype.see = function(src) {
-	var _f = new film({ spaces: this.elements });
-	_f.load(src)
-	return _f;
+	var _m = new film({ spaces: this.elements });
+	_m.wall = this;
+	_m.load(src)
+	return _m;
 }
 
 Wall.prototype.hear = function(src) {
-	var _c = new cassette({ spaces: this.elements });
-	_c.load(src)
-	return _c;
+	var _m = new cassette({ spaces: this.elements });
+	_m.wall = this;
+	_m.load(src)
+	return _m;
 }
 
-Wall.prototype.write = function(msg,style) {
-	var _p = new paper({ spaces: this.elements });
-	if (style==1) {
-		_p.read(msg)
-	} else if (!style) {
-		_p.write(msg)
-	} else if (style==2) {
-		_p.flutter(msg)
+Wall.prototype.write = function(msg,style,arg) {
+	var _m = new paper({ spaces: this.elements });
+	_m.read(msg)
+	_m.wall = this;
+	if (!style) {
+		_m.write()
+	} else if (style=="across") {
+		_m.writeAcross()
+	} else if (style=="flip") {
+		_m.flip(arg)
+	} else if (style=="wash") {
+		_m.wash(arg)
 	}
-	return _p;
+	return _m;
 }
+
 
 Wall.prototype.scroll = function(x,y) {
 	this.element.scroll.x = x
@@ -628,6 +714,18 @@ Wall.prototype.goto = function(url,window) {
 		this.elements[i].element.location.href = url
 	}
 }
+/*
+Wall.prototype.rhythm = function(time,duration,functions,setting) {
+	var _m = new rhythm(time,duration,functions,setting)
+	_m.wall = this;
+	setInterval()
+	this.intervals.push(_m)
+	for (var i=0;i<this.elements.length;i++) {
+		this.elements[i].element.location.href = url
+	}
+}
+*/
+// a.rhythm("a.show()","a.hide()")
 
 Wall.prototype.patterns = {
 	"default": [
