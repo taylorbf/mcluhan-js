@@ -30,7 +30,7 @@ for (var key in window.components) {
 window.onload = function() {
    m.init();
 };
-},{"./lib/core/manager":2,"./lib/media":6,"./lib/media/film":5,"./lib/utils/math":10,"extend":16}],2:[function(require,module,exports){
+},{"./lib/core/manager":2,"./lib/media":6,"./lib/media/film":5,"./lib/utils/math":11,"extend":17}],2:[function(require,module,exports){
 
 var util = require('util');
 var EventEmitter = require('events').EventEmitter;
@@ -124,7 +124,7 @@ manager.prototype.makeWall = function(num,config) {
 //  return 
 }
 
-},{"../media":6,"events":11,"util":15}],3:[function(require,module,exports){
+},{"../media":6,"events":12,"util":16}],3:[function(require,module,exports){
 
 // Template for all DOM-based items (video, audio, divs, embeds)
 
@@ -265,7 +265,7 @@ Cassette.prototype.speed = function(rate) {
 }
 
 
-},{"../core/medium":3,"util":15}],5:[function(require,module,exports){
+},{"../core/medium":3,"util":16}],5:[function(require,module,exports){
 var util = require('util');
 var Medium = require('../core/medium')
 
@@ -346,15 +346,76 @@ Film.prototype.speed = function(rate) {
 }
 
 
-},{"../core/medium":3,"util":15}],6:[function(require,module,exports){
+},{"../core/medium":3,"util":16}],6:[function(require,module,exports){
 module.exports = {
   cassette: require('./cassette'),
   film: require('./film'),
+  paper: require('./paper'),
   presence: require('./presence'),
   window: require('./window'),
   wall: require('./wall')
 }
-},{"./cassette":4,"./film":5,"./presence":7,"./wall":8,"./window":9}],7:[function(require,module,exports){
+},{"./cassette":4,"./film":5,"./paper":7,"./presence":8,"./wall":9,"./window":10}],7:[function(require,module,exports){
+var util = require('util');
+var Medium = require('../core/medium')
+
+
+var Paper = module.exports = function(params) {
+
+	this.defaultSize = { w: 300 }
+	this.type = "div"
+
+	//separate item constructor "Medium" with properties for placement, animation, remove, make dom element, styling element based on json
+	Medium.call(this, params);
+
+	for (var i=0;i<this.element.length;i++) {
+		this.element[i].className = "normal"
+	}
+
+
+}
+
+util.inherits(Paper, Medium);
+
+Paper.prototype.write = function(msg) {
+	for (var i=0;i<this.element.length;i++) {
+		this.element[i].innerHTML = msg
+	}
+	return this;
+}
+
+Paper.prototype.and = function(rate) {
+	for (var i=0;i<this.element.length;i++) {
+		this.element[i].innerHTML = this.elements[i].innerHTML + msg
+	}
+}
+
+Paper.prototype.read = function(file) {
+	file = file ? file : "hello"
+	$.get("text/"+file+'.txt', function(data) {
+	   this.write(data);
+	}.bind(this), 'text');
+}
+
+Paper.prototype.flutter = function(file) {
+	file = file ? file : "hello"
+	$.get("text/"+file+'.txt', function(data) {
+		this.words = data.split(" ");
+		for (var i=0;i<this.element.length;i++) {
+			this.element[i].className = "fullScreen"
+			console.log(this.spaces[i].element.innerWidth)
+			this.element[i].style.width = this.spaces[i].element.innerWidth+"px"
+			this.element[i].style.height = this.spaces[i].element.innerHeight+"px"
+			this.element[i].style.lineHeight = this.spaces[i].element.innerHeight+"px"
+			if (i<this.words.length) {	
+				this.element[i].innerHTML = this.words[i]
+			}
+		}
+	}.bind(this), 'text');
+}
+
+
+},{"../core/medium":3,"util":16}],8:[function(require,module,exports){
 var util = require('util');
 
 
@@ -452,7 +513,7 @@ Presence.prototype.stop = function(rate) {
 	clearInterval(this.interval)
 }
 
-},{"util":15}],8:[function(require,module,exports){
+},{"util":16}],9:[function(require,module,exports){
 var util = require('util');
 var units = require("../media")
  var Tone = require('tone')
@@ -508,11 +569,22 @@ Wall.prototype.see = function(src) {
 	return _f;
 }
 
-
 Wall.prototype.hear = function(src) {
 	var _c = new cassette({ spaces: this.elements });
 	_c.load(src)
 	return _c;
+}
+
+Wall.prototype.write = function(msg,style) {
+	var _p = new paper({ spaces: this.elements });
+	if (style==1) {
+		_p.read(msg)
+	} else if (!style) {
+		_p.write(msg)
+	} else if (style==2) {
+		_p.flutter(msg)
+	}
+	return _p;
 }
 
 Wall.prototype.scroll = function(x,y) {
@@ -598,7 +670,7 @@ Wall.prototype.patterns = {
 
 
 
-},{"../media":6,"tone":17,"util":15}],9:[function(require,module,exports){
+},{"../media":6,"tone":18,"util":16}],10:[function(require,module,exports){
 var util = require('util');
 
 
@@ -700,7 +772,7 @@ Window.prototype.refresh = function() {
 
 
 
-},{"util":15}],10:[function(require,module,exports){
+},{"util":16}],11:[function(require,module,exports){
 
 
 /** @method toPolar 
@@ -838,7 +910,7 @@ exports.random = function(scale) {
 exports.interp = function(loc,min,max) {
   return loc * (max - min) + min;  
 }
-},{}],11:[function(require,module,exports){
+},{}],12:[function(require,module,exports){
 // Copyright Joyent, Inc. and other Node contributors.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a
@@ -1141,7 +1213,7 @@ function isUndefined(arg) {
   return arg === void 0;
 }
 
-},{}],12:[function(require,module,exports){
+},{}],13:[function(require,module,exports){
 if (typeof Object.create === 'function') {
   // implementation from standard node.js 'util' module
   module.exports = function inherits(ctor, superCtor) {
@@ -1166,7 +1238,7 @@ if (typeof Object.create === 'function') {
   }
 }
 
-},{}],13:[function(require,module,exports){
+},{}],14:[function(require,module,exports){
 // shim for using process in browser
 
 var process = module.exports = {};
@@ -1231,14 +1303,14 @@ process.chdir = function (dir) {
     throw new Error('process.chdir is not supported');
 };
 
-},{}],14:[function(require,module,exports){
+},{}],15:[function(require,module,exports){
 module.exports = function isBuffer(arg) {
   return arg && typeof arg === 'object'
     && typeof arg.copy === 'function'
     && typeof arg.fill === 'function'
     && typeof arg.readUInt8 === 'function';
 }
-},{}],15:[function(require,module,exports){
+},{}],16:[function(require,module,exports){
 (function (process,global){
 // Copyright Joyent, Inc. and other Node contributors.
 //
@@ -1813,7 +1885,7 @@ function hasOwnProperty(obj, prop) {
 }
 
 }).call(this,require('_process'),typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"./support/isBuffer":14,"_process":13,"inherits":12}],16:[function(require,module,exports){
+},{"./support/isBuffer":15,"_process":14,"inherits":13}],17:[function(require,module,exports){
 var hasOwn = Object.prototype.hasOwnProperty;
 var toString = Object.prototype.toString;
 var undefined;
@@ -1896,7 +1968,7 @@ module.exports = function extend() {
 };
 
 
-},{}],17:[function(require,module,exports){
+},{}],18:[function(require,module,exports){
 (function (root) {
 	"use strict";
 	var Tone;
