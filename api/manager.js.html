@@ -3,7 +3,7 @@
 <html lang="en">
 <head>
 	<meta charset="utf-8">
-	<title>McLuhan.js Index</title>
+	<title>McLuhan.js Source: core/manager.js</title>
 
 	<!--[if lt IE 9]>
 	<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
@@ -71,131 +71,121 @@
 	<div class="row-fluid">
 
 		
-		<div class="span8">
-			
+			<div class="span12">
+				
 				<div id="main">
 					
 
 
-	
-	<span class="page-title">Index</span>
-	
-	
-
-
-
-
-
-
-
-
-
-
-
-
-	
-	
-
-
-
-
-
-
-
-
-
-
-
-
-	<h1 class="page-title">Index</h1>
-<section>
-
-<header>
-    <h2>
-    core/manager.js
-    </h2>
+		<h1 class="page-title">Source: core/manager.js</h1>
     
-</header>
+    <section>
+        <article>
+            <pre class="sunlight-highlight-javascript linenums">
+var util = require('util');
+var EventEmitter = require('events').EventEmitter;
+ var Tone = require('tone')
 
-<article>
-    <div class="container-overview">
-    
+/** 
+  @title McLuhan JS API
+  @overview 
+  @author Ben Taylor
+  @copyright &amp;copy; 2015
+  @license MIT
+ */ 
 
-    
-        
-
-        
-<dl class="details">
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-author">Author:</dt>
-    <dd class="tag-author">
-        <ul>
-            <li>Ben Taylor</li>
-        </ul>
-    </dd>
-    
-
-    
-    <dt class="tag-copyright">Copyright:</dt>
-    <dd class="tag-copyright"><ul class="dummy"><li>&copy; 2015</li></ul></dd>
-    
-
-    
-    <dt class="tag-license">License:</dt>
-    <dd class="tag-license"><ul class="dummy"><li>MIT</li></ul></dd>
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="manager.js.html">core/manager.js</a>, <a href="manager.js.html#sunlight-1-line-6">line 6</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
+var spacer = false;
 
 
-        
-    
-    </div>
+/** 
 
-    
+  @constructor
+  @description Methods for all global actions that affect groups of media objects.
+  
+*/
 
-    
+var Manager = module.exports = function() {
 
-    
+  /** @type {Number} */
+  this.spaceLimit = 5;
 
-    
+  // Will use eventually
+  // EventEmitter.apply(this)
 
-    
+}
 
-    
+util.inherits(Manager, EventEmitter)
 
-    
 
-    
+/**
+ * @method
+ * @description  initialize and open all browser windows to use
+ */
+Manager.prototype.init = function() {
+  for (var i=0;i&lt;this.spaceLimit;i++) {
+    m.makeSpace()
+  }
+}
 
-    
-</article>
 
-</section>
+/**
+ * Add a new media object
+ * @param {string} type Type of media object to add
+ * @param {Array} arr Array that this object is added into
+ * @param {object} params parameters (x,y,w,h,spaces,parent)
+ */
+Manager.prototype.add = function(type, arr, params) {
+  arr.push( new (require("../media")[type])(params) )
+  var i = arr.length-1;
+  return i;
+}
+
+Manager.prototype.film = function(src,params) {
+    !window.films ? window.films = new Array() : null;
+    var i = this.add("film",films,params)
+    src ? films[i].load(src) : false;
+}
+
+Manager.prototype.makeSpace = function(params) {
+    var i = this.add("window",_spaces,params)
+}
+
+Manager.prototype.peer = function(x,y,w,h) {
+  if (windex >= _spaces.length) {
+    windex = 0;
+  }
+  var params = {
+    x: x ? x : false,
+    y: y ? y : false,
+    w: w ? w : false,
+    h: h ? h : false
+  }
+  _spaces[windex].show(params);
+  windex++;
+  return _spaces[windex-1]
+}
+
+Manager.prototype.pare = function(size) {
+  size = size ? size : 1;
+  for (var i=0;i&lt;size;i++) {
+    spaces[0].hide()
+  }
+}
+
+
+Manager.prototype.makeWall = function(num,config) {
+  var wall = new Array()
+  for (var i=0;i&lt;num;i++) {
+    wall.push(this.useSpace(200*(i+1),50,200,400))
+  }
+  walls.push(wall)
+
+//  return 
+}
+</pre>
+        </article>
+    </section>
+
 
 
 
@@ -221,10 +211,6 @@
 				</footer>
 			</div>
 
-			
-			<div class="span3">
-				<div id="toc"></div>
-			</div>
 			
 			<br clear="both">
 		</div>

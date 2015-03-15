@@ -3,7 +3,7 @@
 <html lang="en">
 <head>
 	<meta charset="utf-8">
-	<title>McLuhan.js Index</title>
+	<title>McLuhan.js Source: core/medium.js</title>
 
 	<!--[if lt IE 9]>
 	<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
@@ -71,131 +71,73 @@
 	<div class="row-fluid">
 
 		
-		<div class="span8">
-			
+			<div class="span12">
+				
 				<div id="main">
 					
 
 
-	
-	<span class="page-title">Index</span>
-	
-	
-
-
-
-
-
-
-
-
-
-
-
-
-	
-	
-
-
-
-
-
-
-
-
-
-
-
-
-	<h1 class="page-title">Index</h1>
-<section>
-
-<header>
-    <h2>
-    core/manager.js
-    </h2>
+		<h1 class="page-title">Source: core/medium.js</h1>
     
-</header>
+    <section>
+        <article>
+            <pre class="sunlight-highlight-javascript linenums">
+// Template for all DOM-based items (video, audio, divs, embeds)
+/**
+ * @class Medium
+ * @constructor
+ * @description  Template for all DOM-based media items (video, audio, text, etc)
+ * @param  {object} Params (see Params)
+ */
+var Medium = module.exports = function(params) {
 
-<article>
-    <div class="container-overview">
-    
+	// handle parameters
+	this.params = params ? params : new Object()
 
-    
-        
+	// define space
+	this.spaces = this.params.spaces ? this.params.spaces : [0];
 
-        
-<dl class="details">
-    
+	// make element
+	this.element = [];
+	for (var i = 0; i&lt;this.spaces.length; i++) {
+		this.element.push(document.createElement(this.type))
+		this.spaces[i].element.document.body.appendChild(this.element[i])
+	}
 
-    
+	this.size(params)
+}
 
-    
+/**
+ * Set a property of all window elements in this media element's wall
+ * @param {String} property key
+ * @param {Unknown} value
+ */
+Medium.prototype.setAll = function(prop,val) {
+	for (var i = 0; i&lt;this.element.length; i++) {
+		this.element[i][prop] = val;
+	}
+}
+Medium.prototype.all = function(method) {
+	for (var i = 0; i&lt;this.element.length; i++) {
+		this.element[i][method]()
+	}
+}
 
-    
+Medium.prototype.size = function(params) {
+	this.params.w ? this.element.style.width = this.params.w+"px" : false;
+	this.params.width ? this.element.style.width = this.params.width+"px" : false;
+	this.params.h ? this.element.style.width = this.params.h+"px" : false;
+	this.params.height ? this.element.style.width = this.params.height+"px" : false;
+}
 
-    
+Medium.prototype.move = function(params) {
+	this.element.style.position = "absolute";
+	params.x ? this.element.style.left = params.x+"px" : false;
+	params.y ? this.element.style.top = params.y+"px" : false;
+}</pre>
+        </article>
+    </section>
 
-    
-    <dt class="tag-author">Author:</dt>
-    <dd class="tag-author">
-        <ul>
-            <li>Ben Taylor</li>
-        </ul>
-    </dd>
-    
-
-    
-    <dt class="tag-copyright">Copyright:</dt>
-    <dd class="tag-copyright"><ul class="dummy"><li>&copy; 2015</li></ul></dd>
-    
-
-    
-    <dt class="tag-license">License:</dt>
-    <dd class="tag-license"><ul class="dummy"><li>MIT</li></ul></dd>
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="manager.js.html">core/manager.js</a>, <a href="manager.js.html#sunlight-1-line-6">line 6</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-        
-    
-    </div>
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</article>
-
-</section>
 
 
 
@@ -221,10 +163,6 @@
 				</footer>
 			</div>
 
-			
-			<div class="span3">
-				<div id="toc"></div>
-			</div>
 			
 			<br clear="both">
 		</div>

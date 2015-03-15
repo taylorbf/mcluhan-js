@@ -3,7 +3,7 @@
 <html lang="en">
 <head>
 	<meta charset="utf-8">
-	<title>McLuhan.js Index</title>
+	<title>McLuhan.js Source: media/window.js</title>
 
 	<!--[if lt IE 9]>
 	<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
@@ -71,131 +71,125 @@
 	<div class="row-fluid">
 
 		
-		<div class="span8">
-			
+			<div class="span12">
+				
 				<div id="main">
 					
 
 
+		<h1 class="page-title">Source: media/window.js</h1>
+    
+    <section>
+        <article>
+            <pre class="sunlight-highlight-javascript linenums">var util = require('util');
+
+/**
+ * @constructor
+ * @description  Window object managed by a Wall
+ * @param  {object} Params (see Params)
+ * @return {Window}
+ */
+var Window = module.exports = function(params) {
+
+	this.defaultSize = { w: 300, h: 200, x: window.screen.width/2 - 150, y: window.screen.height/2 - 100 }
+	this.element = window.open("space.html","win"+windex,"height=100,width=100,left:0,top:0,menubar=0,status=0,location=0,titlebar=0,toolbar=0")
+	with (this.element) {
+		resizeTo(100,100)
+		moveTo(0,0)
+	}
+	this.index = windex;
+	windex++;
+	this.visible = false;
 	
-	<span class="page-title">Index</span>
+}
+
+Window.prototype.show = function(params) {
+
+	this.element.close();
+	this.element = window.open("space.html","win"+this.index,"height=100,width=100,left:0,top:0,menubar=0,status=0,location=0,titlebar=0,toolbar=0")
 	
-	
+	params = params ? params : new Object()
+	params.w = params.w ? params.w : this.defaultSize.w
+	params.h = params.h ? params.h : this.defaultSize.h
+	params.x = params.x ? params.x : this.defaultSize.x
+	params.y = params.y ? params.y : this.defaultSize.y
+
+	with (this.element) {
+		resizeTo(params.w,params.h)
+		moveTo(params.x,params.y)
+	}
+
+	this.visible = true;
+	this.element.focus()
+
+	// spaces can access us
+	spaces.push(this)
+
+	// the new window can access us
+	this.element.space = this;
+	//this.element.defineCanvas();
+
+	// this.canvas and this.context
+	// are then created by the new window when loading
+
+}
+
+Window.prototype.hide = function() {
+	with (this.element) {
+		resizeTo(100,100)
+		moveTo(0,0)
+	}
+	spaces.splice(spaces.indexOf(this),1)
+	this.element.close();
+	this.visible = false;
+}
+
+Window.prototype.load = function(src) {
+	src ? this.element.src = src : false;
+}
+
+Window.prototype.scroll = function(x,y) {
+	this.element.scroll.x = x
+	this.element.scroll.x = y
+}
+
+Window.prototype.move = function(x,y) {
+	this.element.moveTo(x,y)
+}
+
+Window.prototype.size = function() {
+}
+
+Window.prototype.kill = function() {
+}
+
+Window.prototype.empty = function() {
+}
+
+Window.prototype.testDraw = function() {
+	this.context.fillStyle = "#0af"
+	this.context.fillRect(0,0,100,100)
+}
+
+Window.prototype.scroll = function(x,y) {
+	this.element.scrollTo(x,y)
+}
+
+Window.prototype.scrollSight = function() {
+	this.scroll(this.element.screenX,this.element.screenY)
+}
+
+
+Window.prototype.refresh = function() {
+}
 
 
 
 
+</pre>
+        </article>
+    </section>
 
-
-
-
-
-
-
-
-	
-	
-
-
-
-
-
-
-
-
-
-
-
-
-	<h1 class="page-title">Index</h1>
-<section>
-
-<header>
-    <h2>
-    core/manager.js
-    </h2>
-    
-</header>
-
-<article>
-    <div class="container-overview">
-    
-
-    
-        
-
-        
-<dl class="details">
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-author">Author:</dt>
-    <dd class="tag-author">
-        <ul>
-            <li>Ben Taylor</li>
-        </ul>
-    </dd>
-    
-
-    
-    <dt class="tag-copyright">Copyright:</dt>
-    <dd class="tag-copyright"><ul class="dummy"><li>&copy; 2015</li></ul></dd>
-    
-
-    
-    <dt class="tag-license">License:</dt>
-    <dd class="tag-license"><ul class="dummy"><li>MIT</li></ul></dd>
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="manager.js.html">core/manager.js</a>, <a href="manager.js.html#sunlight-1-line-6">line 6</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-        
-    
-    </div>
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</article>
-
-</section>
 
 
 
@@ -221,10 +215,6 @@
 				</footer>
 			</div>
 
-			
-			<div class="span3">
-				<div id="toc"></div>
-			</div>
 			
 			<br clear="both">
 		</div>

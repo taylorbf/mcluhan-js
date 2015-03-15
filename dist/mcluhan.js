@@ -1,5 +1,5 @@
 (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
-var manager = require('./lib/core/manager');
+var Manager = require('./lib/core/manager');
 var FilmManager = require('./lib/media/film');
 var math = require('./lib/utils/math');
 var extend = require('extend');
@@ -10,7 +10,7 @@ var extend = require('extend');
 *      MAKE GLOBAL COMPONENTS + INSTANCES
 ************************************************/
 
-window.m = new manager(); 
+window.m = new Manager(); 
 window._spaces = new Array();
 window.spaces = new Array();
 window.windex = 0;
@@ -35,7 +35,7 @@ window.onload = function() {
 
 var util = require('util');
 var EventEmitter = require('events').EventEmitter;
-// var Tone = require('tone')
+ var Tone = require('tone')
 
 /** 
   @title McLuhan JS API
@@ -50,13 +50,14 @@ var spacer = false;
 
 /** 
 
-  @class m
-  @description 
+  @constructor
+  @description Methods for all global actions that affect groups of media objects.
   
 */
 
-var manager = module.exports = function() {
+var Manager = module.exports = function() {
 
+  /** @type {Number} */
   this.spaceLimit = 5;
 
   // Will use eventually
@@ -64,35 +65,43 @@ var manager = module.exports = function() {
 
 }
 
-util.inherits(manager, EventEmitter)
+util.inherits(Manager, EventEmitter)
 
-manager.prototype.init = function() {
+
+/**
+ * @method
+ * @description  initialize and open all browser windows to use
+ */
+Manager.prototype.init = function() {
   for (var i=0;i<this.spaceLimit;i++) {
     m.makeSpace()
   }
 }
 
 
-/** 
-  @method add 
-  */
-manager.prototype.add = function(type,arr,params) {
+/**
+ * Add a new media object
+ * @param {string} type Type of media object to add
+ * @param {Array} arr Array that this object is added into
+ * @param {object} params parameters (x,y,w,h,spaces,parent)
+ */
+Manager.prototype.add = function(type, arr, params) {
   arr.push( new (require("../media")[type])(params) )
   var i = arr.length-1;
   return i;
 }
 
-manager.prototype.film = function(src,params) {
+Manager.prototype.film = function(src,params) {
     !window.films ? window.films = new Array() : null;
     var i = this.add("film",films,params)
     src ? films[i].load(src) : false;
 }
 
-manager.prototype.makeSpace = function(params) {
+Manager.prototype.makeSpace = function(params) {
     var i = this.add("window",_spaces,params)
 }
 
-manager.prototype.peer = function(x,y,w,h) {
+Manager.prototype.peer = function(x,y,w,h) {
   if (windex >= _spaces.length) {
     windex = 0;
   }
@@ -107,7 +116,7 @@ manager.prototype.peer = function(x,y,w,h) {
   return _spaces[windex-1]
 }
 
-manager.prototype.pare = function(size) {
+Manager.prototype.pare = function(size) {
   size = size ? size : 1;
   for (var i=0;i<size;i++) {
     spaces[0].hide()
@@ -115,7 +124,7 @@ manager.prototype.pare = function(size) {
 }
 
 
-manager.prototype.makeWall = function(num,config) {
+Manager.prototype.makeWall = function(num,config) {
   var wall = new Array()
   for (var i=0;i<num;i++) {
     wall.push(this.useSpace(200*(i+1),50,200,400))
@@ -125,10 +134,15 @@ manager.prototype.makeWall = function(num,config) {
 //  return 
 }
 
-},{"../media":6,"events":12,"util":16}],3:[function(require,module,exports){
+},{"../media":6,"events":12,"tone":18,"util":16}],3:[function(require,module,exports){
 
 // Template for all DOM-based items (video, audio, divs, embeds)
-
+/**
+ * @class Medium
+ * @constructor
+ * @description  Template for all DOM-based media items (video, audio, text, etc)
+ * @param  {object} Params (see Params)
+ */
 var Medium = module.exports = function(params) {
 
 	// handle parameters
@@ -147,6 +161,11 @@ var Medium = module.exports = function(params) {
 	this.size(params)
 }
 
+/**
+ * Set a property of all window elements in this media element's wall
+ * @param {String} property key
+ * @param {Unknown} value
+ */
 Medium.prototype.setAll = function(prop,val) {
 	for (var i = 0; i<this.element.length; i++) {
 		this.element[i][prop] = val;
@@ -174,7 +193,13 @@ Medium.prototype.move = function(params) {
 var util = require('util');
 var Medium = require('../core/medium')
 
-
+/**
+ * @constructor
+ * @description  Performative AUDIO media element
+ * @extends Medium
+ * @param  {object} Params (see Params)
+ * @return {Cassette}
+ */
 var Cassette = module.exports = function(params) {
 
 	this.defaultSize = { w: 300 }
@@ -270,7 +295,13 @@ Cassette.prototype.speed = function(rate) {
 var util = require('util');
 var Medium = require('../core/medium')
 
-
+/**
+ * @constructor
+ * @description  Performative VIDEO media element
+ * @extends Medium
+ * @param  {object} Params (see Params)
+ * @return {Cassette}
+ */
 var Film = module.exports = function(params) {
 
 	this.defaultSize = { w: 300 }
@@ -360,11 +391,18 @@ module.exports = {
 var util = require('util');
 var Medium = require('../core/medium')
 
-
+/**
+ * @class Paper
+ * @constructor
+ * @description  Performative TEXT media element
+ * @extends Medium
+ * @param  {object} Params (see Params)
+ * @return {Paper}
+ */
 var Paper = module.exports = function(params) {
 
 	this.defaultSize = { w: 300 }
-	this.type = "div"
+	this.type = "div";
 
 	//separate item constructor "Medium" with properties for placement, animation, remove, make dom element, styling element based on json
 	Medium.call(this, params);
@@ -497,7 +535,12 @@ Paper.prototype.unwash = function(file) {
 },{"../core/medium":3,"util":16}],8:[function(require,module,exports){
 var util = require('util');
 
-
+/**
+ * @constructor
+ * @description  Pixilated live video feed of performer
+ * @param  {object} Params (see Params)
+ * @return {Presence}
+ */
 var Presence = module.exports = function(params) {
 
 	this.defaultSize = { w: 400, h: 300 }
@@ -595,12 +638,22 @@ Presence.prototype.stop = function(rate) {
 },{"util":16}],9:[function(require,module,exports){
 var util = require('util');
 var units = require("../media")
- var Tone = require('tone')
+// var Tone = require('tone')
 
-
+/**
+ * @class Wall
+ * @constructor
+ * @description Manages groups of windows
+ */
 var Wall = module.exports = function(setting,limit) {
 
+	/**
+	 * Window elements in this wall
+	 * @type {Array} 
+	 * @memberOf Wall
+	 */
 	this.elements = []
+
 	this.setting = setting ? setting : "default"
 	console.log(this.patterns[this.setting].length)
 	this.limit = limit ? limit : this.patterns[this.setting].length
@@ -615,7 +668,11 @@ var Wall = module.exports = function(setting,limit) {
 	
 }
 
-Wall.prototype.show = function(params) {
+/**
+ * Show all browser windows in this wall
+ * @return {Wall} Should return this wall object but probably doesn't now.
+ */
+Wall.prototype.show = function() {
 
 	for (var i=0;i<this.elements.length;i++) {
 		with (this.elements[i].element) {
@@ -626,6 +683,10 @@ Wall.prototype.show = function(params) {
 	this.visible = true;
 }
 
+/**
+ * Hide all browser windows in this wall (but keep them associated with this wall)
+ * @return {Wall} Nothing yet
+ */
 Wall.prototype.hide = function() {
 	for (var i=0;i<this.elements.length;i++) {
 		with (this.elements[i].element) {
@@ -636,12 +697,22 @@ Wall.prototype.hide = function() {
 	}
 }
 
-Wall.prototype.add = function(type,name,params) {
+/** 
+ * Add a new media element to this wall
+ * @param {String}
+ * @param {Object} params (see Params)
+ */
+Wall.prototype.add = function(type,params) {
   this.media.push(new ([type])(params) )
   var i = arr.length-1;
   return i;
 }
 
+/**
+ * Add a film element to the wall
+ * @param  {String}	source filename (w/o file extension, i.e. "waves" not "waves.mp4"
+ * @return {Film}
+ */
 Wall.prototype.see = function(src) {
 	var _m = new film({ spaces: this.elements });
 	_m.wall = this;
@@ -649,6 +720,11 @@ Wall.prototype.see = function(src) {
 	return _m;
 }
 
+/**
+ * Add an audio cassette element to the wall
+ * @param  {String}	source filename (w/o file extension, i.e. "piano" not "piano.mp3"
+ * @return {Cassette}
+ */
 Wall.prototype.hear = function(src) {
 	var _m = new cassette({ spaces: this.elements });
 	_m.wall = this;
@@ -656,6 +732,13 @@ Wall.prototype.hear = function(src) {
 	return _m;
 }
 
+/** 
+ * Add a paper (text) element to the page
+ * @param  {String} message to write or .txt filename to read
+ * @param  {String} style of writing
+ * @param  {Number/String} optional arg depending on style
+ * @return {Paper}
+ */
 Wall.prototype.write = function(msg,style,arg) {
 	var _m = new paper({ spaces: this.elements });
 	_m.read(msg)
@@ -672,21 +755,41 @@ Wall.prototype.write = function(msg,style,arg) {
 	return _m;
 }
 
-
+/**
+ * Scroll all windows to an x/y coordinate
+ * @param  {number} x scroll coordinate
+ * @param  {number} y scroll coordinate
+ * @return {Wall}
+ */
 Wall.prototype.scroll = function(x,y) {
-	this.element.scroll.x = x
-	this.element.scroll.x = y
+	for (var i=0;i<this.elements.length;i++) {
+		this.elements[i].scrollTo(x,y)
+	}
 }
 
+/**
+ * Move all windows by an x/y amount
+ * @return {Wall}
+ */
 Wall.prototype.move = function() {
 }
 
+/**
+ * Resize all windows to a specific w/h
+ * @return {Wall}
+ */
 Wall.prototype.size = function() {
 }
 
+/**
+ * Destroy this wall and return all windows to stack
+ */
 Wall.prototype.kill = function() {
 }
 
+/**
+ * Remove all media elements and content from all windows in this wall
+ */
 Wall.prototype.empty = function() {
 }
 
@@ -695,25 +798,36 @@ Wall.prototype.testDraw = function() {
 	this.context.fillRect(0,0,100,100)
 }
 
-Wall.prototype.scroll = function(x,y) {
-	this.element.scrollTo(x,y)
-}
-
+/**
+ * Scroll each window according to the window's place on the screen
+ * @return {Wall}
+ */
 Wall.prototype.scrollSight = function() {
 	for (var i=0;i<this.elements.length;i++) {
 		this.elements[i].scrollSight()
 	}
 }
 
+/** 
+ * Refresh all windows in this wall
+ * @return {Wall}
+ */
 Wall.prototype.refresh = function() {
 }
 
+/**
+ * Goto a URL
+ * @param  {string} URL
+ * @param  {number/array} number of windows to use, or array of window numbers to use
+ * @return {Wall}
+ */
 Wall.prototype.goto = function(url,window) {
 	var url = url ? url : "space.html"
 	for (var i=0;i<this.elements.length;i++) {
 		this.elements[i].element.location.href = url
 	}
 }
+
 /*
 Wall.prototype.rhythm = function(time,duration,functions,setting) {
 	var _m = new rhythm(time,duration,functions,setting)
@@ -768,10 +882,15 @@ Wall.prototype.patterns = {
 
 
 
-},{"../media":6,"tone":18,"util":16}],10:[function(require,module,exports){
+},{"../media":6,"util":16}],10:[function(require,module,exports){
 var util = require('util');
 
-
+/**
+ * @constructor
+ * @description  Window object managed by a Wall
+ * @param  {object} Params (see Params)
+ * @return {Window}
+ */
 var Window = module.exports = function(params) {
 
 	this.defaultSize = { w: 300, h: 200, x: window.screen.width/2 - 150, y: window.screen.height/2 - 100 }
@@ -871,15 +990,17 @@ Window.prototype.refresh = function() {
 
 
 },{"util":16}],11:[function(require,module,exports){
+/**
+ * @class utils tes
+ * @description (IN TRANSIT) shared utility functions
+ */
 
 
-/** @method toPolar 
+
+/** @method toPolar test1
     Receives cartesian coordinates and returns polar coordinates as an object with 'radius' and 'angle' properties.
     @param {float} [x] 
     @param {float} [y] 
-    ```js
-    var ImOnACircle = nx.toPolar({ x: 20, y: 50 }})
-    ```
 */
 exports.toPolar = function(x,y) {
   var r = Math.sqrt(x*x + y*y);
@@ -908,11 +1029,6 @@ exports.toCartesian = function(radius, angle){
     @param {float} [input value] 
     @param {float} [low limit] 
     @param {float} [high limit] 
-    ```js
-    nx.clip(5,0,10) // returns 5
-    nx.clip(15,0,10) // returns 10
-    nx.clip(-1,0,10) // returns 0
-    ```
 */
 exports.clip = function(value, low, high) {
   return Math.min(high, Math.max(low, value));
@@ -922,10 +1038,6 @@ exports.clip = function(value, low, high) {
     Limits a float to within a certain number of decimal places
     @param {float} [input value] 
     @param {integer} [max decimal places] 
-    ```js
-    nx.prine(1.2345, 3) // returns 1.234
-    nx.prune(1.2345, 1) // returns 1.2
-    ```
 */
 
 exports.prune = function(data, scale) {
@@ -941,7 +1053,6 @@ exports.prune = function(data, scale) {
   return data;
 }
 
-
 /** @method scale 
     Scales an input number to a new range of numbers
     @param {float} [input value] 
@@ -949,10 +1060,6 @@ exports.prune = function(data, scale) {
     @param {float} [high1] input range (high)
     @param {float} [low2] output range (low)
     @param {float} [high2] output range (high)
-    ```js
-    nx.scale(5,0,10,0,100) // returns 50
-    nx.scale(5,0,10,1,2) // returns 1.5
-    ```
 */
 exports.scale = function(inNum, inMin, inMax, outMin, outMax) {
   return (((inNum - inMin) * (outMax - outMin)) / (inMax - inMin)) + outMin;  
@@ -961,10 +1068,6 @@ exports.scale = function(inNum, inMin, inMax, outMin, outMax) {
 /** @method invert 
     Equivalent to nx.scale(input,0,1,1,0). Inverts a normalized (0-1) number. 
     @param {float} [input value]  
-    ```js
-    nx.invert(0.25) // returns 0.75
-    nx.invert(0) // returns 1
-    ```
 */
 exports.invert = function (inNum) {
   return exports.scale(inNum, 1, 0, 0, 1);
@@ -984,9 +1087,6 @@ exports.bounce = function(posIn, borderMin, borderMax, delta) {
 /** @method mtof 
     MIDI to frequency conversion. Returns frequency in Hz.
     @param {float} [MIDI] MIDI value to convert
-    ```js
-    nx.mtof(69) // returns 440
-    ```
 */
 exports.mtof = function(midi) {
   return Math.pow(2, ((midi-69)/12)) * 440;
@@ -996,9 +1096,6 @@ exports.mtof = function(midi) {
 /** @method random 
     Returns a random integer between 0 a given scale parameter.
     @param {float} [scale] Upper limit of random range.
-    ```js
-    nx.random(10) // returns a random number from 0 to 9.
-    ```
 */
 exports.random = function(scale) {
   return Math.floor(Math.random() * scale);

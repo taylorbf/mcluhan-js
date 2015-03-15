@@ -3,7 +3,7 @@
 <html lang="en">
 <head>
 	<meta charset="utf-8">
-	<title>McLuhan.js Index</title>
+	<title>McLuhan.js Source: media/cassette.js</title>
 
 	<!--[if lt IE 9]>
 	<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
@@ -71,131 +71,120 @@
 	<div class="row-fluid">
 
 		
-		<div class="span8">
-			
+			<div class="span12">
+				
 				<div id="main">
 					
 
 
-	
-	<span class="page-title">Index</span>
-	
-	
-
-
-
-
-
-
-
-
-
-
-
-
-	
-	
-
-
-
-
-
-
-
-
-
-
-
-
-	<h1 class="page-title">Index</h1>
-<section>
-
-<header>
-    <h2>
-    core/manager.js
-    </h2>
+		<h1 class="page-title">Source: media/cassette.js</h1>
     
-</header>
+    <section>
+        <article>
+            <pre class="sunlight-highlight-javascript linenums">var util = require('util');
+var Medium = require('../core/medium')
 
-<article>
-    <div class="container-overview">
-    
+/**
+ * @constructor
+ * @description  Performative AUDIO media element
+ * @extends Medium
+ * @param  {object} Params (see Params)
+ * @return {Cassette}
+ */
+var Cassette = module.exports = function(params) {
 
-    
-        
+	this.defaultSize = { w: 300 }
+	this.src = false;
+	this.type = "audio"
 
-        
-<dl class="details">
-    
+	//separate item constructor "Medium" with properties for placement, animation, remove, make dom element, styling element based on json
+	Medium.call(this, params);
+/*
+	for (var i=0;i&lt;this.element.length;i++) {
+		this._p.push(Tone.Player())
+		this._p[this._p.length-1].toMaster()
+	}
+*/
+	this.interval = false;
+	this.rate = 1;
 
-    
+	this.setAll("controls", true);
+	this.setAll("volume", 0.0000001);
+	this.loop();
 
-    
+	this._b = new Array();
+	//for (var i=0;i&lt;this.element.length;i++) {
+	//	this._b.push(Tone.context.createMediaElementSource(this.element[i]));
+	//	this._b[this._b.length-1].connect()
+	//}
 
-    
+}
 
-    
+util.inherits(Cassette, Medium);
 
-    
-    <dt class="tag-author">Author:</dt>
-    <dd class="tag-author">
-        <ul>
-            <li>Ben Taylor</li>
-        </ul>
-    </dd>
-    
+Cassette.prototype.load = function(src) {
+	src ? this.setAll("src","media/"+src+".mp3") : false;
+	this.all("play");
+	return this;
+}
 
-    
-    <dt class="tag-copyright">Copyright:</dt>
-    <dd class="tag-copyright"><ul class="dummy"><li>&copy; 2015</li></ul></dd>
-    
+Cassette.prototype.play = function(rate) {
+	this.rate = rate ? rate : this.rate;
+	this.all("play");
+	this.speed(this.rate)
+}
 
-    
-    <dt class="tag-license">License:</dt>
-    <dd class="tag-license"><ul class="dummy"><li>MIT</li></ul></dd>
-    
+Cassette.prototype.stop = function() {
+	this.all("pause");
+}
 
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="manager.js.html">core/manager.js</a>, <a href="manager.js.html#sunlight-1-line-6">line 6</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
+Cassette.prototype.loop = function(on) {
+	if (on===false || on===0) {
+		this.setAll("loop",false);
+	} else {
+		this.setAll("loop",true);
+	}
+}
 
 
-        
-    
-    </div>
+Cassette.prototype.jumpTo = function(start) {
+	start = start ? start : this.start;
+	this.setAll("currentTime",start);
+}
 
-    
+Cassette.prototype.skip = function(start,stop) {
+	this.start = start ? start : 1;
+	this.stop = stop ? stop : 1.2;
+	if (this.interval) {
+		clearInterval(this.interval);
+	}
+	this.boundJump = this.jumpTo.bind(this)
+	this.interval = setInterval(this.boundJump,(this.stop-this.start)*1000)
+	this.skipping = true;
+	return this;
+}
 
-    
+Cassette.prototype.unskip = function() {
+	this.skipping = false;
+	this.start = false;
+	this.stop = false
+	clearInterval(this.interval);
+	this.interval = false;
+	return this;
+}
 
-    
+Cassette.prototype.speed = function(rate) {
+	if (rate) {
+		this.setAll("playbackRate",rate);
+		this.rate = rate;
+	}
+	return this;
+}
 
-    
+</pre>
+        </article>
+    </section>
 
-    
-
-    
-
-    
-
-    
-
-    
-</article>
-
-</section>
 
 
 
@@ -221,10 +210,6 @@
 				</footer>
 			</div>
 
-			
-			<div class="span3">
-				<div id="toc"></div>
-			</div>
 			
 			<br clear="both">
 		</div>

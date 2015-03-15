@@ -3,7 +3,6 @@
   "description": "Live web art performance platform",
   "author": "Ben Taylor <taylorbf@gmail.com>",
   "dependencies": {
-    "nexusui": "1.0.x",
     "tone": "0.4.x"
   },
   "devDependencies": {
@@ -16,8 +15,9 @@
     "run-sequence": "0.3.x",
     "eventemitter2": "0.4.x",
     "vinyl-source-stream": "1.0.x",
-    "jsdox": "0.4.x",
-    "extend": "2.0.x"
+    "jsdox": "0.2.x",
+    "extend": "2.0.x",
+    "gulp-jsdoc": "^0.1.4"
   },
   "engine": "node >= 0.10.0",
   "version": "0.0.1",

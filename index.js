@@ -1,4 +1,4 @@
-var manager = require('./lib/core/manager');
+var Manager = require('./lib/core/manager');
 var FilmManager = require('./lib/media/film');
 var math = require('./lib/utils/math');
 var extend = require('extend');
@@ -9,7 +9,7 @@ var extend = require('extend');
 *      MAKE GLOBAL COMPONENTS + INSTANCES
 ************************************************/
 
-window.m = new manager(); 
+window.m = new Manager(); 
 window._spaces = new Array();
 window.spaces = new Array();
 window.windex = 0;
