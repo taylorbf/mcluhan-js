@@ -97,7 +97,7 @@ Make the video loop from 1 sec to 2 sec
 
 Create a new text element in all browser windows of a Wall.
 
-`a.a = a.read("Hell world")`
+`a.a = a.read("Hello world")`
 
 ### Pixelated Video Stream
 
