@@ -6,6 +6,9 @@ var extend = require('extend');
 require('nexusui');
 window._ = require("underscore")
 
+window.glitch = require("./bower_components/glitch-canvas/dist/glitch-canvas")
+
+console.log(glitch)
 
 /************************************************
 *      MAKE GLOBAL COMPONENTS + INSTANCES
@@ -18,23 +21,223 @@ window.windex = 0;
 window.walls = new Array();
 window.journal = { "hello": "Hello Digital World" }
 
+
 window.components = require("./lib/media")
 for (var key in window.components) {
 	window[key] = window.components[key]
 }
 
 window.onload = function() {
+	console.log("test")
    m.init();
 };
-},{"./lib/core/manager":2,"./lib/media":6,"./lib/media/film":5,"./lib/utils/math":11,"extend":17,"nexusui":18,"underscore":55}],2:[function(require,module,exports){
+},{"./bower_components/glitch-canvas/dist/glitch-canvas":2,"./lib/core/manager":3,"./lib/media":7,"./lib/media/film":6,"./lib/utils/math":13,"extend":19,"nexusui":20,"underscore":57}],2:[function(require,module,exports){
+//! glitch-canvas by snorpey, MIT License
+(function(window, factory) {
+    if (typeof define === "function" && define.amd) {
+        define(factory);
+    } else if (typeof exports === "object") {
+        module.exports = factory();
+    } else {
+        window.glitch = factory();
+    }
+})(this, function() {
+    var canvas_1 = document.createElement("canvas");
+    var canvas_2 = document.createElement("canvas");
+    var ctx_1 = canvas_1.getContext("2d");
+    var ctx_2 = canvas_2.getContext("2d");
+    var base64_chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
+    var base64_map = base64_chars.split("");
+    var reversed_base64_map = {};
+    var params;
+    var base64;
+    var byte_array;
+    var jpg_header_length;
+    var img;
+    var new_image_data;
+    var i;
+    var len;
+    base64_map.forEach(function(val, key) {
+        reversed_base64_map[val] = key;
+    });
+    function glitchImageData(image_data, parameters, callback) {
+        if (isValidImageData(image_data) && checkType(parameters, "parameters", "object") && checkType(callback, "callback", "function")) {
+            params = getNormalizedParameters(parameters);
+            resizeCanvas(canvas_1, image_data);
+            resizeCanvas(canvas_2, image_data);
+            base64 = getBase64FromImageData(image_data, params.quality);
+            byte_array = base64ToByteArray(base64);
+            jpg_header_length = getJpegHeaderSize(byte_array);
+            for (i = 0, len = params.iterations; i < len; i++) {
+                glitchJpegBytes(byte_array, jpg_header_length, params.seed, params.amount, i, params.iterations);
+            }
+            img = new Image();
+            img.onload = function() {
+                ctx_1.drawImage(img, 0, 0);
+                new_image_data = ctx_1.getImageData(0, 0, image_data.width, image_data.height);
+                callback(new_image_data);
+            };
+            img.src = byteArrayToBase64(byte_array);
+        }
+    }
+    function resizeCanvas(canvas, size) {
+        if (canvas.width !== size.width) {
+            canvas.width = size.width;
+        }
+        if (canvas.height !== size.height) {
+            canvas.height = size.height;
+        }
+    }
+    function glitchJpegBytes(byte_array, jpg_header_length, seed, amount, i, len) {
+        var max_index = byte_array.length - jpg_header_length - 4;
+        var px_min = parseInt(max_index / len * i, 10);
+        var px_max = parseInt(max_index / len * (i + 1), 10);
+        var delta = px_max - px_min;
+        var px_i = parseInt(px_min + delta * seed, 10);
+        if (px_i > max_index) {
+            px_i = max_index;
+        }
+        var index = Math.floor(jpg_header_length + px_i);
+        byte_array[index] = Math.floor(amount * 256);
+    }
+    function getBase64FromImageData(image_data, quality) {
+        var q = typeof quality === "number" && quality < 1 && quality > 0 ? quality : .1;
+        ctx_2.putImageData(image_data, 0, 0);
+        var base64 = canvas_2.toDataURL("image/jpeg", q);
+        switch (base64.length % 4) {
+          case 3:
+            base64 += "=";
+            break;
 
+          case 2:
+            base64 += "==";
+            break;
+
+          case 1:
+            base64 += "===";
+            break;
+        }
+        return base64;
+    }
+    function getJpegHeaderSize(data) {
+        var result = 417;
+        for (i = 0, len = data.length; i < len; i++) {
+            if (data[i] === 255 && data[i + 1] === 218) {
+                result = i + 2;
+                break;
+            }
+        }
+        return result;
+    }
+    function base64ToByteArray(str) {
+        var result = [];
+        var digit_num;
+        var cur;
+        var prev;
+        for (i = 23, len = str.length; i < len; i++) {
+            cur = reversed_base64_map[str.charAt(i)];
+            digit_num = (i - 23) % 4;
+            switch (digit_num) {
+              case 1:
+                result.push(prev << 2 | cur >> 4);
+                break;
+
+              case 2:
+                result.push((prev & 15) << 4 | cur >> 2);
+                break;
+
+              case 3:
+                result.push((prev & 3) << 6 | cur);
+                break;
+            }
+            prev = cur;
+        }
+        return result;
+    }
+    function byteArrayToBase64(arr) {
+        var result = [ "data:image/jpeg;base64," ];
+        var byte_num;
+        var cur;
+        var prev;
+        for (i = 0, len = arr.length; i < len; i++) {
+            cur = arr[i];
+            byte_num = i % 3;
+            switch (byte_num) {
+              case 0:
+                result.push(base64_map[cur >> 2]);
+                break;
+
+              case 1:
+                result.push(base64_map[(prev & 3) << 4 | cur >> 4]);
+                break;
+
+              case 2:
+                result.push(base64_map[(prev & 15) << 2 | cur >> 6]);
+                result.push(base64_map[cur & 63]);
+                break;
+            }
+            prev = cur;
+        }
+        if (byte_num === 0) {
+            result.push(base64_map[(prev & 3) << 4]);
+            result.push("==");
+        } else if (byte_num === 1) {
+            result.push(base64_map[(prev & 15) << 2]);
+            result.push("=");
+        }
+        return result.join("");
+    }
+    function getImageDataCopy(image_data) {
+        var copy = ctx_2.createImageData(image_data.width, image_data.height);
+        copy.data.set(image_data.data);
+        return copy;
+    }
+    function getNormalizedParameters(parameters) {
+        return {
+            seed: (parameters.seed || 0) / 100,
+            quality: (parameters.quality || 0) / 100,
+            amount: (parameters.amount || 0) / 100,
+            iterations: parameters.iterations || 0
+        };
+    }
+    function isValidImageData(image_data) {
+        if (checkType(image_data, "image_data", "object") && checkType(image_data.width, "image_data.width", "number") && checkType(image_data.height, "image_data.height", "number") && checkType(image_data.data, "image_data.data", "object") && checkType(image_data.data.length, "image_data.data.length", "number") && checkNumber(image_data.data.length, "image_data.data.length", isPositive, "> 0")) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    function checkType(it, name, expected_type) {
+        if (typeof it === expected_type) {
+            return true;
+        } else {
+            error(it, "typeof " + name, '"' + expected_type + '"', '"' + typeof it + '"');
+            return false;
+        }
+    }
+    function checkNumber(it, name, condition, condition_name) {
+        if (condition(it) === true) {
+            return true;
+        } else {
+            error(it, name, condition_name, "not");
+        }
+    }
+    function isPositive(nr) {
+        return nr > 0;
+    }
+    function error(it, name, expected, result) {
+        throw new Error("glitch(): Expected " + name + " to be " + expected + ", but it was " + result + ".");
+    }
+    return glitchImageData;
+});
+},{}],3:[function(require,module,exports){
 var util = require('util');
 var EventEmitter = require('events').EventEmitter;
- var Tone = require('tone')
+var Tone = require('tone')
 
 /** 
   @title McLuhan JS API
-  @overview 
+  @overview A toolkit for performative web browsing
   @author Ben Taylor
   @copyright &copy; 2015
   @license MIT
@@ -129,7 +332,7 @@ Manager.prototype.makeWall = function(num,config) {
 //  return 
 }
 
-},{"../media":6,"events":12,"tone":54,"util":16}],3:[function(require,module,exports){
+},{"../media":7,"events":14,"tone":56,"util":18}],4:[function(require,module,exports){
 
 // Template for all DOM-based items (video, audio, divs, embeds)
 /**
@@ -184,7 +387,7 @@ Medium.prototype.move = function(params) {
 	params.x ? this.element.style.left = params.x+"px" : false;
 	params.y ? this.element.style.top = params.y+"px" : false;
 }
-},{}],4:[function(require,module,exports){
+},{}],5:[function(require,module,exports){
 var util = require('util');
 var Medium = require('../core/medium')
 
@@ -286,7 +489,7 @@ Cassette.prototype.speed = function(rate) {
 }
 
 
-},{"../core/medium":3,"util":16}],5:[function(require,module,exports){
+},{"../core/medium":4,"util":18}],6:[function(require,module,exports){
 var util = require('util');
 var Medium = require('../core/medium')
 
@@ -373,16 +576,17 @@ Film.prototype.speed = function(rate) {
 }
 
 
-},{"../core/medium":3,"util":16}],6:[function(require,module,exports){
+},{"../core/medium":4,"util":18}],7:[function(require,module,exports){
 module.exports = {
   cassette: require('./cassette'),
   film: require('./film'),
   paper: require('./paper'),
+  photo: require('./photo'),
   presence: require('./presence'),
   window: require('./window'),
   wall: require('./wall')
 }
-},{"./cassette":4,"./film":5,"./paper":7,"./presence":8,"./wall":9,"./window":10}],7:[function(require,module,exports){
+},{"./cassette":5,"./film":6,"./paper":8,"./photo":9,"./presence":10,"./wall":11,"./window":12}],8:[function(require,module,exports){
 var util = require('util');
 var Medium = require('../core/medium')
 
@@ -527,7 +731,79 @@ Paper.prototype.unwash = function(file) {
 }
 
 
-},{"../core/medium":3,"util":16}],8:[function(require,module,exports){
+},{"../core/medium":4,"util":18}],9:[function(require,module,exports){
+var util = require('util');
+var Medium = require('../core/medium')
+
+/**
+ * @class Photo
+ * @constructor
+ * @description  Performative IMAGE media element
+ * @extends Medium
+ * @param  {object} Params (see Params)
+ * @return {Photo}
+ */
+var Photo = module.exports = function(params) {
+
+	this.defaultSize = { w: 300, h: 300 }
+	this.type = "canvas";
+
+	//separate item constructor "Medium" with properties for placement, animation, remove, make dom element, styling element based on json
+	Medium.call(this, params);
+
+	this.context = []
+
+	for (var i = 0; i<this.spaces.length; i++) {
+		this.context.push(this.element[i].getContext("2d"))
+	}
+
+	this.width = 0;
+	this.height = 0;
+
+}
+
+util.inherits(Photo, Medium);
+
+Photo.prototype.load = function(src) {
+
+	this.image = new Image()
+	this.image.onload = function() {
+		this.width = this.image.width;
+		this.height = this.image.height
+		for (var i=0;i<this.context.length;i++) {
+			this.element[i].width = this.width;
+			this.element[i].height = this.height;
+			this.element[i].style.width = this.width;
+			this.element[i].style.height = this.height;
+			this.context[i].drawImage(this.image,0,0)
+		}
+	}.bind(this)
+	this.image.src = "images/"+src+".jpg"
+
+	return this;
+
+}
+
+Photo.prototype.glitch = function(file,callback) {
+	this.data = this.context[0].getImageData( 0, 0, this.width, this.height );
+
+	// glitch the image data (passing drawImageDataInCanvasTwo as a callback function)
+	var parameters = { amount: 10, seed: 45, iterations: 30, quality: 30 };
+	
+	console.log(parameters)
+	console.log(glitch)
+	
+	glitch( this.data, parameters, function(data) {
+		console.log("inside")
+		for (var i = 0; i<this.spaces.length; i++) {
+			this.context[i].putImageData( data, 0, 0 );
+		}
+	}.bind(this));
+		
+}
+
+
+},{"../core/medium":4,"util":18}],10:[function(require,module,exports){
 var util = require('util');
 
 /**
@@ -630,7 +906,7 @@ Presence.prototype.stop = function(rate) {
 	clearInterval(this.interval)
 }
 
-},{"util":16}],9:[function(require,module,exports){
+},{"util":18}],11:[function(require,module,exports){
 var util = require('util');
 var units = require("../media")
 // var Tone = require('tone')
@@ -711,7 +987,7 @@ Wall.prototype.add = function(type,params) {
  * @param  {String}	source filename (w/o file extension, i.e. "waves" not "waves.mp4"
  * @return {Film}
  */
-Wall.prototype.see = function(src) {
+Wall.prototype.watch = function(src) {
 	var _m = new film({ spaces: this.elements });
 	_m.wall = this;
 	_m.load(src)
@@ -750,6 +1026,18 @@ Wall.prototype.write = function(msg,style,arg) {
 	} else if (style=="wash") {
 		_m.wash(arg)
 	}
+	return _m;
+}
+
+/**
+ * Add an image canvas to the wall
+ * @param  {String}	source filename (w/o file extension, i.e. "piano" not "piano.mp3"
+ * @return {Cassette}
+ */
+Wall.prototype.see = function(src) {
+	var _m = new photo({ spaces: this.elements });
+	_m.wall = this;
+	_m.load(src)
 	return _m;
 }
 
@@ -880,7 +1168,7 @@ Wall.prototype.patterns = {
 
 
 
-},{"../media":6,"util":16}],10:[function(require,module,exports){
+},{"../media":7,"util":18}],12:[function(require,module,exports){
 var util = require('util');
 
 /**
@@ -987,7 +1275,7 @@ Window.prototype.refresh = function() {
 
 
 
-},{"util":16}],11:[function(require,module,exports){
+},{"util":18}],13:[function(require,module,exports){
 /**
  * @class utils tes
  * @description (IN TRANSIT) shared utility functions
@@ -1103,7 +1391,7 @@ exports.random = function(scale) {
 exports.interp = function(loc,min,max) {
   return loc * (max - min) + min;  
 }
-},{}],12:[function(require,module,exports){
+},{}],14:[function(require,module,exports){
 // Copyright Joyent, Inc. and other Node contributors.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a
@@ -1406,7 +1694,7 @@ function isUndefined(arg) {
   return arg === void 0;
 }
 
-},{}],13:[function(require,module,exports){
+},{}],15:[function(require,module,exports){
 if (typeof Object.create === 'function') {
   // implementation from standard node.js 'util' module
   module.exports = function inherits(ctor, superCtor) {
@@ -1431,7 +1719,7 @@ if (typeof Object.create === 'function') {
   }
 }
 
-},{}],14:[function(require,module,exports){
+},{}],16:[function(require,module,exports){
 // shim for using process in browser
 
 var process = module.exports = {};
@@ -1496,14 +1784,14 @@ process.chdir = function (dir) {
     throw new Error('process.chdir is not supported');
 };
 
-},{}],15:[function(require,module,exports){
+},{}],17:[function(require,module,exports){
 module.exports = function isBuffer(arg) {
   return arg && typeof arg === 'object'
     && typeof arg.copy === 'function'
     && typeof arg.fill === 'function'
     && typeof arg.readUInt8 === 'function';
 }
-},{}],16:[function(require,module,exports){
+},{}],18:[function(require,module,exports){
 (function (process,global){
 // Copyright Joyent, Inc. and other Node contributors.
 //
@@ -2078,7 +2366,7 @@ function hasOwnProperty(obj, prop) {
 }
 
 }).call(this,require('_process'),typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"./support/isBuffer":15,"_process":14,"inherits":13}],17:[function(require,module,exports){
+},{"./support/isBuffer":17,"_process":16,"inherits":15}],19:[function(require,module,exports){
 var hasOwn = Object.prototype.hasOwnProperty;
 var toString = Object.prototype.toString;
 var undefined;
@@ -2161,7 +2449,7 @@ module.exports = function extend() {
 };
 
 
-},{}],18:[function(require,module,exports){
+},{}],20:[function(require,module,exports){
 var manager = require('./lib/core/manager');
 var domUtils = require('./lib/utils/dom');
 var drawingUtils = require('./lib/utils/drawing');
@@ -2199,7 +2487,7 @@ window.onload = function() {
   nx.startPulse();
   
 };
-},{"./lib/core/manager":19,"./lib/utils/dom":21,"./lib/utils/drawing":22,"./lib/utils/math":23,"extend":17}],19:[function(require,module,exports){
+},{"./lib/core/manager":21,"./lib/utils/dom":23,"./lib/utils/drawing":24,"./lib/utils/math":25,"extend":19}],21:[function(require,module,exports){
 
 /** 
   @title NexusUI API
@@ -2536,7 +2824,7 @@ manager.prototype.blockMove = function(e) {
      e.stopPropogation();
   }
 }
-},{"../utils/timing":24,"../utils/transmit":25,"../widgets":33,"events":12,"util":16}],20:[function(require,module,exports){
+},{"../utils/timing":26,"../utils/transmit":27,"../widgets":35,"events":14,"util":18}],22:[function(require,module,exports){
 var EventEmitter = require('events').EventEmitter;
 var util = require('util');
 var domUtils = require('../utils/dom');
@@ -3005,7 +3293,7 @@ widget.prototype.saveCanv = function() {
   var data = this.canvas.toDataURL("image/png").replace("image/png", "image/octet-stream");
   window.location.href = data
 }
-},{"../utils/dom":21,"../utils/drawing":22,"../utils/timing":24,"../utils/transmit":25,"events":12,"util":16}],21:[function(require,module,exports){
+},{"../utils/dom":23,"../utils/drawing":24,"../utils/timing":26,"../utils/transmit":27,"events":14,"util":18}],23:[function(require,module,exports){
 
 /** @class utils 
   Shared utility functions. These functions are exposed as methods of nx in NexusUI projects, i.e. .mtof() here can be accessed in your project with nx.mtof().
@@ -3081,7 +3369,7 @@ exports.getTouchPosition = function(e, canvas_offset) {
   }
   return click_position;
 }
-},{}],22:[function(require,module,exports){
+},{}],24:[function(require,module,exports){
 var math = require('./math')
 
 /** @method randomColor
@@ -3156,7 +3444,7 @@ exports.text = function(context, text, position) {
     closePath();
   }
 }
-},{"./math":23}],23:[function(require,module,exports){
+},{"./math":25}],25:[function(require,module,exports){
 
 
 /** @method toPolar 
@@ -3294,7 +3582,7 @@ exports.random = function(scale) {
 exports.interp = function(loc,min,max) {
   return loc * (max - min) + min;  
 }
-},{}],24:[function(require,module,exports){
+},{}],26:[function(require,module,exports){
 
 
 exports.throttle = function(func, wait) {
@@ -3316,7 +3604,7 @@ exports.throttle = function(func, wait) {
     }
   }
 }
-},{}],25:[function(require,module,exports){
+},{}],27:[function(require,module,exports){
 exports.defineTransmit = function(protocol) {
   
   var newTransmit;
@@ -3405,7 +3693,7 @@ exports.maxTransmit = function (subPath, data) {
     var oscPath = subPath=='value' ? this.oscPath : this.oscPath+"/"+subPath;
     window.max.outlet(oscPath + " " + data);
 }
-},{}],26:[function(require,module,exports){
+},{}],28:[function(require,module,exports){
 var util = require('util');
 var widget = require('../core/widget');
 
@@ -3490,7 +3778,7 @@ banner.prototype.click = function() {
 		window.location = this.link;
 	}
 }
-},{"../core/widget":20,"util":16}],27:[function(require,module,exports){
+},{"../core/widget":22,"util":18}],29:[function(require,module,exports){
 var util = require('util');
 var widget = require('../core/widget');
 
@@ -3677,7 +3965,7 @@ button.prototype.setTouchImage = function(image) {
 	this.imageTouch.onload = this.draw();
 	this.imageTouch.src = image;
 }
-},{"../core/widget":20,"util":16}],28:[function(require,module,exports){
+},{"../core/widget":22,"util":18}],30:[function(require,module,exports){
 var util = require('util');
 var widget = require('../core/widget');
 
@@ -3776,7 +4064,7 @@ colors.prototype.click = function(e) {
 colors.prototype.move = function(e) {
 	this.click(e);
 }
-},{"../core/widget":20,"util":16}],29:[function(require,module,exports){
+},{"../core/widget":22,"util":18}],31:[function(require,module,exports){
 var util = require('util');
 var widget = require('../core/widget');
 
@@ -3849,7 +4137,7 @@ comment.prototype.draw = function() {
 	}
 	this.wrapText(this.val.text, 6, 3+this.size, this.width-6, this.size);
 }
-},{"../core/widget":20,"util":16}],30:[function(require,module,exports){
+},{"../core/widget":22,"util":18}],32:[function(require,module,exports){
 var math = require('../utils/math');
 var util = require('util');
 var widget = require('../core/widget');
@@ -4028,7 +4316,7 @@ dial.prototype.aniBounce = function() {
 }
 
 
-},{"../core/widget":20,"../utils/math":23,"util":16}],31:[function(require,module,exports){
+},{"../core/widget":22,"../utils/math":25,"util":18}],33:[function(require,module,exports){
 var math = require('../utils/math')
 var util = require('util');
 var widget = require('../core/widget');
@@ -4206,7 +4494,7 @@ envelope.prototype.stop = function() {
 	this.val.index = 0;
 	this.draw();
 }
-},{"../core/widget":20,"../utils/math":23,"util":16}],32:[function(require,module,exports){
+},{"../core/widget":22,"../utils/math":25,"util":18}],34:[function(require,module,exports){
 var math = require('../utils/math')
 var util = require('util');
 var widget = require('../core/widget');
@@ -4481,7 +4769,7 @@ ghost.prototype.click = function(e) {
 		this.draw();
 	}
 }
-},{"../core/widget":20,"../utils/math":23,"util":16}],33:[function(require,module,exports){
+},{"../core/widget":22,"../utils/math":25,"util":18}],35:[function(require,module,exports){
 module.exports = {
   banner: require('./banner'),
   button: require('./button'),
@@ -4511,7 +4799,7 @@ module.exports = {
   typewriter: require('./typewriter'),
   vinyl: require('./vinyl')
 }
-},{"./banner":26,"./button":27,"./colors":28,"./comment":29,"./dial":30,"./envelope":31,"./ghost":32,"./joints":34,"./keyboard":35,"./matrix":36,"./message":37,"./metro":38,"./mouse":39,"./multislider":40,"./multitouch":41,"./number":42,"./position":43,"./range":44,"./remix":45,"./select":46,"./slider":47,"./string":48,"./tabs":49,"./tilt":50,"./toggle":51,"./typewriter":52,"./vinyl":53}],34:[function(require,module,exports){
+},{"./banner":28,"./button":29,"./colors":30,"./comment":31,"./dial":32,"./envelope":33,"./ghost":34,"./joints":36,"./keyboard":37,"./matrix":38,"./message":39,"./metro":40,"./mouse":41,"./multislider":42,"./multitouch":43,"./number":44,"./position":45,"./range":46,"./remix":47,"./select":48,"./slider":49,"./string":50,"./tabs":51,"./tilt":52,"./toggle":53,"./typewriter":54,"./vinyl":55}],36:[function(require,module,exports){
 var math = require('../utils/math')
 var util = require('util');
 var widget = require('../core/widget');
@@ -4709,7 +4997,7 @@ joints.prototype.aniBounce = function() {
 	}
 }
 
-},{"../core/widget":20,"../utils/math":23,"util":16}],35:[function(require,module,exports){
+},{"../core/widget":22,"../utils/math":25,"util":18}],37:[function(require,module,exports){
 var util = require('util');
 var widget = require('../core/widget');
 var drawing = require('../utils/drawing');
@@ -5027,7 +5315,7 @@ keyboard.prototype.release = function(e) {
 
 
 
-},{"../core/widget":20,"../utils/drawing":22,"../utils/math":23,"util":16}],36:[function(require,module,exports){
+},{"../core/widget":22,"../utils/drawing":24,"../utils/math":25,"util":18}],38:[function(require,module,exports){
 var math = require('../utils/math');
 var drawing = require('../utils/drawing');
 var util = require('util');
@@ -5365,7 +5653,7 @@ matrix.prototype.customDestroy = function() {
 	this.stop();
 }
 
-},{"../core/widget":20,"../utils/drawing":22,"../utils/math":23,"util":16}],37:[function(require,module,exports){
+},{"../core/widget":22,"../utils/drawing":24,"../utils/math":25,"util":18}],39:[function(require,module,exports){
 var util = require('util');
 var widget = require('../core/widget');
 
@@ -5437,7 +5725,7 @@ message.prototype.click = function(e) {
 message.prototype.release = function(e) {
 	this.draw();
 }
-},{"../core/widget":20,"util":16}],38:[function(require,module,exports){
+},{"../core/widget":22,"util":18}],40:[function(require,module,exports){
 var math = require('../utils/math')
 var util = require('util');
 var widget = require('../core/widget');
@@ -5551,7 +5839,7 @@ metro.prototype.advance = function() {
 metro.prototype.customDestroy = function() {
 	nx.removeAni(this.advance.bind(this))
 }
-},{"../core/widget":20,"../utils/math":23,"util":16}],39:[function(require,module,exports){
+},{"../core/widget":22,"../utils/math":25,"util":18}],41:[function(require,module,exports){
 var util = require('util');
 var widget = require('../core/widget');
 var math = require('../utils/math');
@@ -5651,7 +5939,7 @@ mouse.prototype.move = function(e) {
 mouse.prototype.customDestroy = function() {
 	window.removeEventListener("mousemove",  this.boundmove, false);
 }
-},{"../core/widget":20,"../utils/math":23,"util":16}],40:[function(require,module,exports){
+},{"../core/widget":22,"../utils/math":25,"util":18}],42:[function(require,module,exports){
 var math = require('../utils/math')
 var util = require('util');
 var widget = require('../core/widget');
@@ -5808,7 +6096,7 @@ multislider.prototype.setSliderValue = function(slider,value) {
 	this.transmit(msg);
 }
 
-},{"../core/widget":20,"../utils/math":23,"util":16}],41:[function(require,module,exports){
+},{"../core/widget":22,"../utils/math":25,"util":18}],43:[function(require,module,exports){
 var math = require('../utils/math');
 var drawing = require('../utils/drawing');
 var util = require('util');
@@ -6014,7 +6302,7 @@ multitouch.prototype.sendit = function() {
 	}
 	this.transmit(this.val);
 }
-},{"../core/widget":20,"../utils/drawing":22,"../utils/math":23,"util":16}],42:[function(require,module,exports){
+},{"../core/widget":22,"../utils/drawing":24,"../utils/math":25,"util":18}],44:[function(require,module,exports){
 var math = require('../utils/math')
 var util = require('util');
 var widget = require('../core/widget');
@@ -6092,7 +6380,7 @@ number.prototype.move = function(e) {
 		this.transmit(this.val);
 	}
 }
-},{"../core/widget":20,"../utils/math":23,"util":16}],43:[function(require,module,exports){
+},{"../core/widget":22,"../utils/math":25,"util":18}],45:[function(require,module,exports){
 var math = require('../utils/math')
 var util = require('util');
 var widget = require('../core/widget');
@@ -6258,7 +6546,7 @@ position.prototype.aniBounce = function() {
 position.prototype.customDestroy = function() {
 	nx.removeAni(this.aniBounce);
 }
-},{"../core/widget":20,"../utils/math":23,"util":16}],44:[function(require,module,exports){
+},{"../core/widget":22,"../utils/math":25,"util":18}],46:[function(require,module,exports){
 var util = require('util');
 var widget = require('../core/widget');
 var math = require('../utils/math')
@@ -6484,7 +6772,7 @@ range.prototype.move = function() {
 
 	}
 }
-},{"../core/widget":20,"../utils/math":23,"util":16}],45:[function(require,module,exports){
+},{"../core/widget":22,"../utils/math":25,"util":18}],47:[function(require,module,exports){
 var math = require('../utils/math')
 var util = require('util');
 var widget = require('../core/widget');
@@ -6696,7 +6984,7 @@ remix.prototype.move = function(e) {
 		this.scan(this.clickPos.x/this.width)
 	}
 }
-},{"../core/widget":20,"../utils/math":23,"util":16}],46:[function(require,module,exports){
+},{"../core/widget":22,"../utils/math":25,"util":18}],48:[function(require,module,exports){
 var util = require('util');
 var widget = require('../core/widget');
 
@@ -6772,7 +7060,7 @@ select.prototype.change = function(thisselect) {
 	this.val.text = thisselect.value;
 	this.transmit(this.val);
 }
-},{"../core/widget":20,"util":16}],47:[function(require,module,exports){
+},{"../core/widget":22,"util":18}],49:[function(require,module,exports){
 var math = require('../utils/math')
 var util = require('util');
 var widget = require('../core/widget');
@@ -6941,7 +7229,7 @@ slider.prototype.move = function() {
 	}
 	this.transmit(this.val);
 }
-},{"../core/widget":20,"../utils/math":23,"util":16}],48:[function(require,module,exports){
+},{"../core/widget":22,"../utils/math":25,"util":18}],50:[function(require,module,exports){
 var util = require('util');
 var widget = require('../core/widget');
 
@@ -7143,7 +7431,7 @@ string.prototype.pluck = function(which) {
 string.prototype.customDestroy = function() {
 	nx.removeAni(this.draw.bind(this));
 }
-},{"../core/widget":20,"util":16}],49:[function(require,module,exports){
+},{"../core/widget":22,"util":18}],51:[function(require,module,exports){
 var math = require('../utils/math')
 var util = require('util');
 var widget = require('../core/widget');
@@ -7233,7 +7521,7 @@ tabs.prototype.click = function() {
 	this.transmit(this.val)
 	this.draw();
 }
-},{"../core/widget":20,"../utils/math":23,"util":16}],50:[function(require,module,exports){
+},{"../core/widget":22,"../utils/math":25,"util":18}],52:[function(require,module,exports){
 var math = require('../utils/math')
 var util = require('util');
 var widget = require('../core/widget');
@@ -7367,7 +7655,7 @@ tilt.prototype.customDestroy = function() {
 	window.removeEventListener("deviceorientation",this.boundChromeTilt,false);
 	window.removeEventListener("mozOrientation",this.boundMozTilt,false);
 }
-},{"../core/widget":20,"../utils/math":23,"util":16}],51:[function(require,module,exports){
+},{"../core/widget":22,"../utils/math":25,"util":18}],53:[function(require,module,exports){
 var drawing = require('../utils/drawing');
 var util = require('util');
 var widget = require('../core/widget');
@@ -7441,7 +7729,7 @@ toggle.prototype.click = function() {
 	this.draw();
 	this.transmit(this.val);
 }
-},{"../core/widget":20,"../utils/drawing":22,"util":16}],52:[function(require,module,exports){
+},{"../core/widget":22,"../utils/drawing":24,"util":18}],54:[function(require,module,exports){
 var drawing = require('../utils/drawing');
 var util = require('util');
 var widget = require('../core/widget');
@@ -7691,7 +7979,7 @@ typewriter.prototype.customDestroy = function() {
 	window.removeEventListener("keydown", this.boundType);
 	window.removeEventListener("keyup", this.boundUntype);
 }
-},{"../core/widget":20,"../utils/drawing":22,"util":16}],53:[function(require,module,exports){
+},{"../core/widget":22,"../utils/drawing":24,"util":18}],55:[function(require,module,exports){
 var math = require('../utils/math')
 var util = require('util');
 var widget = require('../core/widget');
@@ -7835,7 +8123,7 @@ vinyl.prototype.spin = function() {
 vinyl.prototype.customDestroy = function() {
 	nx.removeAni(this.spin.bind(this));
 }
-},{"../core/widget":20,"../utils/math":23,"util":16}],54:[function(require,module,exports){
+},{"../core/widget":22,"../utils/math":25,"util":18}],56:[function(require,module,exports){
 (function (root) {
 	"use strict";
 	var Tone;
@@ -22178,7 +22466,7 @@ vinyl.prototype.customDestroy = function() {
 		root.Tone = Tone;
 	}
 } (this));
-},{}],55:[function(require,module,exports){
+},{}],57:[function(require,module,exports){
 //     Underscore.js 1.8.2
 //     http://underscorejs.org
 //     (c) 2009-2015 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors

@@ -3,7 +3,7 @@
 <html lang="en">
 <head>
 	<meta charset="utf-8">
-	<title>McLuhan.js Classes</title>
+	<title>McLuhan.js Source: media/photo.js</title>
 
 	<!--[if lt IE 9]>
 	<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
@@ -75,114 +75,90 @@
 	<div class="row-fluid">
 
 		
-		<div class="span8">
-			
+			<div class="span12">
+				
 				<div id="main">
 					
 
 
-	<h1 class="page-title">Classes</h1>
-<section>
-
-<header>
-    <h2>
+		<h1 class="page-title">Source: media/photo.js</h1>
     
-    </h2>
-    
-</header>
+    <section>
+        <article>
+            <pre class="sunlight-highlight-javascript linenums">var util = require('util');
+var Medium = require('../core/medium')
 
-<article>
-    <div class="container-overview">
-    
+/**
+ * @class Photo
+ * @constructor
+ * @description  Performative IMAGE media element
+ * @extends Medium
+ * @param  {object} Params (see Params)
+ * @return {Photo}
+ */
+var Photo = module.exports = function(params) {
 
-    
-        
+	this.defaultSize = { w: 300, h: 300 }
+	this.type = "canvas";
 
-        
-<dl class="details">
-    
+	//separate item constructor "Medium" with properties for placement, animation, remove, make dom element, styling element based on json
+	Medium.call(this, params);
 
-    
+	this.context = []
 
-    
+	for (var i = 0; i&lt;this.spaces.length; i++) {
+		this.context.push(this.element[i].getContext("2d"))
+	}
 
-    
+	this.width = 0;
+	this.height = 0;
 
-    
+}
 
-    
+util.inherits(Photo, Medium);
 
-    
+Photo.prototype.load = function(src) {
 
-    
+	this.image = new Image()
+	this.image.onload = function() {
+		this.width = this.image.width;
+		this.height = this.image.height
+		for (var i=0;i&lt;this.context.length;i++) {
+			this.element[i].width = this.width;
+			this.element[i].height = this.height;
+			this.element[i].style.width = this.width;
+			this.element[i].style.height = this.height;
+			this.context[i].drawImage(this.image,0,0)
+		}
+	}.bind(this)
+	this.image.src = "images/"+src+".jpg"
 
-    
+	return this;
 
-    
+}
 
-    
+Photo.prototype.glitch = function(file,callback) {
+	this.data = this.context[0].getImageData( 0, 0, this.width, this.height );
 
-    
+	// glitch the image data (passing drawImageDataInCanvasTwo as a callback function)
+	var parameters = { amount: 10, seed: 45, iterations: 30, quality: 30 };
+	
+	console.log(parameters)
+	console.log(glitch)
+	
+	glitch( this.data, parameters, function(data) {
+		console.log("inside")
+		for (var i = 0; i&lt;this.spaces.length; i++) {
+			this.context[i].putImageData( data, 0, 0 );
+		}
+	}.bind(this));
+		
+}
 
-    
-</dl>
+</pre>
+        </article>
+    </section>
 
-
-        
-    
-    </div>
-
-    
-
-    
-
-    
-
-    
-        <h3 class="subsection-title">Classes</h3>
-
-        <dl>
-            <dt><a href="Cassette.html">Cassette</a></dt>
-            <dd></dd>
-        
-            <dt><a href="Film.html">Film</a></dt>
-            <dd></dd>
-        
-            <dt><a href="Manager.html">Manager</a></dt>
-            <dd></dd>
-        
-            <dt><a href="Medium.html">Medium</a></dt>
-            <dd></dd>
-        
-            <dt><a href="Paper.html">Paper</a></dt>
-            <dd></dd>
-        
-            <dt><a href="Photo.html">Photo</a></dt>
-            <dd></dd>
-        
-            <dt><a href="Presence.html">Presence</a></dt>
-            <dd></dd>
-        
-            <dt><a href="Wall.html">Wall</a></dt>
-            <dd></dd>
-        
-            <dt><a href="Window.html">Window</a></dt>
-            <dd></dd>
-        </dl>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</article>
-
-</section>
 
 
 
@@ -208,10 +184,6 @@
 				</footer>
 			</div>
 
-			
-			<div class="span3">
-				<div id="toc"></div>
-			</div>
 			
 			<br clear="both">
 		</div>
