@@ -3,7 +3,7 @@
 <html lang="en">
 <head>
 	<meta charset="utf-8">
-	<title>McLuhan.js Class: Presence</title>
+	<title>McLuhan.js Source: media/hack.js</title>
 
 	<!--[if lt IE 9]>
 	<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
@@ -79,186 +79,67 @@
 	<div class="row-fluid">
 
 		
-		<div class="span8">
-			
+			<div class="span12">
+				
 				<div id="main">
 					
 
 
-	<h1 class="page-title">Class: Presence</h1>
-<section>
-
-<header>
-    <h2>
-    Presence
-    </h2>
+		<h1 class="page-title">Source: media/hack.js</h1>
     
-</header>
+    <section>
+        <article>
+            <pre class="sunlight-highlight-javascript linenums">var util = require('util');
+var Medium = require('../core/medium')
 
-<article>
-    <div class="container-overview">
-    
+/**
+ * @class Hack
+ * @constructor
+ * @description  Performative IFRAME media element
+ * @extends Medium
+ * @param  {object} Params (see Params)
+ * @return {Photo}
+ */
+var Hack = module.exports = function(params) {
 
-    
-        
-<dt>
-    <h4 class="name" id="Presence"><span class="type-signature"></span>new Presence<span class="signature">(Params)</span><span class="type-signature"> &rarr; {<a href="Presence.html">Presence</a>}</span></h4>
-    
-    
-</dt>
-<dd>
-    
-    
-    <div class="description">
-        Pixilated live video feed of performer
-    </div>
-    
+	this.defaultSize = { w: 1200, h: 1200 }
+	this.type = "iframe";
 
-    
-    
-    
-    
-    
-        <h5>Parameters:</h5>
-        
+	//separate item constructor "Medium" with properties for placement, animation, remove, make dom element, styling element based on json
+	Medium.call(this, params);
 
-<table class="params table table-striped">
-    <thead>
-	<tr>
-		
-		<th>Name</th>
-		
+	for (var i=0;i&lt;this.element.length;i++) {
+		this.element[i].style.border="none";
+	}
 
-		<th>Type</th>
+//	denied for cross-origin reasons:
+/*	this.doc = new Array();
 
-		
+	for (var i=0;i&lt;this.element.length;i++) {
+	    $(this.element[i]).load(function() {
+	        this.doc.push(this.contentDocument || this.contentWindow.document);
+	    	console.log(this.doc)
+	    }.bind(this));
+	} */
 
-		
+}
 
-		<th class="last">Description</th>
-	</tr>
-	</thead>
+util.inherits(Hack, Medium);
 
-	<tbody>
-	
+Hack.prototype.load = function(src) {
 
-        <tr>
-            
-                <td class="name"><code>Params</code></td>
-            
+	for (var i=0;i&lt;this.spaces.length;i++) {
+		this.element[i].src = "http://"+src
+	}
 
-            <td class="type">
-            
-                
-<span class="param-type">object</span>
+	return this;
 
+}
 
-            
-            </td>
+</pre>
+        </article>
+    </section>
 
-            
-
-            
-
-            <td class="description last">(see Params)</td>
-        </tr>
-
-	
-	</tbody>
-</table>
-
-    
-    
-    
-<dl class="details">
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="presence.js.html">media/presence.js</a>, <a href="presence.js.html#sunlight-1-line-9">line 9</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-    
-    
-
-    
-
-    
-    
-    
-    
-    
-    <h5>Returns:</h5>
-    
-            
-
-
-<dl>
-	<dt>
-		Type
-	</dt>
-	<dd>
-		
-<span class="param-type"><a href="Presence.html">Presence</a></span>
-
-
-	</dd>
-</dl>
-
-
-        
-    
-    
-</dd>
-
-    
-    </div>
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</article>
-
-</section>
 
 
 
@@ -284,10 +165,6 @@
 				</footer>
 			</div>
 
-			
-			<div class="span3">
-				<div id="toc"></div>
-			</div>
 			
 			<br clear="both">
 		</div>
