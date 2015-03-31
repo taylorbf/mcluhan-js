@@ -99,6 +99,14 @@ Create a new text element in all browser windows of a Wall.
 
 `a.a = a.read("Hello world")`
 
+### Text-To-Speech
+
+We offer a built-in text-to-speech system.
+
+`say("Bonjour")`
+
+This is not a property of a Wall; it is only one voice and is envoked by a global `say` method.
+
 ### Pixelated Video Stream
 
 Start a pixelated, black-and-white, low-frame rate video stream from the performer. Data is sent as a binary list (011100etc...) where each digit denotes if a pixel in the video is black or white.

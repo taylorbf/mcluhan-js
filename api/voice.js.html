@@ -3,7 +3,7 @@
 <html lang="en">
 <head>
 	<meta charset="utf-8">
-	<title>McLuhan.js Class: Presence</title>
+	<title>McLuhan.js Source: media/voice.js</title>
 
 	<!--[if lt IE 9]>
 	<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
@@ -83,186 +83,116 @@
 	<div class="row-fluid">
 
 		
-		<div class="span8">
-			
+			<div class="span12">
+				
 				<div id="main">
 					
 
 
-	<h1 class="page-title">Class: Presence</h1>
-<section>
+		<h1 class="page-title">Source: media/voice.js</h1>
+    
+    <section>
+        <article>
+            <pre class="sunlight-highlight-javascript linenums">var util = require('util');
 
-<header>
-    <h2>
-    Presence
-    </h2>
-    
-</header>
+/**
+ * @constructor
+ * @description  Performative Text-To-Speech media element
+ * @param  {object} Params (see Params)
+ * @return {Voice}
+ */
 
-<article>
-    <div class="container-overview">
-    
+var Voice = module.exports = function(params) {
 
-    
-        
-<dt>
-    <h4 class="name" id="Presence"><span class="type-signature"></span>new Presence<span class="signature">(Params)</span><span class="type-signature"> &rarr; {<a href="Presence.html">Presence</a>}</span></h4>
-    
-    
-</dt>
-<dd>
-    
-    
-    <div class="description">
-        Pixilated live video feed of performer
-    </div>
-    
+	this.text = "hello world"
 
-    
-    
-    
-    
-    
-        <h5>Parameters:</h5>
-        
+	this.src = false;
 
-<table class="params table table-striped">
-    <thead>
-	<tr>
-		
-		<th>Name</th>
-		
+	this.element = document.createElement("audio");
+	//this.element.src = "data:audio/x-wav;base64,"+encode64(wav)
+	this.element.addEventListener('ended',function(el) {
+		console.log("done")
+		//this could be a place to remove this audio element,
+		//if we want to dynamically load/destroy each audio element
+	}.bind(this.element,this.element))
 
-		<th>Type</th>
+    this.stream = Tone.context.createMediaElementSource(this.element)
+    this.stream.connect(feedbackDelay)
 
-		
+    //this.element.play()
 
-		
+}
 
-		<th class="last">Description</th>
-	</tr>
-	</thead>
+Voice.prototype.say = function(params) {
+	this.text = params.text;
+	this.speed = params.speed ? params.speed : 175;
+	this.pitch = params.pitch ? params.pitch : 50;
+	speak(this.text, { pitch: this.pitch, speed: this.speed })
+}
 
-	<tbody>
-	
+Voice.prototype.load = function(src) {
+	src ? this.setAll("src","media/"+src+".mp3") : false;
+	this.all("play");
+	return this;
+}
 
-        <tr>
-            
-                <td class="name"><code>Params</code></td>
-            
+Voice.prototype.play = function(rate) {
+	this.rate = rate ? rate : this.rate;
+	this.all("play");
+	this.speed(this.rate)
+}
 
-            <td class="type">
-            
-                
-<span class="param-type">object</span>
+Voice.prototype.stop = function() {
+	this.all("pause");
+}
+
+Voice.prototype.loop = function(on) {
+	if (on===false || on===0) {
+		this.setAll("loop",false);
+	} else {
+		this.setAll("loop",true);
+	}
+}
 
 
-            
-            </td>
+Voice.prototype.jumpTo = function(start) {
+	start = start ? start : this.start;
+	this.setAll("currentTime",start);
+}
 
-            
+Voice.prototype.skip = function(start,stop) {
+	this.start = start ? start : 1;
+	this.stop = stop ? stop : 1.2;
+	if (this.interval) {
+		clearInterval(this.interval);
+	}
+	this.boundJump = this.jumpTo.bind(this)
+	this.interval = setInterval(this.boundJump,(this.stop-this.start)*1000)
+	this.skipping = true;
+	return this;
+}
 
-            
+Voice.prototype.unskip = function() {
+	this.skipping = false;
+	this.start = false;
+	this.stop = false
+	clearInterval(this.interval);
+	this.interval = false;
+	return this;
+}
 
-            <td class="description last">(see Params)</td>
-        </tr>
+Voice.prototype.speed = function(rate) {
+	if (rate) {
+		this.setAll("playbackRate",rate);
+		this.rate = rate;
+	}
+	return this;
+}
 
-	
-	</tbody>
-</table>
+</pre>
+        </article>
+    </section>
 
-    
-    
-    
-<dl class="details">
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="presence.js.html">media/presence.js</a>, <a href="presence.js.html#sunlight-1-line-9">line 9</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-    
-    
-
-    
-
-    
-    
-    
-    
-    
-    <h5>Returns:</h5>
-    
-            
-
-
-<dl>
-	<dt>
-		Type
-	</dt>
-	<dd>
-		
-<span class="param-type"><a href="Presence.html">Presence</a></span>
-
-
-	</dd>
-</dl>
-
-
-        
-    
-    
-</dd>
-
-    
-    </div>
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</article>
-
-</section>
 
 
 
@@ -288,10 +218,6 @@
 				</footer>
 			</div>
 
-			
-			<div class="span3">
-				<div id="toc"></div>
-			</div>
 			
 			<br clear="both">
 		</div>

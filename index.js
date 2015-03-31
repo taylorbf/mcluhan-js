@@ -1,11 +1,13 @@
 var Manager = require('./lib/core/manager');
-var FilmManager = require('./lib/media/film');
 var math = require('./lib/utils/math');
 var extend = require('extend');
 require('nexusui');
 window._ = require("underscore")
 window.glitch = require("./bower_components/glitch-canvas/dist/glitch-canvas")
 window.Nightmare = require ("nightmare")
+window.Tone = require('tone').Tone
+
+//var Voice = require("./lib/media/voice")
 
 /************************************************
 *      MAKE GLOBAL COMPONENTS + INSTANCES
@@ -30,6 +32,13 @@ window.onload = function() {
 	 // .type('input[title="Search"]', 'github nightmare')
 	 // .click('.searchsubmit')
 	 // .run();
+
+	window.feedbackDelay = new Tone.PingPongDelay({
+	      "delayTime" : 0.07,
+	      "feedback" : 0.94,
+	      "wet" : 0.5
+	}).toMaster();
+	siri = new voice()
 };
 
 
@@ -39,6 +48,20 @@ window.alt = function() {
 
 
 
+}
+
+
+
+window.Tonify = function(el) {
+
+}
+
+window.say = function(text,speed,pitch) {
+	siri.say({
+		"text": text,
+		"speed": speed,
+		"pitch": pitch
+	})
 }
 
 
