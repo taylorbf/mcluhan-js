@@ -105,6 +105,8 @@ We offer a built-in text-to-speech system.
 
 `say("Bonjour")`
 
+Our TTS is connected to Tone.JS, meaning any Tone effects can be applied to it. Currently the voice is run through a ping pong delay; a more complete API for connecting effects is planned.
+
 This is not a property of a Wall; it is only one voice and is envoked by a global `say` method.
 
 ### Pixelated Video Stream

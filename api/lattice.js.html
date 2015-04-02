@@ -3,7 +3,7 @@
 <html lang="en">
 <head>
 	<meta charset="utf-8">
-	<title>McLuhan.js Source: media/paper.js</title>
+	<title>McLuhan.js Source: media/lattice.js</title>
 
 	<!--[if lt IE 9]>
 	<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
@@ -93,7 +93,7 @@
 					
 
 
-		<h1 class="page-title">Source: media/paper.js</h1>
+		<h1 class="page-title">Source: media/lattice.js</h1>
     
     <section>
         <article>
@@ -101,143 +101,113 @@
 var Medium = require('../core/medium')
 
 /**
- * @class Paper
+ * @class Lattice
  * @constructor
- * @description  Performative TEXT media element
+ * @description  Interactive PITCH LATTICE
  * @extends Medium
  * @param  {object} Params (see Params)
- * @return {Paper}
+ * @return {Lattice}
  */
-var Paper = module.exports = function(params) {
+var Lattice = module.exports = function(params) {
 
-	this.defaultSize = { w: 300 }
-	this.type = "div";
+	this.defaultSize = { w: 600, h: 600 }
+	this.type = "canvas";
 
 	//separate item constructor "Medium" with properties for placement, animation, remove, make dom element, styling element based on json
 	Medium.call(this, params);
 
-	this.flipSpace = 0
-	this.flipWord = 0
-	this.time = 100;
-
-	for (var i=0;i&lt;this.element.length;i++) {
-		this.element[i].className = "normal"
+	this.context = []
+	this.instrument = []
+	//create 3d matrix
+	this.dimension = {
+		x: 5,
+		y: 8,
+		z: 3
 	}
 
-
-}
-
-util.inherits(Paper, Medium);
-
-Paper.prototype.read = function(text) {
-	console.log(journal, text)
-	if (journal[text]) {
-		this.text = journal[text];
-	} else {
-		this.text = text ? text : "null"
-	}
-	this.words = this.text.split(" ");
-	this.letters = this.text.split("");
-	return this;
-}
-
-/* eventually move this to happen at start up for all files in
-/media/text folder, and to make them stored in journals object
-with filname as object key */
-Paper.prototype.readFile = function(file,callback) {
-	file = file ? file : "hello"
-	this.text
-	$.get("text/"+file+'.txt', function(text) {
-		this.text = text ? text : "null"
-		this.words = this.text.split(" ");
-		this.letters = this.text.split("");
-		var bc = callback.bind(this)
-	    bc(data);
-	}.bind(this), 'text');
-}
-
-Paper.prototype.write = function() {
-	for (var i=0;i&lt;this.element.length;i++) {
-		this.element[i].innerHTML = this.text
-	}
-	return this;
-}
-
-Paper.prototype.and = function() {
-	for (var i=0;i&lt;this.element.length;i++) {
-		this.element[i].innerHTML = this.elements[i].innerHTML + this.text
-	}
-}
-
-Paper.prototype.writeAcross = function() {
-	for (var i=0;i&lt;this.element.length;i++) {
-		this.element[i].className = "fullScreen"
-		this.element[i].style.width = this.spaces[i].element.innerWidth+"px"
-		this.element[i].style.height = this.spaces[i].element.innerHeight+"px"
-		this.element[i].style.lineHeight = this.spaces[i].element.innerHeight+"px"
-		if (i&lt;this.words.length) {	
-			this.element[i].innerHTML = this.words[i]
+	for (var i = 0; i&lt;this.spaces.length; i++) {
+		this.element[i].width = this.defaultSize.w
+		this.element[i].height = this.defaultSize.h
+		this.instrument[i] = new Object();
+		this.instrument[i].context = this.element[i].getContext("2d")
+		this.instrument[i].player = new Tone.Player("./media/pno.mp3")
+		this.instrument[i].player.retrigger = true
+		this.instrument[i].player.toMaster()	
+		this.instrument[i].notes = new Array();
+		for (var j = 0; j &lt; this.dimension.x; j++) {
+			this.instrument[i].notes[j] = new Array();
+			for (var k = 0; k &lt; this.dimension.z; k++) {
+				this.instrument[i].notes[j][k] = new Array();
+				for (var l = 0; l &lt; this.dimension.y; l++) {
+					this.instrument[i].notes[j][k][l] = 1;
+				}
+			}
 		}
 	}
-}
 
-Paper.prototype.flip = function(time) {
-	time ? this.time = time : null;
-	this.flipint = setInterval(this.flipOne.bind(this), time)
-}
+	this.draw();
 
-Paper.prototype.flipOne = function() {
-	this.element[this.flipSpace].innerHTML = this.words[this.flipWord];
-	this.flipSpace++;
-	if (this.flipSpace>=this.spaces.length) {
-		this.flipSpace=0;
-	}
-	this.flipWord++;
-	if (this.flipWord>=this.words.length) {
-		this.flipWord=0;
-	}
-}
-
-Paper.prototype.unflip = function(file) {
-	clearInterval(this.flipint);
 }
 
 
-Paper.prototype.wash = function(time) {
-	time ? this.time = time : null;
-	this.washWord = 0;
-	for (var i=0;i&lt;this.element.length;i++) {
-		this.element[i].className = "fullScreen"
-		this.element[i].style.width = this.spaces[i].element.innerWidth+"px"
-		this.element[i].style.height = this.spaces[i].element.innerHeight+"px"
-		this.element[i].style.lineHeight = this.spaces[i].element.innerHeight+"px"
-	}
-	this.washint = setInterval(this.washOne.bind(this), time)
-}
+/*
+	looking at : 5 * 3 * 10
+	x: * 3/2
+	y: + fundamental of this column, making overtone series
+	z: * 5/4
+				25/16
+				5/4		15/8	45/32
+		2/3		1/1		3/2		9/8
+				8/5
 
-Paper.prototype.washOne = function() {
-	for (var i=0;i&lt;this.element.length;i++) {
-		if (!this.strobe) {
-			this.element[i].style.backgroundColor = "black"
-		} else {
-			this.element[i].style.backgroundColor = "white"
+
+
+
+		2/3 * &lt;=	=> * 3/2
+ */
+
+
+util.inherits(Lattice, Medium);
+
+Lattice.prototype.draw = function(src) {
+
+	for (var i = 0; i&lt;this.instrument.length; i++) {
+		var context = this.instrument[i].context
+		var notes = this.instrument[i].notes
+		for (var j = 0; j &lt; notes.length; j++) {
+			for (var k = 0; k &lt; notes[j].length; k++) {
+				for (var l = 0; l &lt; notes[j][k].length; l++) {
+					//j is x
+					//l is y
+					//k is z
+					var x = j * 60 - k * 14
+					var y = l * 60 - k * 10
+					context.fillStyle = "rgb(0,100,"+(255-k*50)+")"
+					context.fillRect(x,y,10-k,10-k)
+					//this.instrument[i].notes[j][k][l] = 1;
+				}
+			}
 		}
-		this.element[i].innerHTML = this.words[this.washWord];
 	}
-	if (!this.strobe) {
-		this.strobe = true;
-	} else {
-		this.strobe = false;
-	}
-	this.washWord++;
-	if (this.washWord>=this.words.length) {
-		this.washWord = 0;
-		//this.unwash()
-	}
+
+
+	return this;
+
 }
 
-Paper.prototype.unwash = function(file) {
-	clearInterval(this.washint);
+Lattice.prototype.node = function() {
+
+	this.note = 0
+
+	this.play = function() {
+
+	}
+
+	this.stop = function() {
+
+	}
+
+
 }
 
 </pre>
