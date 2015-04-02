@@ -33,6 +33,7 @@
 	        try {
 	            eval.apply(window, [command]);
 	        } catch (e) {
+	        	console.log(e)
 	            $("#terminal").terminal().set_command(command);
 	            return e.message;
 	        }

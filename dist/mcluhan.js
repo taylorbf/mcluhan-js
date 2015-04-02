@@ -322,7 +322,7 @@ var spacer = false;
 var Manager = module.exports = function() {
 
   /** @type {Number} */
-  this.spaceLimit = 16;
+  this.spaceLimit = 8;
 
   // Will use eventually
   // EventEmitter.apply(this)
@@ -750,18 +750,20 @@ var Lattice = module.exports = function(params) {
 		this.instrument[i].player.retrigger = true
 		this.instrument[i].player.toMaster()	
 		this.instrument[i].notes = new Array();
-		for (var j = 0; j < this.dimension.x; j++) {
+		for (var j = 0; j < this.dimension.z; j++) {
 			this.instrument[i].notes[j] = new Array();
-			for (var k = 0; k < this.dimension.z; k++) {
+			for (var k = 0; k < this.dimension.x; k++) {
 				this.instrument[i].notes[j][k] = new Array();
 				for (var l = 0; l < this.dimension.y; l++) {
-					this.instrument[i].notes[j][k][l] = 1;
+					this.instrument[i].notes[j][k][l] = new this.note(j,k,l,this.instrument[i].context,this.instrument[i].player,this.instrument[i],this);
 				}
 			}
 		}
 	}
 
 	this.draw();
+
+	return this;
 
 }
 
@@ -789,18 +791,13 @@ Lattice.prototype.draw = function(src) {
 
 	for (var i = 0; i<this.instrument.length; i++) {
 		var context = this.instrument[i].context
+		context.fillStyle="black"
+		context.fillRect(0,0,this.defaultSize.w,this.defaultSize.h)
 		var notes = this.instrument[i].notes
 		for (var j = 0; j < notes.length; j++) {
 			for (var k = 0; k < notes[j].length; k++) {
 				for (var l = 0; l < notes[j][k].length; l++) {
-					//j is x
-					//l is y
-					//k is z
-					var x = j * 60 - k * 14
-					var y = l * 60 - k * 10
-					context.fillStyle = "rgb(0,100,"+(255-k*50)+")"
-					context.fillRect(x,y,10-k,10-k)
-					//this.instrument[i].notes[j][k][l] = 1;
+					notes[j][k][l].draw();
 				}
 			}
 		}
@@ -811,15 +808,59 @@ Lattice.prototype.draw = function(src) {
 
 }
 
-Lattice.prototype.node = function() {
+Lattice.prototype.play = function() {
 
-	this.note = 0
+	//this.instrument[0].player.play()
+	this.instrument[0].notes[1][1][1].play()
+}
 
-	this.play = function() {
+Lattice.prototype.note = function(z,x,y,context,player,instrument,lattice) {
+
+	this.note = 1
+	this.on = false;
+
+	this.context = context;
+	this.player = player;
+	this.instrument = instrument;
+	this.lattice = lattice;
+
+	this.x = x
+	this.y = y
+	this.z = z
+
+	this.place = {
+		x: (this.x * 60 + 50) * (1+this.z/12),
+		y: (this.y * 50 + 50) * (1+this.z/12)
+	}
+	this.grd = this.context.createRadialGradient(this.place.x-3,this.place.y-3,3,this.place.x+3,this.place.y+3,20);
+	this.grd.addColorStop(0,"rgb("+(180+this.z*40)+","+(180+this.z*40)+","+(180+this.z*40)+")")
+	this.grd.addColorStop(1,"#333")
+
+	this.draw = function() {
+
+		//j is z
+		//k is x
+		//l is y
+
+		this.context.fillStyle = this.grd
+		this.context.beginPath()
+		this.context.arc(this.place.x,this.place.y,8+this.z*2,0,Math.PI*2,false)
+		this.context.fill()
+		this.context.closePath()
 
 	}
 
+	this.play = function() {
+		this.on = true;
+		this.player.start();
+		//currently redraws *all* lattices in all windows. should only draw its own instrument.
+		this.lattice.draw();
+	}
+
 	this.stop = function() {
+		this.on = false;
+		this.player.stop();
+		this.instrument.draw();
 
 	}
 
@@ -1567,7 +1608,7 @@ Wall.prototype.patterns = {
 		{
 			x: 100,
 			y: 100,
-			w: 300,
+			w: 450,
 			h: 600
 		}
 	],
