@@ -13,13 +13,15 @@
 
 McLuhan.js is under heavy development and will be released later in 2015.
 
-## How to Use
+# How to Use
 
 This is a place to convey basic use patterns. This documentation is of currently-working methods, though some may be in flux.
 
-### Wall
+## Wall Object
 
-Create a wall (collection of browsers).
+Wall is the central commanding object of the library, because it creates a space for other materials to be added.
+
+Create a wall (collection of browser windows).
 
 `var a = new Wall()`
 
@@ -63,6 +65,8 @@ Destroy the wall and return all windows to the window stack
 
 `a.kill()`
 
+## Media
+
 ### URLs
 
 Send all windows in the wall to a URL
@@ -99,6 +103,18 @@ Create a new text element in all browser windows of a Wall.
 
 `a.a = a.read("Hello world")`
 
+### Just Intonation Pitch Lattice
+
+Create a new 3-dimensional just intonation pitch lattice with algorithmic automation methods.
+
+`a.a = a.partch()`
+
+Wander through the lattice.
+
+`a.a.wander()`
+
+## Global (non-Wall) Media
+
 ### Text-To-Speech
 
 We offer a built-in text-to-speech system.
@@ -114,3 +130,4 @@ This is not a property of a Wall; it is only one voice and is envoked by a globa
 Start a pixelated, black-and-white, low-frame rate video stream from the performer. Data is sent as a binary list (011100etc...) where each digit denotes if a pixel in the video is black or white.
 
 `var me = new presence()`
+
