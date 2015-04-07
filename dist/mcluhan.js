@@ -1591,6 +1591,11 @@ Wall.prototype.scramble = function() {
 		this.elements[i].scramble()
 	}
 }
+Wall.prototype.trans = function(x,y) {
+	for (var i=0;i<this.elements.length;i++) {
+		this.elements[i].trans(x,y)
+	}
+}
 
 /** 
  * Refresh all windows in this wall
@@ -1831,6 +1836,18 @@ Window.prototype.scramble = function() {
 
 
 Window.prototype.refresh = function() {
+}
+
+
+Window.prototype.trans = function(x,y) {
+	$({newx: this.element.screenX}).animate({newx: x}, {
+	    duration: 20000,
+	    easing: "linear",
+	    step: function(cur) {
+	    	console.log(cur)
+	    	this.element.moveTo(cur)
+	    }.bind(this)
+	})
 }
 
 
