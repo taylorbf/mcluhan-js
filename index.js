@@ -91,6 +91,14 @@ window.random = function(scale) {
 	return Math.floor(Math.random()*scale)
 }
 
+window.ramp = function(start,end,dur,callback) {
+	$({n: start}).animate({n: end}, {
+	    duration: dur,
+	    easing: "linear",
+	    step: callback
+	})
+}
+
 
 
 

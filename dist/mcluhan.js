@@ -92,6 +92,14 @@ window.random = function(scale) {
 	return Math.floor(Math.random()*scale)
 }
 
+window.ramp = function(start,end,dur,callback) {
+	$({n: start}).animate({n: end}, {
+	    duration: dur,
+	    easing: "linear",
+	    step: callback
+	})
+}
+
 
 
 
@@ -1543,20 +1551,6 @@ Wall.prototype.scroll = function(x,y) {
 }
 
 /**
- * Move all windows by an x/y amount
- * @return {Wall}
- */
-Wall.prototype.move = function() {
-}
-
-/**
- * Resize all windows to a specific w/h
- * @return {Wall}
- */
-Wall.prototype.size = function() {
-}
-
-/**
  * Destroy this wall and return all windows to stack
  */
 Wall.prototype.kill = function() {
@@ -1591,11 +1585,71 @@ Wall.prototype.scramble = function() {
 		this.elements[i].scramble()
 	}
 }
-Wall.prototype.trans = function(x,y) {
+
+/* animate browser windows
+Wall.prototype.trans = function(x,y,time) {
 	for (var i=0;i<this.elements.length;i++) {
-		this.elements[i].trans(x,y)
+		this.elements[i].trans(x,y,time)
+	}
+} */
+
+/* move and resize to new pattern configuration */
+Wall.prototype.shapeshift = function(pattern,time) {
+	var patt = this.patterns[pattern];
+	for (var i=0;i<this.elements.length;i++) {
+		this.elements[i].size(patt[i%patt.length].w,patt[i%patt.length].h,0)
+		this.elements[i].move(patt[i%patt.length].x,patt[i%patt.length].y,time)
+	}
+
+
+/*	for (var i=0;i<this.elements.length;i++) {
+		this.elements[i].move(patt[i%patt.length].x,patt[i%patt.length].y,time,function(patt,i,time) {
+			console.log(this,patt,i,time)
+		//	alert("done")
+			this.elements[i].size(patt[i%patt.length].w,patt[i%patt.length].h,time)
+		}.bind(this,patt,i,time))
+	} */
+}
+
+/**
+ * Move all windows to an x/y location
+ * @return {Wall}
+ */
+Wall.prototype.move = function(x,y,time) {
+	for (var i=0;i<this.elements.length;i++) {
+		this.elements[i].move(x,y,time)
 	}
 }
+
+/**
+ * Resize all windows to a specific w/h
+ * @return {Wall}
+ */
+Wall.prototype.size = function() {
+}
+
+/**
+ * Move all windows to an x/y location
+ * @return {Wall}
+ */
+Wall.prototype.moveby = function() {
+}
+
+/**
+ * Resize all windows to a specific w/h
+ * @return {Wall}
+ */
+Wall.prototype.sizeby = function() {
+}
+
+
+/* resize whole wall to certain amount */
+
+
+
+
+
+
 
 /** 
  * Refresh all windows in this wall
@@ -1800,13 +1854,13 @@ Window.prototype.scroll = function(x,y) {
 	this.element.scroll.x = x
 	this.element.scroll.x = y
 }
-
+/*
 Window.prototype.move = function(x,y) {
 	this.element.moveTo(x,y)
 }
 
 Window.prototype.size = function() {
-}
+} */
 
 Window.prototype.kill = function() {
 }
@@ -1839,15 +1893,67 @@ Window.prototype.refresh = function() {
 }
 
 
-Window.prototype.trans = function(x,y) {
-	$({newx: this.element.screenX}).animate({newx: x}, {
-	    duration: 20000,
+Window.prototype.move = function(x,y,time,callback) {
+	if (time && time > 99) {
+		callback = callback ? callback : function() { }
+		var obj = {
+			x: this.element.screenX,
+			y: this.element.screenY,
+		}
+		$(obj).animate({x: x, y: y}, {
+		    duration: time,
+		    easing: "linear",
+		    step: function() {
+		    	this.element.moveTo(obj.x,obj.y)
+		    }.bind(this)
+		 //   complete: callback
+		})	
+	} else {
+		this.element.moveTo(x,y)
+	}
+	/*$({newx: this.element.screenX}).animate({newx: x}, {
+	    duration: 8000,
 	    easing: "linear",
 	    step: function(cur) {
-	    	console.log(cur)
 	    	this.element.moveTo(cur)
 	    }.bind(this)
-	})
+	})*/
+/*	ramp(this.element.screenX, x, time, function(cur) {  
+		this.element.moveTo(cur,this.element.screenY)
+	}.bind(this))
+	ramp(this.element.screenY, y, time, function(cur) {  
+		this.element.moveTo(this.element.screenX,cur)
+	}.bind(this))
+*/
+
+}
+
+Window.prototype.size = function(w,h,time) {
+	if (time && time > 99) {
+		callback = callback ? callback : function() { }
+		var obj = {
+			w: this.element.outerWidth,
+			h: this.element.outerHeight,
+		}
+		$(obj).animate({w: w, h: h}, {
+		    duration: time,
+		    easing: "linear",
+		    step: function() {
+		    	this.element.resizeTo(obj.w,obj.h)
+		    }.bind(this),
+		    complete: callback
+		})
+	} else {
+		this.element.resizeTo(w,h)
+	}
+/*	ramp(this.element.outerWidth, w, time, function(cur) {  
+		this.element.resizeTo(cur,this.element.outerHeight)
+	}.bind(this))
+	ramp(this.element.outerHeight, h, time, function(cur) {  
+		this.element.resizeTo(this.element.outerWidth,cur)
+	}.bind(this))
+*/
+
 }
 
 
