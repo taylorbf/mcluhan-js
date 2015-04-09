@@ -28,7 +28,9 @@ for (var key in window.components) {
 }
 
 window.onload = function() {
-    m.init();
+	// this opens all windows
+    //m.init();
+    
  //   new Nightmare().goto('http://yahoo.com').run()
 	 // .type('input[title="Search"]', 'github nightmare')
 	 // .click('.searchsubmit')
@@ -349,6 +351,24 @@ Manager.prototype.init = function() {
     m.makeSpace()
   }
 }
+
+
+Manager.prototype.deck = function(limit) {
+  this.spaceLimit = limit
+  for (var i=0;i<this.spaceLimit;i++) {
+    m.makeSpace()
+  }
+  this.timer = setInterval(this.pretimeline.bind(this),100)
+}
+
+Manager.prototype.time = 0
+
+Manager.prototype.pretimeline = function() {
+  this.time += 0.1
+  setInterval(this.timeline.bind(this,this.time),100)
+}
+
+
 
 
 /**
@@ -1452,6 +1472,7 @@ Wall.prototype.add = function(type,params) {
  * @return {Film}
  */
 Wall.prototype.watch = function(src) {
+	//NEED TO BE ABLE TO SET WIDTH / HEIGHT
 	var _m = new film({ spaces: this.elements });
 	_m.wall = this;
 	_m.load(src)
@@ -1953,6 +1974,32 @@ Window.prototype.size = function(w,h,time) {
 		this.element.resizeTo(this.element.outerWidth,cur)
 	}.bind(this))
 */
+
+}
+
+
+Window.prototype.moveseq = function(x,y,time,callback) {
+
+	//create a function that moves one window linearly, then calls this function again,
+	// which will move the next window, etc.
+
+	if (time && time > 99) {
+		callback = callback ? callback : function() { }
+		var obj = {
+			x: this.element.screenX,
+			y: this.element.screenY,
+		}
+		$(obj).animate({x: x, y: y}, {
+		    duration: time,
+		    easing: "linear",
+		    step: function() {
+		    	this.element.moveTo(obj.x,obj.y)
+		    }.bind(this),
+		    complete: callback
+		})	
+	} else {
+		this.element.moveTo(x,y)
+	}
 
 }
 

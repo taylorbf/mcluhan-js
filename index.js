@@ -27,7 +27,9 @@ for (var key in window.components) {
 }
 
 window.onload = function() {
-    m.init();
+	// this opens all windows
+    //m.init();
+    
  //   new Nightmare().goto('http://yahoo.com').run()
 	 // .type('input[title="Search"]', 'github nightmare')
 	 // .click('.searchsubmit')

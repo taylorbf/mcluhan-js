@@ -1,0 +1,58 @@
+<!doctype html>
+<html>
+  <head>
+  <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="viewport" content="width=device-width">
+	<script src="speakClient.js"></script>
+	<script src="../dist/mcluhan.js"></script>
+	<link href='http://fonts.googleapis.com/css?family=Nixie+One' rel='stylesheet' type='text/css'>
+	<link href='http://fonts.googleapis.com/css?family=Anonymous+Pro' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <script src="./jcubic/js/jquery-1.7.1.min.js"></script>
+  </head>
+  <body>
+
+  	<h1>McLuhan.js: Live Coding the Browser</h1>
+
+  	
+
+	<script>
+
+		m.deck(8);
+
+		var time = 0;
+
+		m.timeline = function(time) {
+		  switch(time) {
+			case 1: 
+			  var a = new wall("line");
+			case 2: 
+			  a.watch("waves")
+			case 3: 
+			  a.xray()
+		  }
+		}
+
+	/*	m.timeline({
+			0: function() {
+				var a = new wall("line")
+			},
+			1500: function() {
+				a.watch("waves")
+			},
+			3000: function() {
+				a.xray()
+			}
+		}) */
+
+
+		setTimeout('var a = new wall("line")',4000)
+		setTimeout('a.watch("waves")',6000)
+		setTimeout('a.xray()',8000)
+
+
+	</script>
+
+  </body>
+</html>
