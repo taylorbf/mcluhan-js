@@ -2,13 +2,14 @@
   "name": "mcluhan.js",
   "description": "Live web art performance platform",
   "author": "Ben Taylor <taylorbf@gmail.com>",
-  "repository" : { 
-    "type" : "git",
-    "url" : "http://github.com/taylorbf/mcluhan-js/"
+  "repository": {
+    "type": "git",
+    "url": "http://github.com/taylorbf/mcluhan-js/"
   },
   "dependencies": {
     "tone": "0.4.x",
-    "nexusui": "1.0.x"
+    "nexusui": "1.0.x",
+    "nprogress": "^0.1.6"
   },
   "devDependencies": {
     "gulp": "3.8.x",

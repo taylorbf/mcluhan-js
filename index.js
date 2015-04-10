@@ -6,6 +6,8 @@ window._ = require("underscore")
 window.glitch = require("./bower_components/glitch-canvas/dist/glitch-canvas")
 window.Nightmare = require ("nightmare")
 window.Tone = require('tone').Tone
+window.NProgress = require('nprogress')
+
 
 //var Voice = require("./lib/media/voice")
 
@@ -34,6 +36,13 @@ window.onload = function() {
 	 // .type('input[title="Search"]', 'github nightmare')
 	 // .click('.searchsubmit')
 	 // .run();
+	 // 
+	
+	$("<link/>", {
+	   rel: "stylesheet",
+	   type: "text/css",
+	   href: "../node_modules/nprogress/nprogress.css"
+	}).appendTo("head");
 
 	window.feedbackDelay = new Tone.PingPongDelay({
 	      "delayTime" : 0.07,

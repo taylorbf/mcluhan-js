@@ -9,7 +9,7 @@
 	<link href='http://fonts.googleapis.com/css?family=Nixie+One' rel='stylesheet' type='text/css'>
 	<link href='http://fonts.googleapis.com/css?family=Anonymous+Pro' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" type="text/css" href="css/style.css">
-    <script src="./jcubic/js/jquery-1.7.1.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
   </head>
   <body>
 
@@ -17,30 +17,37 @@
 
 	$(function() {
 		
-		var projectwid = $(".guides").width()
-		var projecthgt = $(".guides").height()
-		var showbguide = true;
+		projectwid = $(".guides").width()
+		projecthgt = $(".guides").height()
+		showbguide = true;
 
-		var winwid2;
-		var winhgt2;
+		window.addEventListener("resize",checkSize)
 
-		window.addEventListener("resize",function() {
-			var winwid = window.innerWidth;
-			var winhgt = window.innerHeight;
-			if (winwid < projectwid + 10 && winwid > projectwid - 10 && winhgt < projecthgt + 10 && winhgt > projecthgt - 10) {
+		checkSize()
 
-				if (showbguide) {
-					showbguide = false;
-					$(".bguide").fadeOut()
-					$(".sguide").fadeIn()
-					watchWindow();
-				}
-				
-
-			}
-		})
+		NProgress.start();
+		NProgress.inc();
+		
+		setTimeout("NProgress.set(0.69)", 3000);
+		setTimeout("NProgress.set(0.99)", 4000);
+		setTimeout(NProgress.done, 5000);
+		setTimeout("$('#splash').fadeOut()", 5000);
 
 	})
+
+	function checkSize() {
+		var winwid = window.innerWidth;
+		var winhgt = window.innerHeight;
+		if (winwid < projectwid + 10 && winwid > projectwid - 10 && winhgt < projecthgt + 10 && winhgt > projecthgt - 10) {
+
+			if (showbguide) {
+				showbguide = false;
+				$(".bguide").fadeOut(200)
+				$(".sguide").fadeIn(200)
+				watchWindow();
+			}
+		}
+	}
 
 	function watchWindow() {
 		sguide = setInterval(pingWindow, 50)
@@ -61,56 +68,60 @@
 		var polar = m.toPolar(distx,disty)
 		var degrees = Math.round((polar.angle/(Math.PI*2)) * 360) + 180;
 
-		console.log(degrees)
-
 		$("#sgarrow").css("-ms-transform", "rotate("+degrees+"deg)")
 		$("#sgarrow").css("-webkit-transform", "rotate("+degrees+"deg)")
 		$("#sgarrow").css("transform", "rotate("+degrees+"deg)")
 
 		if (Math.abs(distx) < 20 && Math.abs(disty) < 20 ) {
-			$(".sguide").fadeOut()
+			$(".sguide").fadeOut(200)
 			clearInterval(sguide)
 		}
 
 	}
 		
 
+	m.deck(16);
 
-		m.deck(16);
-
-		m.timeline = function(scheduler) {
-		  switch(scheduler) {
-			case 10: 
-			  a = new wall("line");
-				break;
-			case 100: 
-			  a.watch("waves")
-				break;
-			case 150: 
-			  a.xray()
-				break;
-		  }
-		}
+	m.timeline = function(scheduler) {
+	  switch(scheduler) {
+		case 10: 
+		  a = new wall("line");
+			break;
+		case 70: 
+		  a.watch("ocean")
+			break;
+		case 100: 
+		  a.xray()
+			break;
+	  }
+	}
 
 	
 	</script>
 
-	<div class="guides">
+	<div style="position:absolute;top:0px;width:100%">
+		<div class="guides">
 
-		<h1>FILM<h1>
+			<h1>FILM<h1>
 
-		<button onclick="m.start(0,1000);">Let's Go!</button>
+			<button onclick="m.start(0,1000);">Let's Go!</button>
 
-		<footer>Lovingly made with McLuhan.js</footer>
+			<footer>Lovingly made with McLuhan.js</footer>
 
-		<div class="sguide" style="display:none">
-			Please move your browser to the middle of your screen.
-			<div id="sgarrow" style="font-size:70px;margin-top:40px">&#10148;</div>
+			<div class="sguide" style="display:none">
+				Please move your browser to the middle of your screen.
+				<div id="sgarrow" style="font-size:70px;margin-top:40px">&#10148;</div>
 
+			</div>
+			<div class="bguide">
+				Please resize your browser to the size of this box.
+			</div>
 		</div>
-		<div class="bguide">
-			Please resize your browser to the size of this box.
-		</div>
+	</div>
+
+
+	<div id="splash">
+		<span>M</span>
 	</div>
 
 	<!-- 
