@@ -13,28 +13,31 @@
   </head>
   <body>
 
-  	<h1>McLuhan.js: Live Coding the Browser</h1>
-
-  	
-
 	<script>
 
-		m.deck(8);
 
-		var time = 0;
+	//function start() {
+		m.deck(16);
 
-		m.timeline = function(time) {
-		  switch(time) {
-			case 1: 
-			  var a = new wall("line");
-			case 2: 
+		m.timeline = function(scheduler) {
+		  switch(scheduler) {
+			case 10: 
+			  a = new wall("line");
+				break;
+			case 100: 
 			  a.watch("waves")
-			case 3: 
+				break;
+			case 150: 
 			  a.xray()
+				break;
 		  }
 		}
 
-	/*	m.timeline({
+		
+	//}
+	/*
+	
+	 	m.timeline({
 			0: function() {
 				var a = new wall("line")
 			},
@@ -44,15 +47,28 @@
 			3000: function() {
 				a.xray()
 			}
-		}) */
+		})
 
 
 		setTimeout('var a = new wall("line")',4000)
 		setTimeout('a.watch("waves")',6000)
 		setTimeout('a.xray()',8000)
-
+	*/
 
 	</script>
+
+	<h1>FILM<h1>
+
+	<button onclick="m.start(0,1000);">Let's Go!</button>
+
+	<footer>Lovingly made with McLuhan.js</footer>
+
+	<!-- 
+	preparation section!
+	please make your browser this big (show guides)
+	move it to center of screen (show arrow!)
+	nice alert when done
+	-->
 
   </body>
 </html>

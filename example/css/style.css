@@ -2,22 +2,41 @@ body {
 	margin:0;
 	padding:0;
 	height:100%;
+	background-color:#19d;
+}
+
+h1, button, footer {
+	font-family:"Anonymous Pro";
+	font-weight:100;
+	color:white;
+	text-align:center;
+	margin:40px auto;
 }
 
 h1 {
-	font-family:"Anonymous Pro";
-	font-weight:800;
-	font-size:11pt;
-	text-align:center;
-	letter-spacing:0.2em;
-	padding:5px;
-
+	font-size:25pt;
+	letter-spacing:1px;
 }
 
-#terminal {
-	height:200px;
-	border:solid 1px #333;
-	border-width: 1px 0px;
-	width:400px;
-	margin:5px auto;
+button {
+	border:solid 3px white;
+	padding:7px 30px;
+	background-color:#19d;
+	font-size:19pt;
+	cursor:pointer;
+}
+button:hover {
+	background-color:white;
+	color:#19d;
+}
+button:active {
+	background-color:#ddd;
+	color:#19d;
+}
+
+footer {
+	position:absolute;
+	bottom:10px;
+	font-size:11pt;
+	width:100%;
 }

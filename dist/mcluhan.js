@@ -358,14 +358,18 @@ Manager.prototype.deck = function(limit) {
   for (var i=0;i<this.spaceLimit;i++) {
     m.makeSpace()
   }
-  this.timer = setInterval(this.pretimeline.bind(this),100)
 }
 
 Manager.prototype.time = 0
 
 Manager.prototype.pretimeline = function() {
-  this.time += 0.1
-  setInterval(this.timeline.bind(this,this.time),100)
+  this.time += 1
+  this.time = Math.round(this.time)
+  this.timeline(this.time)
+}
+
+Manager.prototype.start = function() {
+  this.timer = setInterval(this.pretimeline.bind(this),100)
 }
 
 
@@ -605,7 +609,7 @@ var Medium = require('../core/medium')
  */
 var Film = module.exports = function(params) {
 
-	this.defaultSize = { w: 300 }
+	this.defaultSize = { w: 900 }
 	this.src = false;
 	this.type = "video"
 
