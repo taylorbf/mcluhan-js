@@ -1,3 +1,6 @@
+
+/* demo links */
+
 body {
 	margin:0;
 	padding:0;
@@ -7,6 +10,7 @@ body {
 
 h1, button, footer {
 	font-family:"Anonymous Pro";
+	font-family:"Quicksand";
 	font-weight:100;
 	color:white;
 	text-align:center;
@@ -19,24 +23,66 @@ h1 {
 }
 
 button {
-	border:solid 3px white;
-	padding:7px 30px;
-	background-color:#19d;
-	font-size:19pt;
+	border:solid 2px #19d;
+	padding:8px 32px;
+	background-color:#fff;
+	color:#19d;
+	font-size:16pt;
 	cursor:pointer;
+	width:180px;
+	text-align:center;
+    -webkit-transition: border .2s;
+    transition: border .2s;
 }
 button:hover {
-	background-color:white;
-	color:#19d;
+	border:solid 2px #fff;
 }
 button:active {
-	background-color:#ddd;
-	color:#19d;
+	background-color:#19d;
+	color:#fff;
 }
 
 footer {
-	position:absolute;
-	bottom:10px;
+	margin:50px auto;
 	font-size:11pt;
 	width:100%;
+}
+
+
+
+/* start page */
+
+.guides {
+	border:solid 3px white;
+	margin:0 auto;
+	height:400px;
+	width:400px;
+	position:relative;
+}
+
+.bguide, .sguide {
+	position:absolute;
+	background-color:white;
+	color:#19d;
+	text-align:center;
+	padding:80px 40px;
+	box-sizing:border-box;
+	top:0px;
+	height:100%;
+	width:100%;
+	font-size:16pt;
+	opacity:1;
+	border:dashed 3px #19d;
+}
+
+.sguide {
+	background-color:#333;
+}
+
+#sgarrow {
+	-ms-transform: rotate(20deg);
+    -webkit-transform: rotate(20deg);
+    transform: rotate(20deg);
+     -webkit-transition: transform .5s;
+    transition: transform .5s;
 }

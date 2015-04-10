@@ -310,6 +310,8 @@ window.ramp = function(start,end,dur,callback) {
 var util = require('util');
 var EventEmitter = require('events').EventEmitter;
 var Tone = require('tone')
+var math = require('../utils/math')
+var extend = require('extend');
 
 /** 
   @title McLuhan JS API
@@ -336,6 +338,8 @@ var Manager = module.exports = function() {
 
   // Will use eventually
   // EventEmitter.apply(this)
+  
+  extend(this,math)
 
 }
 
@@ -430,7 +434,7 @@ Manager.prototype.makeWall = function(num,config) {
 //  return 
 }
 
-},{"../media":8,"events":22,"tone":109,"util":50}],4:[function(require,module,exports){
+},{"../media":8,"../utils/math":16,"events":22,"extend":51,"tone":109,"util":50}],4:[function(require,module,exports){
 
 // Template for all DOM-based items (video, audio, divs, embeds)
 /**

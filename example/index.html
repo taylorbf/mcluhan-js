@@ -3,32 +3,54 @@
   <head>
   <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="viewport" content="width=device-width">
 	<script src="../dist/mcluhan.js"></script>
-	<link href='http://fonts.googleapis.com/css?family=Nixie+One' rel='stylesheet' type='text/css'>
+	<link href='http://fonts.googleapis.com/css?family=Quicksand:300,400,700' rel='stylesheet' type='text/css'>
 	<link href='http://fonts.googleapis.com/css?family=Anonymous+Pro' rel='stylesheet' type='text/css'>
-<!--	<script src="js/nexusUI.js"></script> -->
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <script src="./jcubic/js/jquery-1.7.1.min.js"></script>
   </head>
   <body>
 
-<!--	<canvas nx="toggle" id="winset1"></canvas>
-	<canvas nx="toggle" id="winset2"></canvas>
-	<canvas nx="toggle" id="winset3"></canvas>
-	<canvas nx="toggle" id="winset4"></canvas>
-	<canvas nx="toggle" id="winset5"></canvas> -->
+  	<script>
 
-	<script>
-	/*  nx.onload = function() {
-	    winset1.on('*',function(data) {
-		  if (data.value) {
-		    var wall = new Array()
-		    for (var i=0;i<4;i++) {
-		      wall.push(m.peer(200*(i+1),50,200,400))
-		    }
-		    walls.push(wall)
-		  }
-	    })
-	  } */
-	</script>
+  	function goto(page) {
+  		window.location.href = "-" + page + ".html"
+  	}
+  	</script>
+
+	<style>
+		button { display:block; margin:10px auto; }
+	</style>
+
+	<h1>McLuhan.JS<h1>
+
+	<button onclick="goto('film')">Film</button>
+
+	<button onclick="goto('film')">Cassette</button>
+
+	<button onclick="goto('film')">Presence</button>
+
+	<button onclick="goto('film')">Voice</button>
+
+	<button onclick="goto('film')">Lattice</button>
+
+	<button onclick="goto('film')">Hack</button>
+
+	<button onclick="goto('film')">Wall</button>
+
+	<button onclick="goto('film')">Paper</button>
+
+	<button onclick="goto('film')">Rhythm</button>
+
+	<footer>Lovingly made with McLuhan.js</footer>
+
+	<!-- 
+	preparation section!
+	please make your browser this big (show guides)
+	move it to center of screen (show arrow!)
+	nice alert when done
+	-->
 
   </body>
 </html>
