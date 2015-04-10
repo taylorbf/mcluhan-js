@@ -6,6 +6,7 @@ body {
 	padding:0;
 	height:100%;
 	background-color:#19d;
+	width:100%;
 }
 
 h1, button, footer {
@@ -56,6 +57,8 @@ footer {
 	height:400px;
 	width:400px;
 	position:relative;
+  	top: 50%;
+  	transform: translateY(-50%);
 }
 
 .bguide, .sguide {
@@ -82,7 +85,7 @@ footer {
     -webkit-transform: rotate(20deg);
     transform: rotate(20deg);
      -webkit-transition: transform .5s;
-    transition: transform .5s;
+    transition: all .5s;
 }
 
 

@@ -368,6 +368,7 @@ Manager.prototype.init = function() {
 
 Manager.prototype.deck = function(limit) {
   this.spaceLimit = limit
+  windex = 0;
   for (var i=0;i<this.spaceLimit;i++) {
     m.makeSpace()
   }
@@ -1841,6 +1842,7 @@ var Window = module.exports = function(params) {
 	this.index = windex;
 	windex++;
 	this.visible = false;
+	this.empty()
 	
 }
 
@@ -1905,6 +1907,7 @@ Window.prototype.kill = function() {
 }
 
 Window.prototype.empty = function() {
+	this.element.document.body.innerHTML = "";
 }
 
 Window.prototype.testDraw = function() {

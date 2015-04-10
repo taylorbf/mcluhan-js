@@ -16,10 +16,13 @@
 	<script>
 
 	$(function() {
-		
+
+		// m.gui.setup()
+
 		projectwid = $(".guides").width()
 		projecthgt = $(".guides").height()
 		showbguide = true;
+		smoothguide = 0;
 
 		window.addEventListener("resize",checkSize)
 
@@ -42,10 +45,12 @@
 
 			if (showbguide) {
 				showbguide = false;
-				$(".bguide").fadeOut(200)
-				$(".sguide").fadeIn(200)
+				$(".bguide").fadeOut(smoothguide)
+				$(".sguide").fadeIn(0)
 				watchWindow();
 			}
+		} else {
+			smoothguide = 500;
 		}
 	}
 
@@ -67,14 +72,18 @@
 
 		var polar = m.toPolar(distx,disty)
 		var degrees = Math.round((polar.angle/(Math.PI*2)) * 360) + 180;
+		var size = (Math.round(polar.radius)/6)+10
 
 		$("#sgarrow").css("-ms-transform", "rotate("+degrees+"deg)")
 		$("#sgarrow").css("-webkit-transform", "rotate("+degrees+"deg)")
 		$("#sgarrow").css("transform", "rotate("+degrees+"deg)")
+		$("#sgarrow").css("font-size", size+"px")
 
 		if (Math.abs(distx) < 20 && Math.abs(disty) < 20 ) {
-			$(".sguide").fadeOut(200)
+			$(".sguide").fadeOut(smoothguide)
 			clearInterval(sguide)
+		} else {
+			smoothguide = 500
 		}
 
 	}
@@ -87,19 +96,26 @@
 		case 10: 
 		  a = new wall("line");
 			break;
-		case 70: 
-		  a.watch("ocean")
+		case 30: 
+		  a.a = a.watch("ocean")
 			break;
-		case 100: 
+		case 50: 
 		  a.xray()
+			break;
+		case 70: 
+		  a.a.skip(6,8)
 			break;
 	  }
 	}
 
+	window.addEventListener("beforeunload", function() {
+		m.deck(m.spaceLimit);
+	});
+
 	
 	</script>
 
-	<div style="position:absolute;top:0px;width:100%">
+	<div style="position:absolute;top:0px;width:100%;height:100%">
 		<div class="guides">
 
 			<h1>FILM<h1>
@@ -127,8 +143,11 @@
 	<!-- 
 	preparation section!
 	// please make your browser this big (show guides)
-	move it to center of screen (show arrow!)
-	nice alert when done
+	// move it to center of screen (show arrow!)
+	// nice alert when done
+	back button that redecks when leaving page
+	show x and y distances in setup gui arrow task
+	need a close all windows function with a callback function...
 	-->
 
   </body>
