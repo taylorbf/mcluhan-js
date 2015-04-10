@@ -1,0 +1,124 @@
+<!doctype html>
+<html>
+  <head>
+  <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="viewport" content="width=device-width">
+	<script src="speakClient.js"></script>
+	<script src="../dist/mcluhan.js"></script>
+	<link href='http://fonts.googleapis.com/css?family=Nixie+One' rel='stylesheet' type='text/css'>
+	<link href='http://fonts.googleapis.com/css?family=Anonymous+Pro' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <script src="./jcubic/js/jquery-1.7.1.min.js"></script>
+  </head>
+  <body>
+
+	<script>
+
+	$(function() {
+		
+		var projectwid = $(".guides").width()
+		var projecthgt = $(".guides").height()
+		var showbguide = true;
+
+		var winwid2;
+		var winhgt2;
+
+		window.addEventListener("resize",function() {
+			var winwid = window.innerWidth;
+			var winhgt = window.innerHeight;
+			if (winwid < projectwid + 10 && winwid > projectwid - 10 && winhgt < projecthgt + 10 && winhgt > projecthgt - 10) {
+
+				if (showbguide) {
+					showbguide = false;
+					$(".bguide").fadeOut()
+					$(".sguide").fadeIn()
+					watchWindow();
+				}
+				
+
+			}
+		})
+
+	})
+
+	function watchWindow() {
+		sguide = setInterval(pingWindow, 50)
+	}
+
+	var wwid = window.screen.availWidth;
+	var whgt = window.screen.availHeight;
+
+	function pingWindow() {
+		var winx = window.screenLeft;
+		var winy = window.screenTop;
+		var winwid2 = window.outerWidth;
+		var winhgt2 = window.outerHeight;
+
+		var distx = winx + (winwid2/2) - (wwid/2)
+		var disty = winy + (winhgt2/2) - (whgt/2)
+
+		var polar = m.toPolar(distx,disty)
+		var degrees = Math.round((polar.angle/(Math.PI*2)) * 360) + 180;
+
+		console.log(degrees)
+
+		$("#sgarrow").css("-ms-transform", "rotate("+degrees+"deg)")
+		$("#sgarrow").css("-webkit-transform", "rotate("+degrees+"deg)")
+		$("#sgarrow").css("transform", "rotate("+degrees+"deg)")
+
+		if (Math.abs(distx) < 20 && Math.abs(disty) < 20 ) {
+			$(".sguide").fadeOut()
+			clearInterval(sguide)
+		}
+
+	}
+		
+
+
+		m.deck(16);
+
+		m.timeline = function(scheduler) {
+		  switch(scheduler) {
+			case 10: 
+			  a = new wall("line");
+				break;
+			case 100: 
+			  a.watch("waves")
+				break;
+			case 150: 
+			  a.xray()
+				break;
+		  }
+		}
+
+	
+	</script>
+
+	<div class="guides">
+
+		<h1>FILM<h1>
+
+		<button onclick="m.start(0,1000);">Let's Go!</button>
+
+		<footer>Lovingly made with McLuhan.js</footer>
+
+		<div class="sguide" style="display:none">
+			Please move your browser to the middle of your screen.
+			<div id="sgarrow" style="font-size:70px;margin-top:40px">&#10148;</div>
+
+		</div>
+		<div class="bguide">
+			Please resize your browser to the size of this box.
+		</div>
+	</div>
+
+	<!-- 
+	preparation section!
+	// please make your browser this big (show guides)
+	move it to center of screen (show arrow!)
+	nice alert when done
+	-->
+
+  </body>
+</html>
