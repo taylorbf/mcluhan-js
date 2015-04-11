@@ -5,8 +5,9 @@ body {
 	margin:0;
 	padding:0;
 	height:100%;
-	background-color:#19d;
 	width:100%;
+	background-color:#19d;
+	font-family:"Quicksand";
 }
 
 h1, button, footer {
@@ -52,6 +53,13 @@ footer {
 
 /* start page */
 
+#shell {
+	position:absolute;
+	top:0px;
+	width:100%;
+	height:100%;
+}
+
 .guides {
 	margin:0 auto;
 	height:400px;
@@ -73,7 +81,7 @@ footer {
 	width:100%;
 	font-size:16pt;
 	opacity:1;
-	border:dashed 3px #19d;
+	border:dashed 4px #19d;
 }
 
 .sguide {
@@ -86,6 +94,7 @@ footer {
     transform: rotate(20deg);
      -webkit-transition: transform .5s;
     transition: all .5s;
+    font-size:100px;
 }
 
 
