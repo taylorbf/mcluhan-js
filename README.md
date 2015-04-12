@@ -13,7 +13,7 @@
 
 McLuhan.js is a toolkit for making browser art (a.k.a. web art or net.art). The library focuses especially on enabling live performances of browser art to remote viewers.
 
-[Examples](http://taylorbf.github.io/mcluhan-js/examples)
+[Examples](http://taylorbf.github.io/mcluhan-js/example/)
 
 McLuhan.js is under heavy development and will be released later in 2015.
 
