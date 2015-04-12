@@ -556,10 +556,10 @@ StaticProject.prototype.setup = function() {
 
 	this.checkSize()
 	
-	setTimeout("NProgress.set(0.69)", 4000);
-	setTimeout("NProgress.set(0.99)", 6000);
-	setTimeout(NProgress.done, 8000);
-	setTimeout("$('#splash').fadeOut()", 8000);
+	setTimeout("NProgress.set(0.39)", 2000);
+	setTimeout("NProgress.set(0.99)", 4000);
+	setTimeout(NProgress.done, 6000);
+	setTimeout("$('#splash').fadeOut()", 6000);
 
 	window.addEventListener("beforeunload", function() {
 		m.deck(m.spaceLimit);
@@ -981,8 +981,11 @@ Lattice.prototype.draw = function(src) {
 Lattice.prototype.play = function() {
 	this.instrument[0].notes[this.place.z][this.place.x][this.place.y].play()
 }
-Lattice.prototype.wander = function() {
-	this.int = setInterval(this.nextxyz.bind(this),100)
+Lattice.prototype.wander = function(speed) {
+	this.int = setInterval(this.nextxyz.bind(this),speed)
+}
+Lattice.prototype.stop = function() {
+	clearInterval(this.int)
 }
 Lattice.prototype.nextxyz = function() {
 	var dir = random(3)
@@ -993,12 +996,12 @@ Lattice.prototype.nextxyz = function() {
 	} else {
 		this.place.z += random(3)-1
 	}
-	this.place.x = this.place.x>=this.dimension.x ? 0 : this.place.x;
-	this.place.y = this.place.y>=this.dimension.y ? 0 : this.place.y;
-	this.place.z = this.place.z>=this.dimension.z ? 0 : this.place.z;
-	this.place.x = this.place.x<0 ? this.dimension.x-1 : this.place.x;
-	this.place.y = this.place.y<0 ? this.dimension.y-1 : this.place.y;
-	this.place.z = this.place.z<0 ? this.dimension.z-1 : this.place.z;
+	this.place.x = this.place.x>=this.dimension.x ? this.dimension.x-2 : this.place.x;
+	this.place.y = this.place.y>=this.dimension.y ? this.dimension.y-2 : this.place.y;
+	this.place.z = this.place.z>=this.dimension.z ? this.dimension.z-2 : this.place.z;
+	this.place.x = this.place.x<0 ? 1 : this.place.x;
+	this.place.y = this.place.y<0 ? 1 : this.place.y;
+	this.place.z = this.place.z<0 ? 1 : this.place.z;
 	this.play()
 }
 Lattice.prototype.nextx = function() {
@@ -1250,7 +1253,7 @@ var Medium = require('../core/medium')
  */
 var Photo = module.exports = function(params) {
 
-	this.defaultSize = { w: 300, h: 300 }
+	this.defaultSize = { w: 800 }
 	this.type = "canvas";
 
 	//separate item constructor "Medium" with properties for placement, animation, remove, make dom element, styling element based on json
@@ -1295,8 +1298,8 @@ Photo.prototype.glitch = function(file,callback) {
 	// glitch the image data (passing drawImageDataInCanvasTwo as a callback function)
 	var parameters = { amount: 10, seed: 45, iterations: 30, quality: 30 };
 	
-	console.log(parameters)
-	console.log(glitch)
+	//console.log(parameters)
+	//console.log(glitch)
 	
 	glitch( this.data, parameters, function(data) {
 		console.log("inside")
@@ -1338,6 +1341,10 @@ var Presence = module.exports = function(params) {
 	this.pic.height = this.defaultSize.h;
 	this.picctx = this.pic.getContext('2d');
 
+	/* this gets the "presence" canvas in coding.html ...
+		if want to send presence through network or add to a Wall,
+		will need to generate this second canvas programatically
+	*/
 	this.canvas = document.getElementById("presence")
 	this.canvas.style.height = this.defaultSize.h;
 	this.canvas.style.width = this.defaultSize.w;
@@ -1720,6 +1727,9 @@ Wall.prototype.kill = function() {
  * Remove all media elements and content from all windows in this wall
  */
 Wall.prototype.empty = function() {
+	for (var i=0;i<this.elements.length;i++) {
+		this.elements[i].element.document.body.innerHTML = ""
+	}
 }
 
 Wall.prototype.testDraw = function() {

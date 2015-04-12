@@ -7,18 +7,20 @@ body {
 	height:100%;
 	width:100%;
 	background-color:#19d;
-	font-family:"Quicksand";
+	font-family:"Quicksand", helvetica neue;
+	text-align:center;
 }
 
 h1, button, footer {
-	font-family:"Quicksand";
+	font-family:"Quicksand", helvetica neue;
 	font-weight:100;
 	color:white;
 	text-align:center;
-	margin:40px auto;
+	margin:35px auto;
 }
 
 h1 {
+	margin:70px auto 35px;
 	font-size:25pt;
 	letter-spacing:1px;
 }
@@ -76,7 +78,7 @@ footer {
 	text-align:center;
 	padding:80px 40px;
 	box-sizing:border-box;
-	top:-40px;
+	top:-65px;
 	height:100%;
 	width:100%;
 	font-size:16pt;

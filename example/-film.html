@@ -8,7 +8,7 @@
 		<script src="../dist/mcluhan.js"></script>
 		<link href='http://fonts.googleapis.com/css?family=Quicksand:300,400,700' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" type="text/css" href="css/style.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <script src="js/jquery-2.1.0.min.js"></script>
   </head>
   <body>
 
@@ -40,7 +40,21 @@
 					  a.xray()
 						break;
 					case 70:
-					  a.a.skip(6,8)
+					  a.a.stop()
+						break;
+					case 90:
+					  a.a.play()
+					  a.a.jumpTo(0)
+						break;
+					case 110:
+					  a.a.speed(4)
+					  a.a.jumpTo(5)
+						break;
+					case 130:
+					  a.a.skip(8,8.5)
+						break;
+					case 150:
+					  history.back()
 						break;
 				  }
 				}
@@ -52,7 +66,7 @@
 		<div id="shell">
 			<div class="guides">
 
-				<h1>FILM<h1>
+				<h1>FILM</h1>
 
 				<button onclick="m.static.begin()">Begin</button>
 

@@ -16,15 +16,7 @@
 
 			$(function() {
 
-				m.static.setup({
-					w: 400,
-					h: 400,
-					x: 0.5,
-					y: 0.5,
-					bg: "#19d",
-					text: "#fff",
-					type: "static"
-				})
+				m.static.setup()
 
 				m.deck(16);
 
@@ -34,7 +26,7 @@
 					  a = new wall("line");
 						break;
 					case 30:
-					  a.a = a.watch("ocean")
+					  a.a = new presence()
 						break;
 					case 50:
 					  a.xray()
@@ -52,7 +44,7 @@
 		<div id="shell">
 			<div class="guides">
 
-				<h1>FILM<h1>
+				<h1>PRESENCE</h1>
 
 				<button onclick="m.static.begin()">Begin</button>
 
