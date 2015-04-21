@@ -4,7 +4,7 @@
 
 **Overview:** A platform for live web art performance in remote browsers.
 
-**Project Site:** http://www.whitechord.org
+**Project Site:** http://taylorbf.github.io/mcluhan-js
 
 **License:** McLuhan.js is licensed as open source software under the terms of the "New BSD License", http://creativecommons.org/licenses/BSD/
 
@@ -16,6 +16,20 @@ McLuhan.js is a toolkit for making browser art (a.k.a. web art or net.art). The 
 [Examples](http://taylorbf.github.io/mcluhan-js/example/)
 
 McLuhan.js is under heavy development and will be released later in 2015.
+
+### Open-Source Debt
+
+There's no reason to reinvent the wheel. McLuhan.js makes use of several existing JavaScript libraries for specific effects and events. THANK YOU to these creative coders.
+
+[theNewAesthetic.js](http://nickbriz.com/thenewaesthetic/) by Nick Briz
+
+[glitch-canvas](https://github.com/snorpey/glitch-canvas)
+
+[speak.js](https://github.com/mattytemple/speak-js)
+
+[Tone.js](https://github.com/TONEnoTONE/Tone.js/)
+
+[NexusUI](http://nexusosc.com)
 
 # How to Use
 
