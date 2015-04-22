@@ -1,0 +1,45 @@
+<!doctype html>
+<html>
+  <head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="viewport" content="width=device-width">
+	<script src="speakClient.js"></script>
+	<script src="../dist/mcluhan.js"></script>
+	<link href='http://fonts.googleapis.com/css?family=Quicksand:300,400,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+  </head>
+  <body>
+
+		<script>
+
+			$(function() {
+
+				m.static.setup()
+
+				m.deck(16);
+
+				m.timeline = function(scheduler) {
+				  switch(scheduler) {
+					case 20:
+					  a = new wall("line");
+						break;
+					case 60:
+					  a.bg();
+						break;
+				  }
+				}
+
+			//	m.static.begin()
+
+			})
+
+		
+		</script>
+
+
+  </body>
+
+  <script src="js/theNewAesthetic.js"></script>
+</html>

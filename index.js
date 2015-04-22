@@ -6,7 +6,7 @@ window._ = require("underscore")
 window.glitch = require("./bower_components/glitch-canvas/dist/glitch-canvas")
 window.Nightmare = require ("nightmare")
 window.Tone = require('tone').Tone
-
+require('./lib/utils/bt')
 
 //var Voice = require("./lib/media/voice")
 

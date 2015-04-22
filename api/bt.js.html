@@ -3,7 +3,7 @@
 <html lang="en">
 <head>
 	<meta charset="utf-8">
-	<title>McLuhan.js Source: utils/math.js</title>
+	<title>McLuhan.js Source: utils/bt.js</title>
 
 	<!--[if lt IE 9]>
 	<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
@@ -97,23 +97,21 @@
 					
 
 
-		<h1 class="page-title">Source: utils/math.js</h1>
+		<h1 class="page-title">Source: utils/bt.js</h1>
     
     <section>
         <article>
-            <pre class="sunlight-highlight-javascript linenums">/**
- * @class utils tes
- * @description (IN TRANSIT) shared utility functions
- */
+            <pre class="sunlight-highlight-javascript linenums">
 
-
-
-/** @method toPolar test1
+/** @method toPolar 
     Receives cartesian coordinates and returns polar coordinates as an object with 'radius' and 'angle' properties.
     @param {float} [x] 
     @param {float} [y] 
+    ```js
+    var ImOnACircle = nx.toPolar({ x: 20, y: 50 }})
+    ```
 */
-exports.toPolar = function(x,y) {
+var toPolar = function(x,y) {
   var r = Math.sqrt(x*x + y*y);
 
   var theta = Math.atan2(y,x);
@@ -128,7 +126,7 @@ exports.toPolar = function(x,y) {
     @param {float} [radius] 
     @param {float} [angle] 
 */
-exports.toCartesian = function(radius, angle){
+var toCartesian = function(radius, angle){
   var cos = Math.cos(angle);
   var sin = Math.sin(angle);
   return {x: radius*cos, y: radius*sin*-1};
@@ -140,8 +138,13 @@ exports.toCartesian = function(radius, angle){
     @param {float} [input value] 
     @param {float} [low limit] 
     @param {float} [high limit] 
+    ```js
+    nx.clip(5,0,10) // returns 5
+    nx.clip(15,0,10) // returns 10
+    nx.clip(-1,0,10) // returns 0
+    ```
 */
-exports.clip = function(value, low, high) {
+var clip = function(value, low, high) {
   return Math.min(high, Math.max(low, value));
 }
 
@@ -149,9 +152,13 @@ exports.clip = function(value, low, high) {
     Limits a float to within a certain number of decimal places
     @param {float} [input value] 
     @param {integer} [max decimal places] 
+    ```js
+    nx.prine(1.2345, 3) // returns 1.234
+    nx.prune(1.2345, 1) // returns 1.2
+    ```
 */
 
-exports.prune = function(data, scale) {
+var prune = function(data, scale) {
   if (typeof data === "number") {
     data = parseFloat(data.toFixed(scale));
   } else if (data instanceof Array) {
@@ -164,6 +171,7 @@ exports.prune = function(data, scale) {
   return data;
 }
 
+
 /** @method scale 
     Scales an input number to a new range of numbers
     @param {float} [input value] 
@@ -171,20 +179,28 @@ exports.prune = function(data, scale) {
     @param {float} [high1] input range (high)
     @param {float} [low2] output range (low)
     @param {float} [high2] output range (high)
+    ```js
+    nx.scale(5,0,10,0,100) // returns 50
+    nx.scale(5,0,10,1,2) // returns 1.5
+    ```
 */
-exports.scale = function(inNum, inMin, inMax, outMin, outMax) {
+var scale = function(inNum, inMin, inMax, outMin, outMax) {
   return (((inNum - inMin) * (outMax - outMin)) / (inMax - inMin)) + outMin;  
 }
 
 /** @method invert 
     Equivalent to nx.scale(input,0,1,1,0). Inverts a normalized (0-1) number. 
     @param {float} [input value]  
+    ```js
+    nx.invert(0.25) // returns 0.75
+    nx.invert(0) // returns 1
+    ```
 */
-exports.invert = function (inNum) {
-  return exports.scale(inNum, 1, 0, 0, 1);
+var invert = function (inNum) {
+  return scale(inNum, 1, 0, 0, 1);
 }
 
-exports.bounce = function(posIn, borderMin, borderMax, delta) {
+var bounce = function(posIn, borderMin, borderMax, delta) {
   if (posIn > borderMin &amp;&amp; posIn &lt; borderMax) {
     return delta;
   } else if (posIn &lt;= borderMin) {
@@ -198,24 +214,119 @@ exports.bounce = function(posIn, borderMin, borderMax, delta) {
 /** @method mtof 
     MIDI to frequency conversion. Returns frequency in Hz.
     @param {float} [MIDI] MIDI value to convert
+    ```js
+    nx.mtof(69) // returns 440
+    ```
 */
-exports.mtof = function(midi) {
+var mtof = function(midi) {
   return Math.pow(2, ((midi-69)/12)) * 440;
 }
 
 
 /** @method random 
-    Returns a random integer between 0 a given scale parameter.
+    Returns a random integer between 0 and a given scale parameter.
     @param {float} [scale] Upper limit of random range.
+    ```js
+    nx.random(10) // returns a random number from 0 to 9.
+    nx.random(10,20) // returns a random number from 10 to 19.
+    ```
 */
-exports.random = function(scale) {
-  return Math.floor(Math.random() * scale);
+var random = function(scale,max) {
+	if (max) {
+		return Math.floor(Math.random() * (max-scale) + scale);
+	} else {
+  		return Math.floor(Math.random() * scale);
+	}
 }
 
 
-exports.interp = function(loc,min,max) {
+var interp = function(loc,min,max) {
   return loc * (max - min) + min;  
-}</pre>
+}
+
+var randomColor = function() {
+  return "rgb(" + random(255) + "," + random(255) + "," + random(255) + ")";
+}
+
+
+var isInside = function(clickedNode,currObject) {
+  if (clickedNode.x > currObject.x &amp;&amp; clickedNode.x &lt; (currObject.x+currObject.w) &amp;&amp; clickedNode.y > currObject.y &amp;&amp; clickedNode.y &lt; (currObject.y+currObject.h)) {
+    return true;
+  } else {
+    return false; 
+  }
+}
+
+
+
+/*
+ interval with controllable speed / interval time
+	bt.interval()
+*/
+
+var VariableSpeedInterval = function(bpm, func) {
+	this.rate = bpm
+	this.on = true;
+	this.event = func ? func : function() { };
+	this.again = function() {
+		if (this.on) {
+			this.event();
+			setTimeout(this.again.bind(this),this.rate)
+		}
+	}
+	this.stop = function() {
+		this.on = false;
+	}
+	this.start = function() {
+		this.on = true;
+		this.again();
+	}
+	this.start();
+}
+
+var interval = function(bpm) {
+	var _int = new VariableSpeedInterval(bpm)
+	return _int;
+}
+
+/* use like this:
+    // func is optional
+	var x = interval(50, function() {   bla ... })
+	x.rate = 100;
+	x.stop()
+	// later
+	x.start
+
+*/
+
+
+
+/*
+random function that executes (returns new num) each time
+	this should probably be global
+*/
+
+
+function rand(scale) {
+	return random.bind(null,scale)
+
+}
+/* use like this:
+
+a = new Wall()
+a.moveTo(rand(WIDTH),rand(HEIGHT))
+
+... how often would this happen?
+.. and in an interval, wouldn't random() just be evaluated anyway?
+
+
+*/
+
+/*
+? ramp a variable, with jquery, maybe...
+array forEach
+
+*/</pre>
         </article>
     </section>
 

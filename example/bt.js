@@ -1,0 +1,3 @@
+exports.rand = function(scale) {
+	
+}

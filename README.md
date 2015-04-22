@@ -4,7 +4,7 @@
 
 **Overview:** A platform for live web art performance in remote browsers.
 
-**Project Site:** http://taylorbf.github.io/mcluhan-js
+**Project Site:** http://taylorbf.github.io/mcluhan-js/example/
 
 **License:** McLuhan.js is licensed as open source software under the terms of the "New BSD License", http://creativecommons.org/licenses/BSD/
 
@@ -19,7 +19,7 @@ McLuhan.js is under heavy development and will be released later in 2015.
 
 ### Open-Source Debt
 
-There's no reason to reinvent the wheel. McLuhan.js makes use of several existing JavaScript libraries for specific effects and events. THANK YOU to these creative coders.
+McLuhan.js makes use of several existing JavaScript libraries for specific effects and events. There's no reason to reinvent the wheel. **Thank you** to these creative coders:
 
 [theNewAesthetic.js](http://nickbriz.com/thenewaesthetic/) by Nick Briz
 
@@ -27,17 +27,17 @@ There's no reason to reinvent the wheel. McLuhan.js makes use of several existin
 
 [speak.js](https://github.com/mattytemple/speak-js)
 
-[Tone.js](https://github.com/TONEnoTONE/Tone.js/)
+[Tone.js](https://github.com/TONEnoTONE/Tone.js/) by Yotam Mann
 
 [NexusUI](http://nexusosc.com)
 
 # How to Use
 
-This is a place to convey basic use patterns. This documentation is of currently-working methods, though some may be in flux.
+This documentation conveys basic use patterns of methods that have existed at some point in time. The API is in constant revision and any methods here may no longer work.
 
 ## Wall Object
 
-Wall is the central commanding object of the library, because it creates a space for other materials to be added.
+Wall is the central object of the library, because it creates a space for other materials to be added.
 
 Create a wall (collection of browser windows).
 
