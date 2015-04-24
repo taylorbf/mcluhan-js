@@ -2182,7 +2182,7 @@ Window.prototype.moveseq = function(x,y,time,callback) {
     var ImOnACircle = nx.toPolar({ x: 20, y: 50 }})
     ```
 */
-var toPolar = function(x,y) {
+window.toPolar = function(x,y) {
   var r = Math.sqrt(x*x + y*y);
 
   var theta = Math.atan2(y,x);
@@ -2197,7 +2197,7 @@ var toPolar = function(x,y) {
     @param {float} [radius] 
     @param {float} [angle] 
 */
-var toCartesian = function(radius, angle){
+window.toCartesian = function(radius, angle){
   var cos = Math.cos(angle);
   var sin = Math.sin(angle);
   return {x: radius*cos, y: radius*sin*-1};
@@ -2215,7 +2215,7 @@ var toCartesian = function(radius, angle){
     nx.clip(-1,0,10) // returns 0
     ```
 */
-var clip = function(value, low, high) {
+window.clip = function(value, low, high) {
   return Math.min(high, Math.max(low, value));
 }
 
@@ -2229,7 +2229,7 @@ var clip = function(value, low, high) {
     ```
 */
 
-var prune = function(data, scale) {
+window.prune = function(data, scale) {
   if (typeof data === "number") {
     data = parseFloat(data.toFixed(scale));
   } else if (data instanceof Array) {
@@ -2255,7 +2255,7 @@ var prune = function(data, scale) {
     nx.scale(5,0,10,1,2) // returns 1.5
     ```
 */
-var scale = function(inNum, inMin, inMax, outMin, outMax) {
+window.scale = function(inNum, inMin, inMax, outMin, outMax) {
   return (((inNum - inMin) * (outMax - outMin)) / (inMax - inMin)) + outMin;  
 }
 
@@ -2267,11 +2267,11 @@ var scale = function(inNum, inMin, inMax, outMin, outMax) {
     nx.invert(0) // returns 1
     ```
 */
-var invert = function (inNum) {
+window.invert = function (inNum) {
   return scale(inNum, 1, 0, 0, 1);
 }
 
-var bounce = function(posIn, borderMin, borderMax, delta) {
+window.bounce = function(posIn, borderMin, borderMax, delta) {
   if (posIn > borderMin && posIn < borderMax) {
     return delta;
   } else if (posIn <= borderMin) {
@@ -2289,7 +2289,7 @@ var bounce = function(posIn, borderMin, borderMax, delta) {
     nx.mtof(69) // returns 440
     ```
 */
-var mtof = function(midi) {
+window.mtof = function(midi) {
   return Math.pow(2, ((midi-69)/12)) * 440;
 }
 
@@ -2302,7 +2302,7 @@ var mtof = function(midi) {
     nx.random(10,20) // returns a random number from 10 to 19.
     ```
 */
-var random = function(scale,max) {
+window.random = function(scale,max) {
 	if (max) {
 		return Math.floor(Math.random() * (max-scale) + scale);
 	} else {
@@ -2311,16 +2311,16 @@ var random = function(scale,max) {
 }
 
 
-var interp = function(loc,min,max) {
+window.interp = function(loc,min,max) {
   return loc * (max - min) + min;  
 }
 
-var randomColor = function() {
+window.randomColor = function() {
   return "rgb(" + random(255) + "," + random(255) + "," + random(255) + ")";
 }
 
 
-var isInside = function(clickedNode,currObject) {
+window.isInside = function(clickedNode,currObject) {
   if (clickedNode.x > currObject.x && clickedNode.x < (currObject.x+currObject.w) && clickedNode.y > currObject.y && clickedNode.y < (currObject.y+currObject.h)) {
     return true;
   } else {
@@ -2335,14 +2335,16 @@ var isInside = function(clickedNode,currObject) {
 	bt.interval()
 */
 
-var VariableSpeedInterval = function(bpm, func) {
-	this.rate = bpm
+window.VariableSpeedInterval = function(rate,func) {
+	this.rate = rate
 	this.on = true;
 	this.event = func ? func : function() { };
-	this.again = function() {
+	this.pulse = function() {
 		if (this.on) {
+			this.time.last = new Date().getTime()
 			this.event();
-			setTimeout(this.again.bind(this),this.rate)
+			//var delay = force ? force : this.rate
+			this.timeout = setTimeout(this.pulse.bind(this),this.rate)
 		}
 	}
 	this.stop = function() {
@@ -2350,23 +2352,44 @@ var VariableSpeedInterval = function(bpm, func) {
 	}
 	this.start = function() {
 		this.on = true;
-		this.again();
+		this.pulse();
+	}
+	this.time = {
+		last: false,
+		cur: false
+	}
+	this.ms = function(newrate) {
+		var oldrate = this.rate;
+		this.rate = newrate;
+
+		this.time.cur = new Date().getTime()
+		if (this.time.cur - this.time.last > newrate) {
+			clearTimeout(this.timeout)
+			this.pulse();
+		} else if (newrate < oldrate) {
+			clearTimeout(this.timeout)
+			var delay = this.rate - (this.time.cur - this.time.last);
+			if (delay < 0 ) { delay = 0 }
+			this.timeout = setTimeout(this.pulse.bind(this),delay)
+		}
 	}
 	this.start();
 }
 
-var interval = function(bpm) {
-	var _int = new VariableSpeedInterval(bpm)
+window.interval = function(rate,func) {
+	var _int = new VariableSpeedInterval(rate,func)
 	return _int;
 }
 
 /* use like this:
     // func is optional
 	var x = interval(50, function() {   bla ... })
-	x.rate = 100;
+	x.ms(100);
 	x.stop()
 	// later
 	x.start
+	//can change function midway
+	x.event = function() { ... }
 
 */
 
@@ -2378,9 +2401,8 @@ random function that executes (returns new num) each time
 */
 
 
-function rand(scale) {
+window.rand = function(scale) {
 	return random.bind(null,scale)
-
 }
 /* use like this:
 

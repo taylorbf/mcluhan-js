@@ -16,7 +16,7 @@
 
 			$(function() {
 
-				m.static.setup()
+			/*	m.static.setup()
 
 				m.deck(16);
 
@@ -31,12 +31,47 @@
 				  }
 				}
 
-			//	m.static.begin()
+			//	m.static.begin() */
+
+				time = new Date().getTime()
+
+				var x = false;
+
+				x = interval(300,function() {
+					time2 = new Date().getTime()
+					console.log(time2-time)
+					time = time2;
+					var out = x ? x.rate : 1000;
+					$("#circle").stop().fadeIn(0).fadeOut(out)
+				})
+
+				$(window).mousemove(function(e) {
+					if (x) {
+						x.ms(e.pageX)
+					}
+				})
 
 			})
 
 		
 		</script>
+
+
+		<div id="circle">
+
+		</div>
+
+		<style>
+
+			#circle {
+				width:100px;
+				height:100px;
+				background-color:white;
+				border-radius:50px;
+				margin:150px auto;
+			}
+
+		</style>
 
 
   </body>
