@@ -1,0 +1,86 @@
+<!doctype html>
+<html>
+  <head>
+  <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width">
+    <script src="speakClient.js"></script>
+    <script src="../dist/mcluhan.js"></script>
+    <link href='http://fonts.googleapis.com/css?family=Anonymous+Pro' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="css/controls.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
+    <script src="js/nexusUI.js"></script>
+    <script src="js/rack.js"></script>
+  </head>
+  <body>
+
+  	<header>mcluhan.js: &nbsp; real-time net.art</header>
+
+ <!--   <canvas nx="select" id="wall1" choices=",line,grid4" style="border-radius:0px !important"></canvas> -->
+
+    <div style="width:100%;overflow:auto:border:solid 1px white;margin:10px">
+    <div style="width:10000px;">
+      <div id="shelves" style="float:left;">
+
+        
+
+      </div>
+      <div style="width:100px;background-color:none;float:left;margin:10px;">
+        <button onclick="makewall(this.innerHTML)">default</button>
+        <button onclick="makewall(this.innerHTML)">line</button>
+        <button onclick="makewall(this.innerHTML)">big1</button>
+        <button onclick="makewall(this.innerHTML)">grid4</button>
+
+      </div>
+    </div>
+    </div>
+  	
+
+  	<script>
+
+      m.deck(4)
+
+      nx.onload = function() {
+
+        nx.colorize("fill","white")
+        nx.colorize("accent","#777")
+      /*  wall1.on("text", function(data) {
+          new wall(data)
+        }) */
+      }
+
+
+
+      $(function() {
+
+        //addShelf()
+
+        $(".dragitem").draggable({
+          helper: "clone"
+        })
+      })
+
+
+  	</script>
+
+
+
+
+    <script>
+
+      //MOVE TO OWN FILE
+
+      var makewall = function(type) {
+        var theshelf = addShelf()
+        theshelf.wall = new wall(type)
+        addRack("wall",theshelf)
+      }
+
+
+
+
+    </script>
+
+  </body>
+</html>
