@@ -4,23 +4,37 @@ var items = new Array();
 var media = new Array();
 var shelves = new Array();
 
-var shelf = function() {
+var shelf = function(type) {
 	var self = this;
 	this.index = shelves.length;
 	this.hasUGen = false;
+	this.wall = new wall(type)
 	this.make = function() {
 		var htmlstr = '<div class="dropzone" id="dropzone'+this.index+'">'
 				//	+ '<div class="emptyrack emptywall">WALL</div>'
 					+ '<div class="racks"></div>'
-					+ '<div class="emptyrack emptymedia">MEDIA</div>'
+					+ '<div class="emptyrack emptymedia"></div>'
 					+ '</div>';
 		$("#shelves").append(htmlstr)
 		//this.droppable();
 
 		this.container = $("#dropzone"+this.index)[0]
 		this.rackcontainer = $(this.container).find(".racks")[0]
+
+		this.mediatypes = ["hear","see","watch"]
+		this.emptyrack = $(this.container).find(".emptyrack")[0]
+		for (var i=0;i<this.mediatypes.length;i++) {
+			var butt = document.createElement("button")
+			butt.innerHTML = this.mediatypes[i]
+			console.log(this.wall)
+			console.log(this.wall[this.mediatypes[i]])
+			butt.addEventListener("click", this.wall[this.mediatypes[i]].bind(this.wall,'waves'))
+			this.emptyrack.appendChild(butt)
+			//$(this.container).find(".emptyrack").append("<button onclick=''>"+this.mediatypes[i]+"</button>")
+		}
 	}
 	this.units = new Array();
+	this.make()
 	/*this.droppable = function() {
 		$("#dropzone"+self.index).droppable({
 			drop: function( event, ui ) {
@@ -30,10 +44,9 @@ var shelf = function() {
 	} */
 }
 
-function addShelf() {
-	var newshelf = new shelf()
+function addShelf(type) {
+	var newshelf = new shelf(type)
 	shelves.push(newshelf)
-	newshelf.make();
 	return newshelf;
 }
 
@@ -894,9 +907,13 @@ var Parts = {
 		widgets: [
 		{
 			label: "something",
-			type: "position",
+			type: "windows",
 			action: function(data) {
-				this.wall.elements[0].move(data.x*500,data.y*500)
+				if (data.items) {
+					this.wall.elements[0].move(data.items[0].x*10,data.items[0].y*5)
+					this.wall.elements[0].size(data.items[0].w*10,data.items[0].h*5)
+					console.log(data.items[0])	
+				}
 			},
 			initial: {
 				value: 0.4
@@ -904,6 +921,24 @@ var Parts = {
 			size: {
 				w: 100,
 				h: 100
+			}
+		},
+		{
+			label: "hide",
+			type: "toggle",
+			action: function(data) {
+				if (data.value) {
+					this.wall.hide()
+				} else {
+					this.wall.show()
+				}
+			},
+			initial: {
+				value: 0
+			},
+			size: {
+				w: 50,
+				h: 50
 			}
 		}
 	]}

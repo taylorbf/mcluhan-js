@@ -152,7 +152,7 @@ button:active {
 .rackunit { 
 	padding: 20px 5px 0px 5px; 
 	position:relative;
-	border:dashed 2px #fff;
+	border:solid 2px #fff;
 	margin-right:-1px;
 	margin-top:-1px;
 	float:left;

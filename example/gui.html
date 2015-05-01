@@ -31,7 +31,7 @@
         <button onclick="makewall(this.innerHTML)">line</button>
         <button onclick="makewall(this.innerHTML)">big1</button>
         <button onclick="makewall(this.innerHTML)">grid4</button>
-
+        <canvas nx="ghost"></canvas>
       </div>
     </div>
     </div>
@@ -48,6 +48,7 @@
       /*  wall1.on("text", function(data) {
           new wall(data)
         }) */
+        ghost1.watch();
       }
 
 
@@ -72,8 +73,8 @@
       //MOVE TO OWN FILE
 
       var makewall = function(type) {
-        var theshelf = addShelf()
-        theshelf.wall = new wall(type)
+        var theshelf = addShelf(type)
+       // theshelf.wall = new wall(type)
         addRack("wall",theshelf)
       }
 
