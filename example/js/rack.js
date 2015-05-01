@@ -9,6 +9,7 @@ var shelf = function(type) {
 	this.index = shelves.length;
 	this.hasUGen = false;
 	this.wall = new wall(type)
+	this.wall.shelf = this;
 	this.make = function() {
 		var htmlstr = '<div class="dropzone" id="dropzone'+this.index+'">'
 				//	+ '<div class="emptyrack emptywall">WALL</div>'
@@ -28,7 +29,7 @@ var shelf = function(type) {
 			butt.innerHTML = this.mediatypes[i]
 			console.log(this.wall)
 			console.log(this.wall[this.mediatypes[i]])
-			butt.addEventListener("click", this.wall[this.mediatypes[i]].bind(this.wall,'waves'))
+			butt.addEventListener("click", this.wall[this.mediatypes[i]].bind(this.wall,"waves"))
 			this.emptyrack.appendChild(butt)
 			//$(this.container).find(".emptyrack").append("<button onclick=''>"+this.mediatypes[i]+"</button>")
 		}
@@ -50,11 +51,10 @@ function addShelf(type) {
 	return newshelf;
 }
 
-function addRack(type,shelf) {
+function addRack(type,shelf,media) {
 	shelfNum = shelf.index
 	// create media here?
 	// var unit = new Tone[Parts[type].type]()
-	var media = false;
 	rack(type,shelf,media)
 }
 
@@ -97,6 +97,7 @@ var rack = function (type,shelf,media) {
 		}
 
 		widget.wall = shelf.wall;
+		widget.media = media ? media : false;
 
 		var action = parts[i].action
 		action = action.bind(widget)
@@ -902,7 +903,7 @@ var Parts = {
 		}
 	]},
 	"wall": {
-		type: "Wall",
+		type: "wall",
 		ugen: false,
 		widgets: [
 		{
@@ -939,6 +940,29 @@ var Parts = {
 			size: {
 				w: 50,
 				h: 50
+			}
+		},
+		{
+			type: "select",
+			label: "watch",
+			action: function(data) {
+				var newmedia = this.wall.watch(data.text)
+				addRack("film",this.wall.shelf,newmedia)
+			},
+			init: function() {
+				this.choices = ["waves","waves"]
+				this.init();
+			} 
+		}
+	]},
+	"film": { 
+		type: "film",
+		widgets: [
+		{
+			type: "range",
+			label: "loop",
+			action: function(data) {
+				this.media.skip(data.start*10,data.stop*10)
 			}
 		}
 	]}
