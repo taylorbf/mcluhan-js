@@ -27,7 +27,18 @@ for (var key in window.components) {
 	window[key] = window.components[key]
 }
 
+window.feedbackDelay = new Tone.PingPongDelay({
+    "delayTime" : 0.07,
+    "feedback" : 0.94,
+    "wet" : 0.5
+}).toMaster();
+window.siri = new voice()
+
 window.onload = function() {
+
+	// no longer fired -- overwritten by nexus's onload
+
+	/*console.log("onload happens")
 	// this opens all windows
     //m.init();
     
@@ -42,7 +53,7 @@ window.onload = function() {
 	      "feedback" : 0.94,
 	      "wet" : 0.5
 	}).toMaster();
-	siri = new voice()
+	siri = new voice() */
 };
 
 

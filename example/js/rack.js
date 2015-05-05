@@ -22,9 +22,9 @@ var shelf = function(type) {
 		this.container = $("#dropzone"+this.index)[0]
 		this.rackcontainer = $(this.container).find(".racks")[0]
 
-		this.mediatypes = ["hear","see","watch"]
+	//	this.mediatypes = ["hear","see","watch"]
 		this.emptyrack = $(this.container).find(".emptyrack")[0]
-		for (var i=0;i<this.mediatypes.length;i++) {
+	/*	for (var i=0;i<this.mediatypes.length;i++) {
 			var butt = document.createElement("button")
 			butt.innerHTML = this.mediatypes[i]
 			console.log(this.wall)
@@ -32,7 +32,7 @@ var shelf = function(type) {
 			butt.addEventListener("click", this.wall[this.mediatypes[i]].bind(this.wall,"waves"))
 			this.emptyrack.appendChild(butt)
 			//$(this.container).find(".emptyrack").append("<button onclick=''>"+this.mediatypes[i]+"</button>")
-		}
+		} */
 	}
 	this.units = new Array();
 	this.make()
@@ -943,14 +943,67 @@ var Parts = {
 			}
 		},
 		{
+			label: "xray",
+			type: "button",
+			action: function(data) {
+				if (data.press) {
+					console.log('xrayed')
+					this.wall.xray()
+				}
+			},
+			initial: {
+				value: 0
+			},
+			size: {
+				w: 25,
+				h: 25
+			}
+		},
+		{
 			type: "select",
 			label: "watch",
 			action: function(data) {
 				var newmedia = this.wall.watch(data.text)
 				addRack("film",this.wall.shelf,newmedia)
 			},
+			size: {
+				w: 50,
+				h: 20
+			},
 			init: function() {
 				this.choices = ["waves","waves"]
+				this.init();
+			} 
+		},
+		{
+			type: "select",
+			label: "hear",
+			action: function(data) {
+				var newmedia = this.wall.hear(data.text)
+				addRack("cassette",this.wall.shelf,newmedia)
+			},
+			size: {
+				w: 50,
+				h: 20
+			},
+			init: function() {
+				this.choices = ["pno","pno"]
+				this.init();
+			} 
+		},
+		{
+			type: "select",
+			label: "see",
+			action: function(data) {
+				var newmedia = this.wall.see(data.text)
+				addRack("photo",this.wall.shelf,newmedia)
+			},
+			size: {
+				w: 50,
+				h: 20
+			},
+			init: function() {
+				this.choices = ["mcluhan","mcluhan"]
 				this.init();
 			} 
 		}
@@ -963,6 +1016,28 @@ var Parts = {
 			label: "loop",
 			action: function(data) {
 				this.media.skip(data.start*10,data.stop*10)
+			}
+		}
+	]},
+	"cassette": { 
+		type: "cassette",
+		widgets: [
+		{
+			type: "range",
+			label: "loop",
+			action: function(data) {
+				this.media.skip(data.start*10,data.stop*10)
+			}
+		}
+	]},
+	"photo": { 
+		type: "photo",
+		widgets: [
+		{
+			type: "button",
+			label: "glitch",
+			action: function(data) {
+				this.media.glitch()
 			}
 		}
 	]}
