@@ -118,22 +118,15 @@ var rack = function (type,shelf,media) {
 	closer.innerHTML = "x"
 	container.appendChild(closer)
 	closer.onclick = function() {
-		if (container.className.indexOf("ugen")>=0) {
+		if (container.className.indexOf("wall")>=0) {
 			shelves[shelfNum].hasUGen = false;
 			$("#dropzone"+shelfNum).find(".emptyugen").show(0)
 			//widget.unit.dispose();
 			if (widget.ToneInt) { Tone.Transport.clearInterval(widget.ToneInt)}
+		} else {
+			console.log(widget.media)
 		}
-		//chain.splice(chain.indexOf(widget.unit),1);
 		parent.removeChild(container)
-		for (var i=0;i<chain.length;i++) {
-			chain[i].disconnect()
-			if (i<chain.length-1) {
-				chain[i].connect(chain[i+1])
-			} else {
-				chain[i].toMaster()
-			}
-		}
 	}
 
 }
@@ -1041,10 +1034,4 @@ var Parts = {
 			}
 		}
 	]}
-//	"Recorder": [
-//	]
-//	"Sampler": [
-//	],
-//	"WaveShaper": [
-//	] */
 }

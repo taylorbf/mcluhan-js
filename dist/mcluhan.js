@@ -350,6 +350,17 @@ var Manager = module.exports = function() {
   /** @type {Number} */
   this.spaceLimit = 8;
 
+  //space to discern and define the area of screen that will be used
+  // including offset, etc
+  this.stage = {
+    w: 800,
+    h: 600
+    //my screen is 800 x 1280
+  }
+
+  this.stage.x = window.screen.width / 2 - this.stage.w / 2;
+  this.stage.y = window.screen.height / 2 - this.stage.h / 2;
+
   // Will use eventually
   // EventEmitter.apply(this)
   
@@ -1902,10 +1913,10 @@ Wall.prototype.patterns = {
 	],
 	"big1": [
 		{
-			x: 100,
-			y: 100,
-			w: 450,
-			h: 600
+			x: m.stage.x,
+			y: m.stage.y,
+			w: m.stage.w,
+			h: m.stage.h
 		}
 	],
 	"line": [
@@ -1987,11 +1998,11 @@ var util = require('util');
  */
 var Window = module.exports = function(params) {
 
-	this.defaultSize = { w: 300, h: 200, x: window.screen.width/2 - 150, y: window.screen.height/2 - 100 }
-	this.element = window.open("space.html","win"+windex,"height=100,width=100,left:0,top:0,menubar=0,status=0,location=0,titlebar=0,toolbar=0")
+	this.defaultSize = { w: 100, h: 100, x: window.screen.width/2 - 50, y: window.screen.height/2 - 50 }
+	this.element = window.open("space.html","win"+windex,"height="+this.defaultSize.h+",width="+this.defaultSize.w+",left:"+this.defaultSize.x+",top:"+this.defaultSize.y+",menubar=0,status=0,location=0,titlebar=0,toolbar=0")
 	with (this.element) {
-		resizeTo(100,100)
-		moveTo(0,0)
+		resizeTo(this.defaultSize.w,this.defaultSize.h)
+		moveTo(this.defaultSize.x,this.defaultSize.y)
 	}
 	this.index = windex;
 	windex++;
