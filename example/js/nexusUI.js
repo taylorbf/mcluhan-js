@@ -542,6 +542,9 @@ var widget = module.exports = function (target) {
   this.fontWeight = nx.fontWeight;
   this.font = nx.font;
 
+  this.clickCB = false;
+  this.releaseCB = false;
+
 }
 util.inherits(widget, EventEmitter)
 
@@ -595,6 +598,7 @@ widget.prototype.preClick = function(e) {
   this.deltaMove.x = 0;
   this.deltaMove.y = 0;
   this.hasMoved = false;
+  this.clickCB ? this.clickCB() : null;
   this.click(e);
   document.body.style.userSelect = "none";
   document.body.style.mozUserSelect = "none";
@@ -615,6 +619,7 @@ widget.prototype.preRelease = function(e) {
   document.removeEventListener("mousemove", this.preMove, false);
   document.removeEventListener("mouseup", this.preRelease, false);
   this.clicked = false;
+  this.releaseCB ? this.releaseCB() : null;
   this.release();
   document.body.style.userSelect = "text";
   document.body.style.mozUserSelect = "text";
@@ -1919,7 +1924,6 @@ dial.prototype.init = function() {
 	
 	if (this.mindim<101) {
 		this.handleLength--;
-	//	this.handleLength--;
 	}
 
 	if (this.mindim<101 || this.mindim<101) {
@@ -6052,6 +6056,16 @@ windows.prototype.init = function() {
 	this.draw();
 }
 
+windows.prototype.add = function(x,y,w,h) {
+	this.items.push({
+		x: x,
+		y: y,
+		w: w,
+		h: h
+	})
+	this.draw();
+}
+
 windows.prototype.draw = function() {
 	this.erase();
 	with (this.context) {
@@ -6091,8 +6105,8 @@ windows.prototype.click = function() {
 	}
 	if (this.holds===false) {
 		this.items.push({
-			x: ~~((this.clickPos.x)/5)*5,
-			y: ~~((this.clickPos.y)/5)*5,
+			x: this.clickPos.x,
+			y: this.clickPos.y,
 			w: this.size,
 			h: this.size
 		})
@@ -6128,12 +6142,12 @@ windows.prototype.move = function() {
 		}
 	} else {
 		if (!this.meta) {
-			this.items[this.holds].x = ~~((this.clickPos.x)/5)*5;
-			this.items[this.holds].y = ~~((this.clickPos.y)/5)*5;	
+			this.items[this.holds].x = this.clickPos.x;
+			this.items[this.holds].y = this.clickPos.y;	
 		} else {
 			for (var i=0;i<this.items.length;i++) {
-				this.items[i].x = (~~((this.clickPos.x)/5)*5 - this.tx) + this.items[i].tx;
-				this.items[i].y = (~~((this.clickPos.y)/5)*5 - this.ty) + this.items[i].ty;	
+				this.items[i].x = (this.clickPos.x - this.tx) + this.items[i].tx;
+				this.items[i].y = (this.clickPos.y - this.ty) + this.items[i].ty;	
 			}
 		}	
 	}

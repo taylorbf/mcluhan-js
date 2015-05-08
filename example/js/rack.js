@@ -92,9 +92,6 @@ var rack = function (type,shelf,media) {
 			w: parts[i].size ? parts[i].size.w : false,
 			h: parts[i].size ? parts[i].size.h : false
 		});
-		if (parts[i].init) {
-			parts[i].init.bind(widget)();
-		}
 
 		widget.wall = shelf.wall;
 		widget.media = media ? media : false;
@@ -110,6 +107,10 @@ var rack = function (type,shelf,media) {
 		label.setAttribute("class", "racklabel")
 		label.innerHTML = parts[i].label
 		col.appendChild(label)
+
+		if (parts[i].init) {
+			parts[i].init.bind(widget)();
+		}
 
 	}
 
@@ -900,17 +901,40 @@ var Parts = {
 		ugen: false,
 		widgets: [
 		{
-			label: "something",
+			label: "windows",
 			type: "windows",
 			action: function(data) {
+				if (data.add) {
+					var w = ~~((data.add.w/this.width)*m.stage.w)
+					var h = ~~((data.add.h/this.height)*m.stage.h)
+					var x = ~~((data.add.x/this.width)*m.stage.w+m.stage.x) - w/2
+					var y = ~~((data.add.y/this.height)*m.stage.h+m.stage.y) - h/2
+					if (data.items.length>this.wall.elements.length) {
+						this.wall.elements.push(m.peer(x,y,w,h));
+					}
+					
+				}
 				if (data.items) {
-					this.wall.elements[0].move(data.items[0].x*10,data.items[0].y*5)
-					this.wall.elements[0].size(data.items[0].w*10,data.items[0].h*5)
-					console.log(data.items[0])	
+					for (var i=0;i<data.items.length;i++) {
+						if (i<this.wall.elements.length) {
+							var w = ~~((data.items[i].w/this.width)*m.stage.w)
+							var h = ~~((data.items[i].h/this.height)*m.stage.h)
+							var x = ~~((data.items[i].x/this.width)*m.stage.w+m.stage.x) - w/2
+							var y = ~~((data.items[i].y/this.height)*m.stage.h+m.stage.y) - h/2
+							this.wall.elements[i].size(w,h)
+							this.wall.elements[i].move(x,y)
+						}
+					}
 				}
 			},
-			initial: {
-				value: 0.4
+			init: function() {
+				for (var i=0;i<this.wall.elements.length;i++) {
+					var w = m.scale(this.wall.elements[i].w,0,m.stage.w,0,this.width)
+					var h = m.scale(this.wall.elements[i].h,0,m.stage.h,0,this.height)
+					var x = m.scale(this.wall.elements[i].x,m.stage.x,m.stage.w+m.stage.x,0,this.width) + w/2
+					var y = m.scale(this.wall.elements[i].y,m.stage.y,m.stage.h+m.stage.y,0,this.height) + h/2
+					this.add(x,y,w,h)
+				}
 			},
 			size: {
 				w: 100,

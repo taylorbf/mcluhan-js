@@ -1561,11 +1561,21 @@ var Wall = module.exports = function(setting,limit) {
 	this.createPatterns();
 
 	this.setting = setting ? setting : "default"
+
+	// number of windows int he wall
 	this.limit = limit ? limit : this.patterns[this.setting].length
+
+	//pattern object with xywh for each window
 	this.patt = this.patterns[this.setting];
+
+	//creates each window in the wall and puts it in its spot
+	////must also change in show function below
 	for (var i=0;i<this.limit;i++) {
-		this.elements.push(m.peer(this.patt[i].x, this.patt[i].y, this.patt[i].w, this.patt[i].h))
+		// not totally necessary but makes the windows popup in the right place from start
+		// actually _is_ necessary for creating the this.elements array
+		this.elements.push(m.peer(~~(this.patt[i].x*m.stage.w+m.stage.x),~~(this.patt[i].y*m.stage.h+m.stage.y),~~(this.patt[i].w*m.stage.w),~~(this.patt[i].h*m.stage.h)));
 	}
+	
 	this.index = windex;
 	this.visible = false;
 
@@ -1580,9 +1590,10 @@ var Wall = module.exports = function(setting,limit) {
 Wall.prototype.show = function() {
 
 	for (var i=0;i<this.elements.length;i++) {
+		//this.elements[i].show();
 		with (this.elements[i].element) {
-			resizeTo(this.patt[i].w, this.patt[i].h)
-			moveTo(this.patt[i].x, this.patt[i].y)
+			resizeTo(~~(this.patt[i].w*m.stage.w), ~~(this.patt[i].h*m.stage.h))
+			moveTo(~~(this.patt[i].x*m.stage.w+m.stage.x), ~~(this.patt[i].y*m.stage.h+m.stage.y))
 		}
 	}
 
@@ -1905,44 +1916,70 @@ Wall.prototype.alt = function(functions,durations,iterations) {
 Wall.prototype.patterns = {
 	"default": [
 		{
-			x: ~~(Math.random()*1000),
-			y: ~~(Math.random()*600),
-			w: 200,
-			h: 100
+			x: Math.random(),
+			y: Math.random(),
+			w: .1,
+			h: .1
 		}
 	],
 	"big1": [
 		{
-			x: m.stage.x,
-			y: m.stage.y,
-			w: m.stage.w,
-			h: m.stage.h
+			x: 0,
+			y: 0,
+			w: 1,
+			h: 1
 		}
 	],
 	"line": [
 		{
-			x: 1,
-			y: 100,
-			w: 200,
-			h: 400
+			x: 0,
+			y: 0,
+			w: .25,
+			h: 1
 		},
 		{
-			x: 200,
-			y: 100,
-			w: 200,
-			h: 400
+			x: 0.25,
+			y: 0,
+			w: .25,
+			h: 1
 		},
 		{
-			x: 400,
-			y: 100,
-			w: 200,
-			h: 400
+			x: 0.5,
+			y: 0,
+			w: .25,
+			h: 1
 		},
 		{
-			x: 600,
-			y: 100,
-			w: 200,
-			h: 400
+			x: 0.75,
+			y: 0,
+			w: .25,
+			h: 1
+		}
+	],
+	"fauve": [
+		{
+			x: 0.1,
+			y: 0,
+			w: 0.2,
+			h: 0.2
+		},
+		{
+			x: 0.7,
+			y: 0.05,
+			w: 0.1,
+			h: 0.95
+		},
+		{
+			x: 0.4,
+			y: 0.4,
+			w: 0.1,
+			h: 0.1
+		},
+		{
+			x: 0,
+			y: 0.4,
+			w: 0.3,
+			h: 0.1
 		}
 	]
 }
@@ -1952,19 +1989,18 @@ Wall.prototype.createPatterns = function() {
 	//grid4
 
 	this.patterns["grid4"] = new Array();
-	var size = 200
+	var size = .25
 	for (var i=0;i<16;i++) {
 		var col = getCol(i,4)
 		var row = getRow(i,4)
 		var pat = {
-			x: col*size+1,
-			y: row*size+1,
+			x: col*size,
+			y: row*size,
 			w: size,
 			h: size
 		}
 		//FUTURE: should do some callibration at start
 		//to learn how big the URL bar etc of each browser is
-		pat.y -= 50 * row;
 		this.patterns["grid4"].unshift(pat)
 	}
 
@@ -2000,10 +2036,12 @@ var Window = module.exports = function(params) {
 
 	this.defaultSize = { w: 100, h: 100, x: window.screen.width/2 - 50, y: window.screen.height/2 - 50 }
 	this.element = window.open("space.html","win"+windex,"height="+this.defaultSize.h+",width="+this.defaultSize.w+",left:"+this.defaultSize.x+",top:"+this.defaultSize.y+",menubar=0,status=0,location=0,titlebar=0,toolbar=0")
-	with (this.element) {
+	this.size(this.defaultSize.w,this.defaultSize.h)
+	this.move(this.defaultSize.x,this.defaultSize.y)
+	/*with (this.element) {
 		resizeTo(this.defaultSize.w,this.defaultSize.h)
 		moveTo(this.defaultSize.x,this.defaultSize.y)
-	}
+	} */
 	this.index = windex;
 	windex++;
 	this.visible = false;
@@ -2014,20 +2052,22 @@ var Window = module.exports = function(params) {
 Window.prototype.show = function(params) {
 
 	this.element.close();
-	this.element = window.open("space.html","win"+this.index,"height=100,width=100,left:0,top:0,menubar=0,status=0,location=0,titlebar=0,toolbar=0")
+	this.element = window.open("space.html","win"+this.index,"height="+this.defaultSize.h+",width="+this.defaultSize.w+",left:"+this.defaultSize.x+",top:"+this.defaultSize.y+",menubar=0,status=0,location=0,titlebar=0,toolbar=0")
 	
+	console.log(params)
 	params = params ? params : new Object()
 	params.w = params.w ? params.w : this.defaultSize.w
 	params.h = params.h ? params.h : this.defaultSize.h
 	params.x = params.x ? params.x : this.defaultSize.x
 	params.y = params.y ? params.y : this.defaultSize.y
 
-	with (this.element) {
-		resizeTo(params.w,params.h)
-		moveTo(params.x,params.y)
-	}
+//	with (this.element) {
+		this.size(params.w,params.h)
+		this.move(params.x,params.y)
+//	}
+	console.log(params)
 
-	this.visible = true;
+	this.visible = true
 	this.element.focus()
 
 	// spaces can access us
@@ -2086,7 +2126,7 @@ Window.prototype.scroll = function(x,y) {
 }
 
 Window.prototype.xray = function() {
-	this.scroll(this.element.screenX,this.element.screenY)
+	this.scroll(this.element.screenX-m.stage.x,this.element.screenY-m.stage.y)
 }
 
 Window.prototype.scramble = function() {
@@ -2118,6 +2158,8 @@ Window.prototype.move = function(x,y,time,callback) {
 	} else {
 		this.element.moveTo(x,y)
 	}
+	this.x = x;
+	this.y = y;
 	/*$({newx: this.element.screenX}).animate({newx: x}, {
 	    duration: 8000,
 	    easing: "linear",
@@ -2153,6 +2195,8 @@ Window.prototype.size = function(w,h,time) {
 	} else {
 		this.element.resizeTo(w,h)
 	}
+	this.w = w;
+	this.h = h;
 /*	ramp(this.element.outerWidth, w, time, function(cur) {  
 		this.element.resizeTo(cur,this.element.outerHeight)
 	}.bind(this))
