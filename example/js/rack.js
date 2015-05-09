@@ -36,6 +36,9 @@ var shelf = function(type) {
 	}
 	this.units = new Array();
 	this.make()
+	this.remove = function() {
+		$('#dropzone'+this.index).remove()
+	}
 	/*this.droppable = function() {
 		$("#dropzone"+self.index).droppable({
 			drop: function( event, ui ) {
@@ -71,6 +74,10 @@ var rack = function (type,shelf,media) {
 	var container = document.createElement("div")
 	container.setAttribute("class", "rackunit")
 	container.id = rackid
+	if (type=="wall") {
+		container.setAttribute("class", "wall")
+	}
+
 	parent.appendChild(container)
 
 	var title = document.createElement("div")
@@ -120,14 +127,15 @@ var rack = function (type,shelf,media) {
 	container.appendChild(closer)
 	closer.onclick = function() {
 		if (container.className.indexOf("wall")>=0) {
-			shelves[shelfNum].hasUGen = false;
-			$("#dropzone"+shelfNum).find(".emptyugen").show(0)
-			//widget.unit.dispose();
-			if (widget.ToneInt) { Tone.Transport.clearInterval(widget.ToneInt)}
+			shelf.wall.kill()
+			shelf.remove()
 		} else {
 			console.log(widget.media)
+			widget.media.kill()
+			widget.destroy();
+			parent.removeChild(container)
 		}
-		parent.removeChild(container)
+		
 	}
 
 }
@@ -942,8 +950,8 @@ var Parts = {
 				}
 			},
 			size: {
-				w: 100,
-				h: 100
+				w: 200,
+				h: 150
 			}
 		},
 		{
@@ -958,6 +966,28 @@ var Parts = {
 			},
 			initial: {
 				value: 0
+			},
+			size: {
+				w: 50,
+				h: 50
+			}
+		},
+		{
+			label: "scroll",
+			type: "position",
+			action: function(data) {
+				this.wall.scroll(data.x*2000,data.y*2000)
+			},
+			size: {
+				w: 100,
+				h: 100
+			}
+		},
+		{
+			label: "autoscroll",
+			type: "toggle",
+			action: function(data) {
+				this.wall.autoscroll(data.value)
 			},
 			size: {
 				w: 50,

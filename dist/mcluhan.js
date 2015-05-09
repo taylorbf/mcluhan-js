@@ -528,6 +528,12 @@ Medium.prototype.move = function(params) {
 		params.y ? this.element[i].style.top = params.y+"px" : false;
 	}
 }
+
+Medium.prototype.kill = function(params) {
+	for (var i = 0; i<this.spaces.length; i++) {
+		this.spaces[i].element.document.body.removeChild(this.element[i])
+	}
+}
 },{}],5:[function(require,module,exports){
 
 
@@ -1591,9 +1597,9 @@ Wall.prototype.show = function() {
 
 	for (var i=0;i<this.elements.length;i++) {
 		//this.elements[i].show();
-		with (this.elements[i].element) {
-			resizeTo(~~(this.patt[i].w*m.stage.w), ~~(this.patt[i].h*m.stage.h))
-			moveTo(~~(this.patt[i].x*m.stage.w+m.stage.x), ~~(this.patt[i].y*m.stage.h+m.stage.y))
+		with (this.elements[i]) {
+			element.resizeTo(w,h)
+			element.moveTo(x,y)
 		}
 	}
 
@@ -1614,7 +1620,7 @@ Wall.prototype.hide = function() {
 	for (var i=0;i<this.elements.length;i++) {
 		with (this.elements[i].element) {
 			resizeTo(100,100)
-			moveTo(0,0)
+			moveTo(m.stage.x+m.stage.w/2-50,m.stage.y+m.stage.h/2-50)
 		}
 	}
 	/*_.each(this.elements,function(win,i,l) {
@@ -1746,7 +1752,14 @@ Wall.prototype.partch = function() {
  */
 Wall.prototype.scroll = function(x,y) {
 	for (var i=0;i<this.elements.length;i++) {
-		this.elements[i].scrollTo(x,y)
+		this.elements[i].element.scrollTo(x,y)
+	}
+}
+
+
+Wall.prototype.autoscroll = function(on) {
+	for (var i=0;i<this.elements.length;i++) {
+		this.elements[i].autoscroll = on;
 	}
 }
 
@@ -1754,7 +1767,9 @@ Wall.prototype.scroll = function(x,y) {
  * Destroy this wall and return all windows to stack
  */
 Wall.prototype.kill = function(index) {
-	this.elements[index].kill()
+	for (var i=0;i<this.elements.length;i++) {
+		this.elements[i].kill()
+	}
 	this.elements.splice(index,1);
 }
 
@@ -1918,8 +1933,8 @@ Wall.prototype.alt = function(functions,durations,iterations) {
 Wall.prototype.patterns = {
 	"default": [
 		{
-			x: Math.random(),
-			y: Math.random(),
+			x: Math.random()*0.9,
+			y: Math.random()*0.9,
 			w: .2,
 			h: .2
 		}
@@ -2047,6 +2062,7 @@ var Window = module.exports = function(params) {
 	this.index = windex;
 	windex++;
 	this.visible = false;
+	this.autoscroll = false;
 	this.empty()
 	
 }
@@ -2116,19 +2132,22 @@ Window.prototype.testDraw = function() {
 	this.context.fillRect(0,0,100,100)
 }
 
-Window.prototype.scroll = function(x,y) {
-	//this.element.scrollTo(x,y)
-	$([this.element.document.body]).stop().clearQueue().animate({ scrollTop: y, scrollLeft: x }, 500);
+Window.prototype.scroll = function(x,y,time) {
+	if (!time) {
+		this.element.scrollTo(x,y)
+	} else {
+		$([this.element.document.body]).stop().clearQueue().animate({ scrollTop: y, scrollLeft: x }, time);
+	}
 }
 
-Window.prototype.xray = function() {
-	this.scroll(this.element.screenX-m.stage.x,this.element.screenY-m.stage.y)
+Window.prototype.xray = function(time) {
+	this.scroll(this.element.screenX-m.stage.x,this.element.screenY-m.stage.y,time)
 }
 
-Window.prototype.scramble = function() {
+Window.prototype.scramble = function(time) {
 	var w = this.element.document.body.clientWidth
 	var h = this.element.document.body.clientHeight
-	this.scroll(random(w),random(h))
+	this.scroll(random(w),random(h),time)
 }
 
 
@@ -2156,6 +2175,9 @@ Window.prototype.move = function(x,y,time,callback) {
 	}
 	this.x = x;
 	this.y = y;
+	if (this.autoscroll) {
+		this.xray();
+	}
 	/*$({newx: this.element.screenX}).animate({newx: x}, {
 	    duration: 8000,
 	    easing: "linear",
