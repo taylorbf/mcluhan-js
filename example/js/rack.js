@@ -8,6 +8,7 @@ var shelf = function(type) {
 	var self = this;
 	this.index = shelves.length;
 	this.hasUGen = false;
+	this.widgets = []
 	this.wall = new wall(type)
 	this.wall.shelf = this;
 	this.make = function() {
@@ -119,6 +120,9 @@ var rack = function (type,shelf,media) {
 			parts[i].init.bind(widget)();
 		}
 
+		shelf.widgets.push(widget)
+
+
 	}
 
 	var closer = document.createElement("div")
@@ -128,11 +132,13 @@ var rack = function (type,shelf,media) {
 	closer.onclick = function() {
 		if (container.className.indexOf("wall")>=0) {
 			shelf.wall.kill()
+			//destroys widget when wall is killed, not when indiv media are killed.
+			for (var i=0;i<shelf.widgets.length;i++) {
+				shelf.widgets[i].destroy();
+			}
 			shelf.remove()
 		} else {
-			console.log(widget.media)
 			widget.media.kill()
-			widget.destroy();
 			parent.removeChild(container)
 		}
 		
@@ -140,770 +146,7 @@ var rack = function (type,shelf,media) {
 
 }
 
-var major = [0,2,4,5,7,9,11,12]
-
 var Parts = {
-	"Player.Loop": {
-		type: "Player",
-		ugen: true,
-		widgets:[
-			{
-				label: "on/off",
-				type: "toggle",
-				action: function(data) {
-					if (data.value) {
-						this.unit.loop = true;
-						this.unit.start();
-					} else {
-						this.unit.loop = false
-						this.unit.stop();
-					}
-				}
-			},{
-				label: "vol",
-				type: "dial",
-				action: function(data) {
-					this.unit.volume.value = nx.scale(data.value,0,1,-96,5)
-				},
-				initial: {
-					"value": 0.95
-				}
-			},{
-				label: "speed",
-				type: "dial",
-				action: function(data) {
-					this.unit.playbackRate = data.value*2;
-				},
-				initial: {
-					value: 0.5
-				}
-			},{
-				label: "loop points",
-				type: "range",
-				action: function(data) {
-					this.unit.setLoopPoints(data.start*this.unit.buffer.duration,data.stop*this.unit.buffer.duration)
-				}
-			},{
-				label: "sound",
-				type: "select",
-				action: function(data) {
-					this.unit.load("audio/"+data.text, function() { })
-				},
-				size: {
-					w: 90,
-					h: 30
-				},
-				init: function() {
-					this.choices = media
-					this.init();
-					this.unit.load("audio/"+this.choices[0], function() { })
-				}
-			},{
-				label: "pitch",
-				type: "keyboard",
-				action: function(data) {
-					if (data.on) {
-						this.unit.playbackRate = Math.pow(2,(data.note-60)/12);
-					}
-				},
-				size: {
-					w: 400,
-					h: 70
-				}
-			}
-		],
-	},
-	"Player.Seq": {
-		type: "Player",
-		ugen: true,
-		widgets:[{
-				label: "bpm",
-				type: "dial",
-				action: function(data) {
-					Tone.Transport.bpm.value = nx.scale(data.value,0,1,0,240)
-				},
-				initial: {
-					"value": 0.5
-				}
-			},
-			{
-				label: "vol",
-				type: "dial",
-				action: function(data) {
-					this.unit.volume.value = nx.scale(data.value,0,1,-96,5)
-				},
-				initial: {
-					"value": 0.95
-				}
-			},{
-				label: "loop",
-				type: "toggle",
-				action: function(data) {
-					this.unit.loop = data.value ? true : false;
-				}
-			},{
-				label: "loop points",
-				type: "range",
-				action: function(data) {
-					this.unit.setLoopPoints(data.start*this.unit.buffer.duration,data.stop*this.unit.buffer.duration)
-				}
-			},{
-				label: "sound",
-				type: "select",
-				action: function(data) {
-					this.unit.load("audio/"+data.text, function() { 
-						this.unit.hasBuffer = true;
-						this.unit.retrigger = true;
-					}.bind(this))
-				},
-				size: {
-					w: 90,
-					h: 30
-				},
-				init: function() {
-					this.choices = media
-					this.init();
-					this.unit.load("audio/"+this.choices[0], function() { })
-				}
-			},{
-				label: "pitch",
-				type: "matrix",
-				action: function(data) {
-					if (this.unit.hasBuffer && data.list) {
-						for (var i=0;i<data.list.length;i++) {
-							if (data.list[i]) {
-								this.unit.start();
-								this.unit.playbackRate = Math.pow(2,(major[i]-12)/12);
-							}
-						}
-					}
-				},
-				size: {
-					w: 400,
-					h: 200
-				},
-				init: function() {
-					this.col = 16;
-					this.row = 8;
-					this.init();
-					Tone.Transport.setTimeout(function(time){
-						Tone.Transport.setInterval(function(time){
-						    this.jumpToCol(this.place)
-						    this.place++;
-						    if (this.place>=this.col) {
-						    	this.place=0;
-						    }
-						}.bind(this), "24n");
-					}.bind(this),Tone.Transport.nextBeat('1n'))
-				} 
-			}
-		],
-	},
-	"AMSynth.Keys": {
-		type: "AMSynth",
-		ugen: true,
-		widgets: [
-		{
-			label: "volume",
-			type: "dial",
-			action: function(data) {
-				this.unit.volume.rampTo(nx.scale(data.value,0,1,-96,5),1);
-			},
-			initial: {
-				"value": 0.75
-			}
-		},{
-			label: "mod",
-			type: "dial",
-			action: function(data) {
-				this.unit.harmonicity = data.value;
-			}
-		},{
-			label: "glide",
-			type: "dial",
-			action: function(data) {
-				this.unit.portamento = data.value;
-			}
-		},{
-			label: "pitch",
-			type: "keyboard",
-			action: function(data) {
-					if (data.on) {
-						this.unit.setNote(Math.pow(2,(data.note-60)/12)*440)
-						this.unit.triggerEnvelopeAttack(0, data.on)
-					} else {
-						this.unit.triggerEnvelopeRelease()
-					}
-				},
-			size: {
-				w: 400,
-				h: 70
-			}
-		}
-	]},
-	"AMSynth.Seq": {
-		type: "AMSynth",
-		ugen: true,
-		widgets: [
-		{
-			label: "volume",
-			type: "dial",
-			action: function(data) {
-				this.unit.volume.rampTo(nx.scale(data.value,0,1,-96,5),1);
-			},
-			initial: {
-				"value": 0.75
-			}
-		},{
-			label: "mod ?",
-			type: "dial",
-			action: function(data) {
-				this.unit.harmonicity = data.value;
-			}
-		},{
-			label: "glide",
-			type: "dial",
-			action: function(data) {
-				this.unit.portamento = data.value;
-			}
-		},{
-			label: "pitch",
-			type: "matrix",
-			action: function(data) {
-				if (data.list) {
-					for (var i=0;i<data.list.length;i++) {
-						if (data.list[i]) {
-							var note = nx.mtof(major[i]+60)
-							this.unit.triggerAttackRelease(note,'64n')
-						}
-					}
-				}
-			},
-			size: {
-				w: 400,
-				h: 200
-			},
-			init: function() {
-				this.col = 16;
-				this.row = 8;
-				this.init();
-				Tone.Transport.setTimeout(function(time){
-					this.ToneInt = Tone.Transport.setInterval(function(time){
-					    this.jumpToCol(this.place)
-					    this.place++;
-					    if (this.place>=this.col) {
-					    	this.place=0;
-					    }
-					}.bind(this), "24n");
-				}.bind(this),Tone.Transport.nextBeat('1n'))
-			} 
-		}
-	]},
-	"FMSynth.Keys": {
-		type: "FMSynth",
-		ugen: true,
-		widgets: [
-		{
-			label: "volume",
-			type: "dial",
-			action: function(data) {
-				this.unit.volume.rampTo(nx.toDB(data.value),1);
-			},
-			initial: {
-				"value": 0.45
-			}
-		},{
-			label: "harm",
-			type: "dial",
-			action: function(data) {
-				this.unit.harmonicity = data.value*5;
-			}
-		},{
-			label: "mod index",
-			type: "dial",
-			action: function(data) {
-				this.unit.modulationIndex = data.value*100;
-			}
-		},{
-			label: "glide",
-			type: "dial",
-			action: function(data) {
-				this.unit.portamento = data.value;
-			}
-		},{
-			label: "pitch",
-			type: "keyboard",
-			action: function(data) {
-					if (data.on) {
-						this.unit.setNote(nx.mtof(data.note))
-						this.unit.triggerEnvelopeAttack(0, data.on)
-					} else {
-						this.unit.triggerEnvelopeRelease()
-					}
-				},
-			size: {
-				w: 400,
-				h: 70
-			}
-		}
-	]},
-	"FMSynth.Seq": {
-		type: "FMSynth",
-		ugen: true,
-		widgets: [
-		{
-			label: "volume",
-			type: "dial",
-			action: function(data) {
-				this.unit.volume.rampTo(nx.toDB(data.value),1);
-			},
-			initial: {
-				"value": 0.75
-			}
-		},{
-			label: "harm",
-			type: "dial",
-			action: function(data) {
-				this.unit.harmonicity = data.value*5;
-			}
-		},{
-			label: "mod index",
-			type: "dial",
-			action: function(data) {
-				this.unit.modulationIndex = data.value*100;
-			}
-		},{
-			label: "glide",
-			type: "dial",
-			action: function(data) {
-				this.unit.portamento = data.value;
-			}
-		},{
-			label: "pitch",
-			type: "matrix",
-			action: function(data) {
-				if (data.list) {
-					for (var i=0;i<data.list.length;i++) {
-						if (data.list[i]) {
-							var note = nx.mtof(major[i]+48)
-							this.unit.triggerAttackRelease(note,'64n')
-						}
-					}
-				}
-			},
-			size: {
-				w: 400,
-				h: 200
-			},
-			init: function() {
-				this.col = 16;
-				this.row = 8;
-				this.init();
-				Tone.Transport.setTimeout(function(time){
-					this.ToneInt = Tone.Transport.setInterval(function(time){
-					    this.jumpToCol(this.place)
-					    this.place++;
-					    if (this.place>=this.col) {
-					    	this.place=0;
-					    }
-					}.bind(this), "24n");
-				}.bind(this),Tone.Transport.nextBeat('1n'))
-			} 
-		}
-	]},
-	"Microphone": {
-		type: "Microphone",
-		ugen: true,
-		widgets: [
-		{
-			label: "volume",
-			type: "dial",
-			action: function(data) {
-				this.unit.volume.value = nx.toDB(data.value);
-			},
-			initial: {
-				value: 0.5
-			}
-		},
-		{
-			label: "on/off (<span style='color:red'>WARNING: FEEDBACK</span>)",
-			type: "toggle",
-			action: function(data) {
-				if (data.value) {
-					this.unit.start();
-				} else {
-					this.unit.stop();
-				}
-			}
-		}
-	]},
-	"Noise": {
-		type: "Noise",
-		ugen: true,
-		widgets: [
-		{
-			label: "on/off",
-			type: "toggle",
-			action: function(data) {
-				if (data.value) {
-					this.unit.start();
-				} else {
-					this.unit.stop();
-				}
-			}
-		},
-		{
-			label: "volume",
-			type: "dial",
-			action: function(data) {
-				this.unit.volume.value = nx.toDB(data.value);
-			},
-			initial: {
-				value: 0.75
-			}
-		},
-		{
-			label: "type",
-			type: "tabs",
-			action: function(data) {
-				this.unit.type = data.text;
-			},
-			init: function() {
-				this.options = ["white","pink","brown"]
-				this.init()
-			}
-		}
-	]},
-	"PluckSynth": {
-		type: "PluckSynth",
-		ugen: true,
-		widgets: [
-		{
-			label: "volume",
-			type: "dial",
-			action: function(data) {
-				this.unit.volume.value = nx.toDB(data.value)+20;
-			},
-			initial: {
-				value: 0.8
-			}
-		},
-		{
-			label: "damp ?",
-			type: "dial",
-			action: function(data) {
-				this.unit.dampening.value = data.value*400;
-			}
-		},
-		{
-			label: "resonance ?",
-			type: "dial",
-			action: function(data) {
-				this.unit.resonance.value = data.value*100;
-			}
-		},{
-			label: "pitch ?",
-			type: "keyboard",
-			action: function(data) {
-				if (data.on) {
-					this.unit.triggerAttack(nx.mtof(data.note))
-				} else {
-				//	this.unit.triggerRelease()
-				}
-			},
-			size: {
-				w: 170,
-				h: 40
-			}
-		}
-	]},
-//	"PolySynth": [
-//	],
-	"AutoPanner": {
-		type: "AutoPanner",
-		ugen: false,
-		widgets: [
-		{
-			label: "on/off",
-			type: "toggle",
-			action: function(data) {
-				if (data.value) {
-					this.unit.start();
-				}
-			},
-			initial: {
-				value: 1
-			}
-		},
-		{
-			label: "amount",
-			type: "dial",
-			action: function(data) {
-				this.unit.amount = data.value;
-			},
-			initial: {
-				value: 0.5
-			}
-		},
-		{
-			label: "freq",
-			type: "dial",
-			action: function(data) {
-				this.unit.frequency.value = data.value*20;
-			},
-			initial: {
-				value: 0.05
-			}
-		}
-	]},
-	"BitCrusher": {
-		type: "BitCrusher",
-		ugen: false,
-		widgets: [
-		{
-			label: "bits",
-			type: "dial",
-			action: function(data) {
-				this.unit.bits = ~~(data.value*24);
-			},
-			initial: {
-				value: 0.2
-			}
-		},
-		{
-			label: "wet",
-			type: "dial",
-			action: function(data) {
-				this.unit.wet.value = data.value;
-			},
-			initial: {
-				value: 0.1
-			}
-		}
-	]},
-/*	"Chebyshev": {
-		type: "Chebyshev",
-		ugen: false,
-		widgets: [
-		{
-			label: "order",
-			type: "dial",
-			action: function(data) {
-				this.unit.order = ~~(data.value*50);
-			},
-			initial: {
-				value: 1
-			}
-		}
-	]}, */
-	"EQ": {
-		type: "EQ",
-		ugen: false,
-		widgets: [
-		{
-			label: "low",
-			type: "position",
-			action: function(data) {
-				this.unit.low.value = nx.invert(data.y)*-50+5
-				this.unit.lowFrequency.value = data.x*1000
-			},
-			initial: {
-				x: 1,
-				y: 0.95
-			},
-			size: {
-				w: 180,
-				h: 100
-			}
-		},
-		{
-			label: "m",
-			type: "position",
-			action: function(data) {
-				this.unit.mid.value = nx.invert(data.y)*-50+5
-			},
-			initial: {
-				x: 0,
-				y: 0.95
-			},
-			size: {
-				w: 21,
-				h: 100
-			}
-		},
-		{
-			label: "high",
-			type: "position",
-			action: function(data) {
-				this.unit.high.value = nx.invert(data.y)*-50+5
-				this.unit.highFrequency.value = data.x*2000+800
-			},
-			initial: {
-				x: 0,
-				y: 0.95
-			},
-			size: {
-				w: 180,
-				h: 100
-			}
-		}
-	]},
-	"Freeverb": {
-		type: "Freeverb",
-		ugen: false,
-		widgets: [
-		{
-			label: "damping / size",
-			type: "position",
-			action: function(data) {
-				this.unit.dampening.value = data.x;
-				this.unit.roomSize.value = data.y;
-			},
-			size: {
-				w: 100,
-				h: 60
-			},
-			initial: {
-				x: 0.5,
-				y: 0.2
-			}
-		}
-	]},
-	"Gate": {
-		type: "Gate",
-		ugen: false,
-		widgets: [
-		{
-			label: "attack / release",
-			type: "position",
-			action: function(data) {
-				this.unit.attack.value = data.x;
-				this.unit.release.value = data.y;
-			},
-			size: {
-				w: 100,
-				h: 60
-			}
-		},
-		{
-			label: "cut",
-			type: "slider",
-			action: function(data) {
-				this.unit.threshold = nx.toDB(data.value) + 10;
-			},
-			size: {
-				w: 20,
-				h: 60
-			}
-		}
-	]},
-	"FeedbackCombFilter": {
-		type: "FeedbackCombFilter",
-		ugen: false,
-		widgets: [
-		{
-			label: "reson",
-			type: "dial",
-			action: function(data) {
-				this.unit.resonance.value = data.value
-			}
-		},
-		{
-			label: "pitch ?",
-			type: "keyboard",
-			action: function(data) {
-				if (data.on) {
-					console.log(1/(nx.mtof(data.note)+24))
-					this.unit.delayTime = 1/(nx.mtof(data.note)+24)
-				}
-			},
-			size: {
-				w: 250,
-				h: 50
-			},
-			init: function() {
-				this.unit.minDelay = 0.0001
-			}
-		}
-	]},
-	"Panner": {
-		type: "Panner",
-		ugen: false,
-		widgets: [
-		{
-			label: "pan",
-			type: "slider",
-			action: function(data) {
-				this.unit.pan.value = data.value*2-1;
-			},
-			size: {
-				w: 150,
-				h: 25
-			}
-		}
-	]},
-	"PingPongDelay": {
-		type: "PingPongDelay",
-		ugen: false,
-		widgets: [
-		{
-			label: "feedback / delay",
-			type: "position",
-			action: function(data) {
-				this.unit.delayTime.value = data.x*2
-				this.unit.feedback.value = data.y*0.99
-			},
-			size: {
-				w: 150,
-				h: 50
-			}
-		}
-	]},
-	"Phaser": {
-		type: "Phaser",
-		ugen: false,
-		widgets: [
-		{
-			label: "base ?",
-			type: "dial",
-			action: function(data) {
-				this.unit.baseFrequency = data.value * 1000
-			},
-			initial: {
-				value: 0.4
-			}
-		},
-		{
-			label: "depth ?",
-			type: "dial",
-			action: function(data) {
-				this.unit.depth = data.value * 20
-			},
-			initial: {
-				value: 0.5
-			}
-		},
-		{
-			label: "freq ? ",
-			type: "dial",
-			action: function(data) {
-				this.unit.frequency.value = data.value
-			},
-			initial: {
-				value: 0.5
-			}
-		},
-		{
-			label: "wet",
-			type: "dial",
-			action: function(data) {
-				this.unit.wet.value = data.value
-			},
-			initial: {
-				value: 0.1
-			}
-		}
-	]},
 	"wall": {
 		type: "wall",
 		ugen: false,
@@ -925,7 +168,8 @@ var Parts = {
 				}
 				if (data.remove!=undefined) { 
 					console.log(data.remove)
-					this.wall.kill(data.remove)
+					this.wall.killWindow(data.remove)
+					//this.wall.elements[data.remove].kill()
 				}
 				if (data.items) {
 					for (var i=0;i<data.items.length;i++) {
@@ -976,7 +220,7 @@ var Parts = {
 			label: "scroll",
 			type: "position",
 			action: function(data) {
-				this.wall.scroll(data.x*2000,data.y*2000)
+				this.wall.scroll(data.x*2000,m.scale(data.y,1,0,0,2000))
 			},
 			size: {
 				w: 100,
@@ -999,7 +243,6 @@ var Parts = {
 			type: "button",
 			action: function(data) {
 				if (data.press) {
-					console.log('xrayed')
 					this.wall.xray()
 				}
 			},
@@ -1010,6 +253,69 @@ var Parts = {
 				w: 25,
 				h: 25
 			}
+		},
+		{
+			label: "empty",
+			type: "button",
+			action: function(data) {
+				if (data.press) {
+					this.wall.empty()
+				}
+			},
+			initial: {
+				value: 0
+			},
+			size: {
+				w: 25,
+				h: 25
+			}
+		},
+		{
+			label: "scramble",
+			type: "button",
+			action: function(data) {
+				if (data.press) {
+					this.wall.scramble()
+				}
+			},
+			initial: {
+				value: 0
+			},
+			size: {
+				w: 25,
+				h: 25
+			}
+		},
+		{
+			label: "refresh",
+			type: "button",
+			action: function(data) {
+				if (data.press) {
+					this.wall.refresh()
+				}
+			},
+			initial: {
+				value: 0
+			},
+			size: {
+				w: 25,
+				h: 25
+			}
+		},
+		{
+			type: "select",
+			label: "pattern",
+			action: function(data) {
+				this.wall.shapeshift(data.text,0)
+			},
+			size: {
+				w: 50,
+				h: 20
+			},
+			init: function() {
+				this.choices = ["default","line","big1","grid4","fauve"]
+				this.init();
+			} 
 		},
 		{
 			type: "select",

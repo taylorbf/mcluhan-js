@@ -530,8 +530,12 @@ Medium.prototype.move = function(params) {
 }
 
 Medium.prototype.kill = function(params) {
-	for (var i = 0; i<this.spaces.length; i++) {
-		this.spaces[i].element.document.body.removeChild(this.element[i])
+//	console.log("-----------------")
+//	console.log(this.spaces)
+	for (var i = 0; i<this.element.length; i++) {
+	//	console.log(this.spaces[i])
+	//	this.spaces[i].element.document.body.removeChild(this.element[i])
+		this.element[i].parentNode.removeChild(this.element[i])
 	}
 }
 },{}],5:[function(require,module,exports){
@@ -1766,11 +1770,19 @@ Wall.prototype.autoscroll = function(on) {
 /**
  * Destroy this wall and return all windows to stack
  */
-Wall.prototype.kill = function(index) {
+Wall.prototype.kill = function() {
 	for (var i=0;i<this.elements.length;i++) {
 		this.elements[i].kill()
 	}
-	this.elements.splice(index,1);
+	this.elements = []
+}
+
+/**
+ * Destroy this wall and return all windows to stack
+ */
+Wall.prototype.killWindow = function(index) {
+	this.elements[index].kill()
+	this.elements.splice(index,1)
 }
 
 /**
@@ -1816,9 +1828,10 @@ Wall.prototype.trans = function(x,y,time) {
 /* move and resize to new pattern configuration */
 Wall.prototype.shapeshift = function(pattern,time) {
 	var patt = this.patterns[pattern];
+	console.log(patt);
 	for (var i=0;i<this.elements.length;i++) {
-		this.elements[i].size(patt[i%patt.length].w,patt[i%patt.length].h,0)
-		this.elements[i].move(patt[i%patt.length].x,patt[i%patt.length].y,time)
+		this.elements[i].size(patt[i%patt.length].w*m.stage.w,patt[i%patt.length].h*m.stage.h,0)
+		this.elements[i].move(patt[i%patt.length].x*m.stage.w+m.stage.x,patt[i%patt.length].y*m.stage.h+m.stage.y,time)
 	}
 
 
@@ -1876,6 +1889,9 @@ Wall.prototype.sizeby = function() {
  * @return {Wall}
  */
 Wall.prototype.refresh = function() {
+	for (var i=0;i<this.elements.length;i++) {
+		this.elements[i].element.location.reload()
+	}
 }
 
 /**
