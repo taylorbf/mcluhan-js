@@ -6066,8 +6066,18 @@ windows.prototype.add = function(x,y,w,h) {
 	this.draw();
 }
 
+windows.prototype.remove = function(index) {
+	this.items.splice(index,1)
+	this.val = {
+		remove: index,
+		items: this.items
+	}
+	this.transmit(this.val)
+	this.draw();
+}
+
 windows.prototype.draw = function() {
-	this.erase();
+	this.erase()
 	with (this.context) {
 
 		if (!this.meta) {
@@ -6086,6 +6096,8 @@ windows.prototype.draw = function() {
 			lineWidth = 1;
 		    strokeRect(this.items[i].x+this.items[i].w/2-10,this.items[i].y+this.items[i].h/2-10,10,10)
 		
+		   // strokeRect(this.items[i].x+this.items[i].w/2-10,this.items[i].y-this.items[i].h/2,10,10)
+		
 		}
 
 	}
@@ -6101,6 +6113,11 @@ windows.prototype.click = function() {
 			if (this.clickPos.x > this.items[i].x + this.items[i].w/2 - 10 && this.clickPos.x < this.items[i].x + this.items[i].w/2 && this.clickPos.y > this.items[i].y + this.items[i].h/2 - 10 && this.clickPos.y < this.items[i].y + this.items[i].h/2) {
 				this.resizing = true;
 			}
+			/*if (this.clickPos.x > this.items[i].x + this.items[i].w/2 - 10 && this.clickPos.x < this.items[i].x + this.items[i].w/2 && this.clickPos.y > this.items[i].y - this.items[i].h/2 && this.clickPos.y < this.items[i].y - this.items[i].h/2 + 10) {
+				this.remove(this.holds)
+				this.holds = false;
+				return;
+			} */
 		}
 	}
 	if (this.holds===false) {
@@ -6134,23 +6151,29 @@ windows.prototype.move = function() {
 		if (!this.meta) {
 			this.items[this.holds].w = this.clickPos.x + this.items[this.holds].w/2 - this.items[this.holds].x
 			this.items[this.holds].h = this.clickPos.y + this.items[this.holds].h/2 - this.items[this.holds].y
+			this.items[this.holds] = this.restrict(this.items[this.holds])
 		} else {
 			for (var i=0;i<this.items.length;i++) {
 				this.items[i].w = this.clickPos.x + this.items[this.holds].w/2 - this.items[this.holds].x
 				this.items[i].h = this.clickPos.y + this.items[this.holds].h/2 - this.items[this.holds].y
+				this.items[i] = this.restrict(this.items[i])
 			}
 		}
 	} else {
 		if (!this.meta) {
 			this.items[this.holds].x = this.clickPos.x;
 			this.items[this.holds].y = this.clickPos.y;	
+			this.items[this.holds] = this.restrict(this.items[this.holds])
 		} else {
 			for (var i=0;i<this.items.length;i++) {
 				this.items[i].x = (this.clickPos.x - this.tx) + this.items[i].tx;
-				this.items[i].y = (this.clickPos.y - this.ty) + this.items[i].ty;	
+				this.items[i].y = (this.clickPos.y - this.ty) + this.items[i].ty;
+				this.items[i] = this.restrict(this.items[i])	
 			}
 		}	
 	}
+
+
 	
 	this.val = {
 		change: true,
@@ -6179,6 +6202,24 @@ windows.prototype.release = function() {
 	this.resizing = false;
 	this.transmit(this.val);
 	this.draw();
+}
+
+windows.prototype.restrict = function(item) {
+	if (item.x < item.w/2) {
+		item.x = item.w/2
+	}
+	if (item.y < item.h/2) {
+		item.y = item.h/2
+	}
+	if (item.x + item.w/2 > this.width) {
+		item.x = this.width - item.w/2
+		//item.w = this.width - item.x
+	}
+	if (item.y + item.h/2 > this.height) {
+		item.y = this.height - item.h/2
+		//item.h = this.height - item.y
+	}	
+	return item;
 }
 },{"../core/widget":3,"../utils/math":6,"util":44}],40:[function(require,module,exports){
 // Copyright Joyent, Inc. and other Node contributors.

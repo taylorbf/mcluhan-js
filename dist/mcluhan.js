@@ -1753,7 +1753,9 @@ Wall.prototype.scroll = function(x,y) {
 /**
  * Destroy this wall and return all windows to stack
  */
-Wall.prototype.kill = function() {
+Wall.prototype.kill = function(index) {
+	this.elements[index].kill()
+	this.elements.splice(index,1);
 }
 
 /**
@@ -1918,8 +1920,8 @@ Wall.prototype.patterns = {
 		{
 			x: Math.random(),
 			y: Math.random(),
-			w: .1,
-			h: .1
+			w: .2,
+			h: .2
 		}
 	],
 	"big1": [
@@ -2100,15 +2102,9 @@ Window.prototype.scroll = function(x,y) {
 	this.element.scroll.x = x
 	this.element.scroll.x = y
 }
-/*
-Window.prototype.move = function(x,y) {
-	this.element.moveTo(x,y)
-}
-
-Window.prototype.size = function() {
-} */
 
 Window.prototype.kill = function() {
+	this.element.close()
 }
 
 Window.prototype.empty = function() {

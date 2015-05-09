@@ -904,6 +904,7 @@ var Parts = {
 			label: "windows",
 			type: "windows",
 			action: function(data) {
+				console.log(data)
 				if (data.add) {
 					var w = ~~((data.add.w/this.width)*m.stage.w)
 					var h = ~~((data.add.h/this.height)*m.stage.h)
@@ -913,6 +914,10 @@ var Parts = {
 						this.wall.elements.push(m.peer(x,y,w,h));
 					}
 					
+				}
+				if (data.remove!=undefined) { 
+					console.log(data.remove)
+					this.wall.kill(data.remove)
 				}
 				if (data.items) {
 					for (var i=0;i<data.items.length;i++) {
