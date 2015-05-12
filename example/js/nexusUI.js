@@ -2309,6 +2309,9 @@ ghost.prototype.write = function(index, val) {
 	for (var key in val) {
 		if (this.buffer[index][key]) {
 			this.buffer[index][key][this.moment] = val[key];
+			if (key=="items") {
+				console.log(val[key][0].x)
+			}
 		}
 	}
 	this.draw();
@@ -2411,18 +2414,42 @@ ghost.prototype.scan = function(x) {
 		var sender = this.components[i];
 		//loop through the widget's gesture buffer
 		for (var key in this.buffer[sender.tapeNum]) {
+
 			if (this.buffer[sender.tapeNum][key]) {
+
 				//create a new val object
 				var val = new Object();
 				//make sure we're not looking out of bounds of the buffer
 				var max = this.buffer[sender.tapeNum][key][~~this.needle+1] ? this.buffer[sender.tapeNum][key][~~this.needle+1] : this.buffer[sender.tapeNum][key][~~this.needle]
+				
+				if (key == "items") {
+					console.log(this.buffer[sender.tapeNum][key][~~this.needle-this.direction][0].x)
+					console.log(this.buffer[sender.tapeNum][key][~~this.needle][0].x)
+					console.log(this.needle)
+				}
+
 				if (this.buffer[sender.tapeNum][key][~~this.needle-this.direction] != undefined && this.buffer[sender.tapeNum][key][~~this.needle] != this.buffer[sender.tapeNum][key][~~this.needle-this.direction]) {
-					// create the value pair
-					val[key] = nx.interp(this.needle - ~~this.needle, this.buffer[sender.tapeNum][key][~~this.needle], max)
-					val[key] += Math.random() * this.noise - this.noise/2;
-					val[key] = nx.clip(val[key],0,1)
-					//set the widget with the value from the buffer
-					sender.set(val, true)
+					
+					console.log(3)
+
+					// if it's a number, interpolate
+					if (typeof this.buffer[sender.tapeNum][key][~~this.needle] == "number") {
+						// create the value pair
+						val[key] = nx.interp(this.needle - ~~this.needle, this.buffer[sender.tapeNum][key][~~this.needle], max)
+						val[key] += Math.random() * this.noise - this.noise/2;
+						val[key] = nx.clip(val[key],0,1)
+						//set the widget with the value from the buffer
+						sender.set(val, true)
+					} else {
+						// otherwise, transfer the closest val as is
+						val[key] = this.buffer[sender.tapeNum][key][~~this.needle]
+						sender.set(val, true)
+						
+					}
+
+
+
+
 				}
 			}
 		}
@@ -6032,10 +6059,15 @@ var windows = module.exports = function (target) {
 
 	widget.call(this, target);
 
-	this.val = {}
+	this.val = {
+		items: [],
+		add: false,
+		remove: false,
+		change: false
+	}
 
-	this.items = []
-	this.size = 30;
+	//this.val.items = []
+	this.size = .25;
 	this.meta = false;
 	this.resizing = false;
 	
@@ -6057,7 +6089,7 @@ windows.prototype.init = function() {
 }
 
 windows.prototype.add = function(x,y,w,h) {
-	this.items.push({
+	this.val.items.push({
 		x: x,
 		y: y,
 		w: w,
@@ -6066,18 +6098,26 @@ windows.prototype.add = function(x,y,w,h) {
 	this.draw();
 }
 
+windows.prototype.setWindow = function(index, loc) {
+	this.val.items[index] = loc;
+	this.draw();
+}
+
 windows.prototype.remove = function(index) {
-	this.items.splice(index,1)
-	this.val = {
+	this.val.items.splice(index,1)
+	this.val.add = false
+	this.val.remove = index
+	this.val.change = false
+	/* this.val = {
 		remove: index,
-		items: this.items
-	}
+		items: this.val.items
+	} */
 	this.transmit(this.val)
 	this.draw();
 }
 
 windows.prototype.draw = function() {
-	this.erase()
+//	this.erase()
 	with (this.context) {
 
 		if (!this.meta) {
@@ -6088,16 +6128,18 @@ windows.prototype.draw = function() {
 
 		fillRect(0,0,this.width,this.height);
 	
-		for (var i=0;i<this.items.length;i++) {
+		for (var i=0;i<this.val.items.length;i++) {
 			fillStyle = this.colors.accent;
-			fillRect(this.items[i].x-this.items[i].w/2,this.items[i].y-this.items[i].h/2,this.items[i].w,this.items[i].h)
+			var x = (this.val.items[i].x-this.val.items[i].w/2)*this.width
+			var y = (this.val.items[i].y-this.val.items[i].h/2)*this.height
+			var w = this.val.items[i].w*this.width
+			var h = this.val.items[i].h*this.height
+			fillRect(x,y,w,h)
 		    
 			strokeStyle = this.colors.fill;
 			lineWidth = 1;
-		    strokeRect(this.items[i].x+this.items[i].w/2-10,this.items[i].y+this.items[i].h/2-10,10,10)
-		
-		   // strokeRect(this.items[i].x+this.items[i].w/2-10,this.items[i].y-this.items[i].h/2,10,10)
-		
+		    strokeRect(x+w-10,y+h-10,10,10)
+		  //  strokeRect((this.val.items[i].x + this.val.items[i].w/2)*this.width - 10, (this.val.items[i].y + this.val.items[i].h/2)*this.height - 10,10,10)
 		}
 
 	}
@@ -6106,79 +6148,87 @@ windows.prototype.draw = function() {
 }
 
 windows.prototype.click = function() {
+
 	this.holds = false;
-	for (var i=0;i<this.items.length;i++) {
-		if (nx.isInside({x:this.clickPos.x+this.items[i].w/2,y:this.clickPos.y+this.items[i].h/2 },this.items[i])) {
+	var cx = this.clickPos.x / this.width;
+	var cy = this.clickPos.y / this.height;
+	for (var i=0;i<this.val.items.length;i++) {
+		if (nx.isInside({ x: cx+this.val.items[i].w/2, y: cy+this.val.items[i].h/2 }, this.val.items[i])) {
 			this.holds = i;
-			if (this.clickPos.x > this.items[i].x + this.items[i].w/2 - 10 && this.clickPos.x < this.items[i].x + this.items[i].w/2 && this.clickPos.y > this.items[i].y + this.items[i].h/2 - 10 && this.clickPos.y < this.items[i].y + this.items[i].h/2) {
+			if (this.clickPos.x > (this.val.items[i].x + this.val.items[i].w/2)*this.width - 10 && this.clickPos.x < (this.val.items[i].x + this.val.items[i].w/2)*this.width && this.clickPos.y > (this.val.items[i].y + this.val.items[i].h/2)*this.height - 10 && this.clickPos.y < (this.val.items[i].y + this.val.items[i].h/2)*this.height) {
 				this.resizing = true;
 			}
-			/*if (this.clickPos.x > this.items[i].x + this.items[i].w/2 - 10 && this.clickPos.x < this.items[i].x + this.items[i].w/2 && this.clickPos.y > this.items[i].y - this.items[i].h/2 && this.clickPos.y < this.items[i].y - this.items[i].h/2 + 10) {
-				this.remove(this.holds)
-				this.holds = false;
-				return;
-			} */
 		}
 	}
+	console.log(this.resizing)
+
 	if (this.holds===false) {
-		this.items.push({
-			x: this.clickPos.x,
-			y: this.clickPos.y,
+		this.val.items.push({
+			x: cx,
+			y: cy,
 			w: this.size,
 			h: this.size
 		})
-		this.holds = this.items.length-1;
+		this.holds = this.val.items.length-1;
 		this.hasMoved = true;
-		this.val = {
-			add: this.items[this.holds],
-			items: this.items
-		}
+		this.val.add = this.val.items[this.holds]
+		this.val.remove = false
+		this.val.change = false
+		/* this.val = {
+			add: this.val.items[this.holds],
+			items: this.val.items
+		} */
 		this.transmit(this.val)
 	}
 	if (this.meta) {
-		for (var i=0;i<this.items.length;i++) {
-			this.items[i].tx = this.items[i].x
-			this.items[i].ty = this.items[i].y
+		for (var i=0;i<this.val.items.length;i++) {
+			this.val.items[i].tx = this.val.items[i].x
+			this.val.items[i].ty = this.val.items[i].y
 		}
-		this.tx = this.clickPos.x
-		this.ty = this.clickPos.y
+		this.tx = cx
+		this.ty = cy
 	}
 	this.draw();
 }
 
 windows.prototype.move = function() {
+	var cx = this.clickPos.x / this.width;
+	var cy = this.clickPos.y / this.height;
 	if (this.resizing) {
 		if (!this.meta) {
-			this.items[this.holds].w = this.clickPos.x + this.items[this.holds].w/2 - this.items[this.holds].x
-			this.items[this.holds].h = this.clickPos.y + this.items[this.holds].h/2 - this.items[this.holds].y
-			this.items[this.holds] = this.restrict(this.items[this.holds])
+			this.val.items[this.holds].w = cx + this.val.items[this.holds].w/2 - this.val.items[this.holds].x
+			this.val.items[this.holds].h = cy + this.val.items[this.holds].h/2 - this.val.items[this.holds].y
+			this.val.items[this.holds] = this.restrict(this.val.items[this.holds])
 		} else {
-			for (var i=0;i<this.items.length;i++) {
-				this.items[i].w = this.clickPos.x + this.items[this.holds].w/2 - this.items[this.holds].x
-				this.items[i].h = this.clickPos.y + this.items[this.holds].h/2 - this.items[this.holds].y
-				this.items[i] = this.restrict(this.items[i])
+			for (var i=0;i<this.val.items.length;i++) {
+				this.val.items[i].w = cx + this.val.items[this.holds].w/2 - this.val.items[this.holds].x
+				this.val.items[i].h = cy + this.val.items[this.holds].h/2 - this.val.items[this.holds].y
+				this.val.items[i] = this.restrict(this.val.items[i])
 			}
 		}
 	} else {
 		if (!this.meta) {
-			this.items[this.holds].x = this.clickPos.x;
-			this.items[this.holds].y = this.clickPos.y;	
-			this.items[this.holds] = this.restrict(this.items[this.holds])
+			this.val.items[this.holds].x = cx;
+			this.val.items[this.holds].y = cy;	
+			this.val.items[this.holds] = this.restrict(this.val.items[this.holds])
 		} else {
-			for (var i=0;i<this.items.length;i++) {
-				this.items[i].x = (this.clickPos.x - this.tx) + this.items[i].tx;
-				this.items[i].y = (this.clickPos.y - this.ty) + this.items[i].ty;
-				this.items[i] = this.restrict(this.items[i])	
+			for (var i=0;i<this.val.items.length;i++) {
+				this.val.items[i].x = (cx - this.tx) + this.val.items[i].tx;
+				this.val.items[i].y = (cy - this.ty) + this.val.items[i].ty;
+				this.val.items[i] = this.restrict(this.val.items[i])	
 			}
 		}	
 	}
 
 
 	
-	this.val = {
+	this.val.change = true;
+	this.val.add = false;
+	this.val.remove = false;
+	/*this.val = {
 		change: true,
-		items: this.items
-	}
+		items: this.val.items
+	} */
 	this.transmit(this.val)
 	this.draw();
 }
@@ -6186,17 +6236,23 @@ windows.prototype.move = function() {
 windows.prototype.release = function() {
 	if (!this.hasMoved) {
 		if (this.meta) {
-			this.val = {
+			this.val.add = false
+			this.val.remove = "all"
+			this.val.change = false
+			/*this.val = {
 				remove: "all",
-				items: this.items
-			}
-			this.items = []
+				items: this.val.items
+			} */
+			this.val.items = []
 		} else {
-			this.val = {
+			this.val.add = false
+			this.val.remove = this.holds
+			this.val.change = false
+		/*	this.val = {
 				remove: this.holds,
-				items: this.items
-			}
-			this.items.splice(this.holds,1)
+				items: this.val.items
+			} */
+			this.val.items.splice(this.holds,1)
 		}
 	}
 	this.resizing = false;
@@ -6211,13 +6267,11 @@ windows.prototype.restrict = function(item) {
 	if (item.y < item.h/2) {
 		item.y = item.h/2
 	}
-	if (item.x + item.w/2 > this.width) {
-		item.x = this.width - item.w/2
-		//item.w = this.width - item.x
+	if (item.x + item.w/2 > 1) {
+		item.x = 1 - item.w/2
 	}
-	if (item.y + item.h/2 > this.height) {
-		item.y = this.height - item.h/2
-		//item.h = this.height - item.y
+	if (item.y + item.h/2 > 1) {
+		item.y = 1 - item.h/2
 	}	
 	return item;
 }

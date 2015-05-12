@@ -76,7 +76,7 @@ var rack = function (type,shelf,media) {
 	container.setAttribute("class", "rackunit")
 	container.id = rackid
 	if (type=="wall") {
-		container.setAttribute("class", "wall")
+		container.setAttribute("class", "rackunit wall")
 	}
 
 	parent.appendChild(container)
@@ -157,16 +157,16 @@ var Parts = {
 			action: function(data) {
 				console.log(data)
 				if (data.add) {
-					var w = ~~((data.add.w/this.width)*m.stage.w)
-					var h = ~~((data.add.h/this.height)*m.stage.h)
-					var x = ~~((data.add.x/this.width)*m.stage.w+m.stage.x) - w/2
-					var y = ~~((data.add.y/this.height)*m.stage.h+m.stage.y) - h/2
+					var w = ~~((data.add.w)*m.stage.w)
+					var h = ~~((data.add.h)*m.stage.h)
+					var x = ~~((data.add.x)*m.stage.w+m.stage.x) - w/2
+					var y = ~~((data.add.y)*m.stage.h+m.stage.y) - h/2
 					if (data.items.length>this.wall.elements.length) {
 						this.wall.elements.push(m.peer(x,y,w,h));
 					}
 					
 				}
-				if (data.remove!=undefined) { 
+				if (!data.remove && !data.remove===0) { 
 					console.log(data.remove)
 					this.wall.killWindow(data.remove)
 					//this.wall.elements[data.remove].kill()
@@ -174,10 +174,10 @@ var Parts = {
 				if (data.items) {
 					for (var i=0;i<data.items.length;i++) {
 						if (i<this.wall.elements.length) {
-							var w = ~~((data.items[i].w/this.width)*m.stage.w)
-							var h = ~~((data.items[i].h/this.height)*m.stage.h)
-							var x = ~~((data.items[i].x/this.width)*m.stage.w+m.stage.x) - w/2
-							var y = ~~((data.items[i].y/this.height)*m.stage.h+m.stage.y) - h/2
+							var w = ~~((data.items[i].w)*m.stage.w)
+							var h = ~~((data.items[i].h)*m.stage.h)
+							var x = ~~((data.items[i].x)*m.stage.w+m.stage.x) - w/2
+							var y = ~~((data.items[i].y)*m.stage.h+m.stage.y) - h/2
 							this.wall.elements[i].size(w,h)
 							this.wall.elements[i].move(x,y)
 						}
@@ -186,10 +186,10 @@ var Parts = {
 			},
 			init: function() {
 				for (var i=0;i<this.wall.elements.length;i++) {
-					var w = m.scale(this.wall.elements[i].w,0,m.stage.w,0,this.width)
-					var h = m.scale(this.wall.elements[i].h,0,m.stage.h,0,this.height)
-					var x = m.scale(this.wall.elements[i].x,m.stage.x,m.stage.w+m.stage.x,0,this.width) + w/2
-					var y = m.scale(this.wall.elements[i].y,m.stage.y,m.stage.h+m.stage.y,0,this.height) + h/2
+					var w = m.scale(this.wall.elements[i].w,0,m.stage.w,0,1)
+					var h = m.scale(this.wall.elements[i].h,0,m.stage.h,0,1)
+					var x = m.scale(this.wall.elements[i].x,m.stage.x,m.stage.w+m.stage.x,0,1) + w/2
+					var y = m.scale(this.wall.elements[i].y,m.stage.y,m.stage.h+m.stage.y,0,1) + h/2
 					this.add(x,y,w,h)
 				}
 			},
@@ -307,6 +307,10 @@ var Parts = {
 			label: "pattern",
 			action: function(data) {
 				this.wall.shapeshift(data.text,0)
+				var patt = this.wall.patterns[data.text]
+				for (var i=0;i<patt.length;i++) {
+					this.wall.shelf.widgets[0].setWindow(i,patt[i])
+				}
 			},
 			size: {
 				w: 50,
