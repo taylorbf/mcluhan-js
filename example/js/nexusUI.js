@@ -2308,17 +2308,12 @@ ghost.prototype.write = function(index, val) {
 	}
 	for (var key in val) {
 		if (this.buffer[index][key]) {
+			// if an array or object, must make a copy, otherwise it is a reference to the original and will not record properly
 			if (typeof val[key] == "object") {
 				if (Array.isArray(val[key])) {
 				//	this.buffer[index][key][this.moment] = val[key].slice()
-				/*	this.buffer[index][key][this.moment] = []
-					for (var i=0;i<val[key].length;i++) {
-						this.buffer[index][key][this.moment][i] = val[key][i]
-					} */
+				//	above line should work, but is still only a reference, not a copy
 					this.buffer[index][key][this.moment] = JSON.parse(JSON.stringify(val[key]))
-					console.log(this.buffer[index][key][this.moment][0].x)
-					//console.log(val[key])
-					//console.log(this.buffer[index][key][this.moment])
 				} else {
 					this.buffer[index][key][this.moment] = {}
 					for (var subkey in val[key]) {
@@ -2437,17 +2432,9 @@ ghost.prototype.scan = function(x) {
 				var val = new Object();
 				//make sure we're not looking out of bounds of the buffer
 				var max = this.buffer[sender.tapeNum][key][~~this.needle+1] ? this.buffer[sender.tapeNum][key][~~this.needle+1] : this.buffer[sender.tapeNum][key][~~this.needle]
-				
-				if (key == "items") {
-				//	console.log(this.buffer[sender.tapeNum][key][~~this.needle-this.direction][0].x)
-					console.log(this.buffer[sender.tapeNum][key][~~this.needle][0].x)
-					console.log(this.needle)
-				}
 
 				if (this.buffer[sender.tapeNum][key][~~this.needle-this.direction] != undefined && this.buffer[sender.tapeNum][key][~~this.needle] != this.buffer[sender.tapeNum][key][~~this.needle-this.direction]) {
 					
-					
-
 					// if it's a number, interpolate
 					if (typeof this.buffer[sender.tapeNum][key][~~this.needle] == "number") {
 						// create the value pair
@@ -2459,7 +2446,6 @@ ghost.prototype.scan = function(x) {
 					} else {
 						// otherwise, transfer the closest val as is
 						val[key] = this.buffer[sender.tapeNum][key][~~this.needle]
-						console.log(val[key])
 						sender.set(val, true)
 						
 					}
@@ -2508,7 +2494,6 @@ ghost.prototype.advance = function() {
 			this.needle += this.rate*this.direction;
 		} else if (this.mode=="random") {
 			this.needle = nx.random((this.end-this.start)*this.size)+this.start*this.size;
-			console.log(this.needle)
 		} else if (this.mode=="wander") {
 			var dir = 3
 			this.needle > this.size*0.75 ? dir-- : null;

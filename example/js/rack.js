@@ -333,7 +333,7 @@ var Parts = {
 				h: 20
 			},
 			init: function() {
-				this.choices = ["waves","waves"]
+				this.choices = ["waves","kremlin"]
 				this.init();
 			} 
 		},
@@ -370,16 +370,115 @@ var Parts = {
 			} 
 		}
 	]},
+
+
+
+
+	/* 
+	      FILM 
+	*/
+
 	"film": { 
 		type: "film",
 		widgets: [
 		{
-			type: "range",
-			label: "loop",
+			type: "select",
+			label: "load",
+			action: function(data) {
+				this.media.load(data.text)
+			},
+			size: {
+				w: 50,
+				h: 20
+			},
+			init: function() {
+				this.choices = ["waves","kremlin"]
+				this.init();
+			} 
+		},
+		{
+			type: "dial",
+			label: "speed",
+			action: function(data) {
+				this.media.speed(data.value*4)
+			},
+			size: {
+				w: 40,
+				h: 40
+			},
+			initial: {
+				value: 0.25
+			} 
+		},
+		{
+			type: "toggle",
+			label: "pause",
+			action: function(data) {
+				if (data.value) {
+					this.media.stop()
+				} else {
+					this.media.play()
+				}
+				
+			},
+			size: {
+				w: 30,
+				h: 30
+			}
+		},
+		{
+			type: "slider",
+			label: "scrub",
+			action: function(data) {
+				this.media.jumpTo(data.value*10)
+			},
+			size: {
+				w: 70,
+				h: 20
+			} 
+		},
+		{
+			type: "dial",
+			label: "opacity",
+			action: function(data) {
+				this.media.fade(data.value)
+			},
+			size: {
+				w: 40,
+				h: 40
+			},
+			initial: {
+				value: 1
+			}
+		},
+		{
+			type: "windows",
+			label: "shape",
+			action: function(data) {
+				this.media.move({x:(data.items[0].x-data.items[0].w/2)*1000, y:(data.items[0].y-data.items[0].h/2)*1000})
+				this.media.size({w:data.items[0].w*1000, h:data.items[0].h*1000})
+			},
+			size: {
+				w: 100,
+				h: 100
+			}
+		},
+		{
+			type: "toggle",
+			label: "hide",
 			action: function(data) {
 				this.media.skip(data.start*10,data.stop*10)
-			}
+			},
+			size: {
+				w: 50,
+				h: 20
+			},
+			init: function() {
+				this.choices = ["mcluhan","mcluhan"]
+				this.init();
+			} 
 		}
+		// left undone: glitch settings dropdown, glitch button, effects settings dropdown
 	]},
 	"cassette": { 
 		type: "cassette",
