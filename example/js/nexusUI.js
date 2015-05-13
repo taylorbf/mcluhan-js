@@ -2308,9 +2308,25 @@ ghost.prototype.write = function(index, val) {
 	}
 	for (var key in val) {
 		if (this.buffer[index][key]) {
-			this.buffer[index][key][this.moment] = val[key];
-			if (key=="items") {
-				console.log(val[key][0].x)
+			if (typeof val[key] == "object") {
+				if (Array.isArray(val[key])) {
+				//	this.buffer[index][key][this.moment] = val[key].slice()
+				/*	this.buffer[index][key][this.moment] = []
+					for (var i=0;i<val[key].length;i++) {
+						this.buffer[index][key][this.moment][i] = val[key][i]
+					} */
+					this.buffer[index][key][this.moment] = JSON.parse(JSON.stringify(val[key]))
+					console.log(this.buffer[index][key][this.moment][0].x)
+					//console.log(val[key])
+					//console.log(this.buffer[index][key][this.moment])
+				} else {
+					this.buffer[index][key][this.moment] = {}
+					for (var subkey in val[key]) {
+						this.buffer[index][key][this.moment][subkey] = val[key][subkey]
+					}
+				}
+			} else {
+				this.buffer[index][key][this.moment] = val[key];
 			}
 		}
 	}
@@ -2423,14 +2439,14 @@ ghost.prototype.scan = function(x) {
 				var max = this.buffer[sender.tapeNum][key][~~this.needle+1] ? this.buffer[sender.tapeNum][key][~~this.needle+1] : this.buffer[sender.tapeNum][key][~~this.needle]
 				
 				if (key == "items") {
-					console.log(this.buffer[sender.tapeNum][key][~~this.needle-this.direction][0].x)
+				//	console.log(this.buffer[sender.tapeNum][key][~~this.needle-this.direction][0].x)
 					console.log(this.buffer[sender.tapeNum][key][~~this.needle][0].x)
 					console.log(this.needle)
 				}
 
 				if (this.buffer[sender.tapeNum][key][~~this.needle-this.direction] != undefined && this.buffer[sender.tapeNum][key][~~this.needle] != this.buffer[sender.tapeNum][key][~~this.needle-this.direction]) {
 					
-					console.log(3)
+					
 
 					// if it's a number, interpolate
 					if (typeof this.buffer[sender.tapeNum][key][~~this.needle] == "number") {
@@ -2443,6 +2459,7 @@ ghost.prototype.scan = function(x) {
 					} else {
 						// otherwise, transfer the closest val as is
 						val[key] = this.buffer[sender.tapeNum][key][~~this.needle]
+						console.log(val[key])
 						sender.set(val, true)
 						
 					}
