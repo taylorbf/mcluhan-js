@@ -155,7 +155,6 @@ var Parts = {
 			label: "windows",
 			type: "windows",
 			action: function(data) {
-				console.log(data)
 				if (data.add) {
 					var w = ~~((data.add.w)*m.stage.w)
 					var h = ~~((data.add.h)*m.stage.h)
@@ -166,10 +165,8 @@ var Parts = {
 					}
 					
 				}
-				if (!data.remove && !data.remove===0) { 
-					console.log(data.remove)
+				if (data.remove || data.remove===0) {
 					this.wall.killWindow(data.remove)
-					//this.wall.elements[data.remove].kill()
 				}
 				if (data.items) {
 					for (var i=0;i<data.items.length;i++) {
@@ -411,6 +408,17 @@ var Parts = {
 			} 
 		},
 		{
+			type: "range",
+			label: "loop",
+			action: function(data) {
+				this.media.skip(data.start*10,data.stop*10)
+			},
+			size: {
+				w: 70,
+				h: 20
+			} 
+		},
+		{
 			type: "toggle",
 			label: "pause",
 			action: function(data) {
@@ -455,7 +463,7 @@ var Parts = {
 			type: "windows",
 			label: "shape",
 			action: function(data) {
-				this.media.move({x:(data.items[0].x-data.items[0].w/2)*1000, y:(data.items[0].y-data.items[0].h/2)*1000})
+				this.media.move({x:(data.items[0].x-data.items[0].w)*1000, y:(data.items[0].y-data.items[0].h)*1000})
 				this.media.size({w:data.items[0].w*1000, h:data.items[0].h*1000})
 			},
 			size: {
@@ -467,16 +475,16 @@ var Parts = {
 			type: "toggle",
 			label: "hide",
 			action: function(data) {
-				this.media.skip(data.start*10,data.stop*10)
+				if (data.value) {
+					this.media.hide()
+				} else {
+					this.media.show()
+				}
 			},
 			size: {
-				w: 50,
-				h: 20
-			},
-			init: function() {
-				this.choices = ["mcluhan","mcluhan"]
-				this.init();
-			} 
+				w: 40,
+				h: 40
+			}
 		}
 		// left undone: glitch settings dropdown, glitch button, effects settings dropdown
 	]},
@@ -484,12 +492,193 @@ var Parts = {
 		type: "cassette",
 		widgets: [
 		{
+			type: "select",
+			label: "load",
+			action: function(data) {
+				this.media.load(data.text)
+			},
+			size: {
+				w: 50,
+				h: 20
+			},
+			init: function() {
+				this.choices = ["pno","pnoc3"]
+				this.init();
+			} 
+		},
+		{
+			type: "dial",
+			label: "speed",
+			action: function(data) {
+				this.media.speed(data.value*4)
+			},
+			size: {
+				w: 40,
+				h: 40
+			},
+			initial: {
+				value: 0.25
+			} 
+		},
+		{
 			type: "range",
 			label: "loop",
 			action: function(data) {
 				this.media.skip(data.start*10,data.stop*10)
+			},
+			size: {
+				w: 70,
+				h: 20
+			} 
+		},
+		{
+			type: "toggle",
+			label: "pause",
+			action: function(data) {
+				if (data.value) {
+					this.media.stop()
+				} else {
+					this.media.play()
+				}
+				
+			},
+			size: {
+				w: 30,
+				h: 30
+			}
+		},
+		{
+			type: "slider",
+			label: "scrub",
+			action: function(data) {
+				this.media.jumpTo(data.value*10)
+			},
+			size: {
+				w: 70,
+				h: 20
+			} 
+		},
+		{
+			type: "dial",
+			label: "opacity",
+			action: function(data) {
+				this.media.fade(data.value)
+			},
+			size: {
+				w: 40,
+				h: 40
+			},
+			initial: {
+				value: 1
+			}
+		},
+		{
+			type: "windows",
+			label: "shape",
+			action: function(data) {
+				this.media.move({x:(data.items[0].x-data.items[0].w)*1000, y:(data.items[0].y-data.items[0].h)*1000})
+				this.media.size({w:data.items[0].w*1000, h:data.items[0].h*1000})
+			},
+			size: {
+				w: 100,
+				h: 100
+			}
+		},
+		{
+			type: "toggle",
+			label: "hide",
+			action: function(data) {
+				if (data.value) {
+					this.media.hide()
+				} else {
+					this.media.show()
+				}
+			},
+			size: {
+				w: 40,
+				h: 40
+			}
+		},
+		{
+			type: "button",
+			label: "impulse",
+			action: function(data) {
+				if (data.press) {
+					this.media.jumpTo(0.01)
+					this.media.play()
+				}
+			},
+			size: {
+				w: 40,
+				h: 40
+			}
+		},
+		{
+			type: "position",
+			label: "bandpass",
+			action: function(data) {
+				// this.media.bp(data.x*2000,data.y*20)
+				// arguments are center freq and Q
+			},
+			size: {
+				w: 100,
+				h: 60
+			}
+		},
+		{
+			type: "dial",
+			label: "delay",
+			action: function(data) {
+				// this.media.delay(data.value)
+				// argument is the volume of the delay source
+				// or, the amount of this particular sound sent to delay
+			},
+			size: {
+				w: 40,
+				h: 40
+			}
+		},
+		{
+			type: "dial",
+			label: "reverb",
+			action: function(data) {
+				// this.media.reverb(data.value)
+				// argument is the volume of the effect
+				// or, the amount of this particular sound sent to effect
+			},
+			size: {
+				w: 40,
+				h: 40
+			}
+		},
+		{
+			type: "dial",
+			label: "distortion",
+			action: function(data) {
+				// this.media.overdrive(data.value)
+				// argument is the volume of the effect
+				// or, the amount of this particular sound sent to effect
+			},
+			size: {
+				w: 40,
+				h: 40
+			}
+		},
+		{
+			type: "crossfade",
+			label: "pan",
+			action: function(data) {
+				// this.media.pan(data.value)
+			},
+			size: {
+				w: 70,
+				h: 20
+			},
+			initial: {
+				value: 0
 			}
 		}
+		// left undone: glitch settings dropdown, glitch button, effects settings dropdown
 	]},
 	"photo": { 
 		type: "photo",
@@ -498,7 +687,57 @@ var Parts = {
 			type: "button",
 			label: "glitch",
 			action: function(data) {
-				this.media.glitch()
+				if (data.press) {
+					this.media.glitch()
+				}
+			}
+		},
+		{
+			type: "dial",
+			label: "opacity",
+			action: function(data) {
+				this.media.fade(data.value)
+			},
+			size: {
+				w: 40,
+				h: 40
+			},
+			initial: {
+				value: 1
+			}
+		},
+		{
+			type: "windows",
+			label: "shape",
+			action: function(data) {
+				this.media.move({x:(data.items[0].x-data.items[0].w)*1000, y:(data.items[0].y-data.items[0].h)*1000})
+				this.media.size({w:data.items[0].w*1000, h:data.items[0].h*1000})
+			},
+			size: {
+				w: 100,
+				h: 100
+			}
+		},
+		{
+			type: "dial",
+			label: "zoom level",
+			action: function(data) {
+				this.media.zoom({ level: data.value })
+			},
+			size: {
+				w: 40,
+				h: 40
+			}
+		},
+		{
+			type: "position",
+			label: "zoom",
+			action: function(data) {
+				this.media.zoom({ x: data.x, y: data.y })
+			},
+			size: {
+				w: 100,
+				h: 60
 			}
 		}
 	]}

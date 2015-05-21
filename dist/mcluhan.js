@@ -544,6 +544,16 @@ Medium.prototype.fade = function(level) {
 		this.element[i].style.opacity = level;
 	}
 }
+Medium.prototype.hide = function(level) {
+	for (var i = 0; i<this.element.length; i++) {
+		this.element[i].style.visibility = "hidden";
+	}
+}
+Medium.prototype.show = function(level) {
+	for (var i = 0; i<this.element.length; i++) {
+		this.element[i].style.visibility = "visible";
+	}
+}
 },{}],5:[function(require,module,exports){
 
 
@@ -734,7 +744,11 @@ Cassette.prototype.loop = function(on) {
 
 
 Cassette.prototype.jumpTo = function(start) {
-	start = start ? start : this.start;
+	if (start===0) {
+		start = start;
+	} else {
+		start = start ? start : this.start;
+	}
 	this.setAll("currentTime",start);
 }
 
@@ -1306,9 +1320,41 @@ var Photo = module.exports = function(params) {
 	this.width = 0;
 	this.height = 0;
 
+	this.zoomstate = {
+		x: 0,
+		y: 0,
+		level: 0.5
+	}
+
+
 }
 
 util.inherits(Photo, Medium);
+
+/*
+THE PLAN
+as it is now -- new Image(), one canvas
+the glitch is controlled (has stable seed, only glitches original image)
+	except, does not glitch an image, glitches a canvas.
+in end, glitch result must be copied using drawImage()
+and, don't want to glitch each step of resize process...
+
+or
+hidden canvas with original image, glitches, 
+can glitch that one
+always copy it over, use putimagedata
+can *sort of* zoome with putimagedata
+
+or
+never use drawimage (except the first time)
+always use get image data and putimagedata
+always transform the current thing
+still have original data in background if wish to reset
+<<<
+because transforming existing transformations is interesting, apparently
+
+
+ */
 
 Photo.prototype.load = function(src) {
 
@@ -1321,8 +1367,17 @@ Photo.prototype.load = function(src) {
 			this.element[i].height = this.height;
 			this.element[i].style.width = this.width;
 			this.element[i].style.height = this.height;
-			this.context[i].drawImage(this.image,0,0)
+			this.context[i].drawImage(this.image, this.zoomstate.x, this.zoomstate.y,this.zoomstate.level*this.width,this.zoomstate.level*this.height,0,0,this.width,this.height );
+	
 		}
+		this.data = this.context[0].getImageData( 0, 0, this.width, this.height );
+
+		// dealing with image data
+		/*this.data = {
+			original: this.context[0].getImageData( 0, 0, this.width, this.height ),
+			current: 0
+		}*/
+
 	}.bind(this)
 	this.image.src = "images/"+src+".jpg"
 
@@ -1331,16 +1386,15 @@ Photo.prototype.load = function(src) {
 }
 
 Photo.prototype.glitch = function(file,callback) {
-	this.data = this.context[0].getImageData( 0, 0, this.width, this.height );
+	//this.data = this.context[0].getImageData( 0, 0, this.width, this.height );
 
 	// glitch the image data (passing drawImageDataInCanvasTwo as a callback function)
-	var parameters = { amount: 10, seed: 45, iterations: 30, quality: 30 };
+	var parameters = { amount: 10, seed: 1, iterations: 10, quality: 30 };
 	
 	//console.log(parameters)
 	//console.log(glitch)
 	
 	glitch( this.data, parameters, function(data) {
-		console.log("inside")
 		for (var i = 0; i<this.spaces.length; i++) {
 			this.context[i].putImageData( data, 0, 0 );
 		}
@@ -1348,7 +1402,22 @@ Photo.prototype.glitch = function(file,callback) {
 		
 }
 
+Photo.prototype.zoom = function(params) {
+	if (params.level) {
+		this.zoomstate.level = params.level
+	}
+	if (params.x) {
+		this.zoomstate.x = params.x * this.width
+	}
+	if (params.y) {
+		this.zoomstate.y = params.y * this.height
+	}
 
+	for (var i = 0; i<this.element.length; i++) {
+		this.context[i].drawImage(this.image, this.zoomstate.x, this.zoomstate.y,this.zoomstate.level*this.width,this.zoomstate.level*this.height,0,0,this.width,this.height );
+	}
+
+}
 },{"../core/medium":4,"util":52}],13:[function(require,module,exports){
 var util = require('util');
 
