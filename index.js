@@ -7,6 +7,9 @@ window.glitch = require("./bower_components/glitch-canvas/dist/glitch-canvas")
 window.Nightmare = require ("nightmare")
 window.Tone = require('tone').Tone
 require('./lib/utils/bt')
+//window.googleit = require('google-image-search')
+window.googleimage = require('google-images')
+//console.log(googleimage)
 
 //var Voice = require("./lib/media/voice")
 
@@ -21,8 +24,8 @@ window.windex = 0;
 window.walls = new Array();
 window.journal = { "hello": "Hello Digital World" }
 
-
 window.components = require("./lib/media")
+
 for (var key in window.components) {
 	window[key] = window.components[key]
 }
@@ -114,7 +117,16 @@ window.ramp = function(start,end,dur,callback) {
 	})
 }
 
+window.loadScript = function (url, callback) {
+    var head = document.getElementsByTagName('head')[0];
+    var script = document.createElement('script');
+    script.type = 'text/javascript';
+    script.src = url;
 
+    script.onreadystatechange = callback;
+    script.onload = callback;
 
+    head.appendChild(script);
+}
 
 

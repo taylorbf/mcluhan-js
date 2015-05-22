@@ -10,6 +10,21 @@
     <link rel="stylesheet" type="text/css" href="css/controls.css">
     <script src="js/nexusUI.js"></script>
     <script src="js/rack.js"></script>
+
+<!--
+    <script>
+        function startgapi() {
+          console.log(gapi)
+          gapi.client.setApiKey("AIzaSyCtqhb-u4gJyt8f-vuf7tDadc68MvaUDn4")
+          gapi.client.load("customsearch", 1);
+        }
+       
+ 
+    </script>
+
+    <script src="https://apis.google.com/js/client.js?onload=startgapi"></script>-->
+
+
   </head>
   <body>
 
@@ -54,12 +69,76 @@
 
       $(function() {
 
-        //addShelf()
 
-       /* $(".dragitem").draggable({
-          helper: "clone"
-        }) */
+        // AIzaSyCtqhb-u4gJyt8f-vuf7tDadc68MvaUDn4
+
+       $.ajax({
+          type: "GET",
+            url: "https://www.googleapis.com/customsearch/v1?q=test&cx=009196469186626065537:vchqbejelag&key=AIzaSyCiMlsThmuedVfny63G7swWUvcNkX963PA&searchType=image&fileType=png",
+            //&fileType=png
+            crossDomain: true,
+            dataType: 'json',
+            contentType: "application/json",
+            success: function(data) {
+              console.log(data);
+              for(var i=0;i<data.items.length;i++) {
+                var url = data.items[i].link
+                console.log(url)
+             //   $("body").append("<img src='"+url+"'>");
+              }
+            },
+            error: function(err) {
+              console.log(err)
+            }
+        })
+
+       /*   console.log(googleimage.search("a",{
+            page:1,
+            callback:function(a,b,c) {
+              console.log(a,b,c)
+            }
+          })) */
+
+/* this is the url i want
+http://ajax.googleapis.com/ajax/services/search/images?v=1.0&q=test&start=0
+*/
+
+//https://www.googleapis.com/customsearch/v1
+//
+//
+//
+//
+//
+//working!
+//https://www.googleapis.com/customsearch/v1?q=test&cx=009196469186626065537:vchqbejelag&key=AIzaSyCiMlsThmuedVfny63G7swWUvcNkX963PA
+//
+//
+//jpg only
+//https://www.googleapis.com/customsearch/v1?q=test&cx=009196469186626065537:vchqbejelag&key=AIzaSyCiMlsThmuedVfny63G7swWUvcNkX963PA&fileType=jpg
+
+
+      /*  $.get
+
+      http://ajax.googleapis.com/ajax/services/search/images?v=1.0&q=test&start=0
+      
+        var xhr = new XMLHttpRequest();
+        var oauthToken = gapi.auth.getToken();
+        xhr.open('GET',
+          'https://www.googleapis.com/plus/v1/people/me/activities/public');
+        xhr.setRequestHeader('Authorization',
+          'Bearer ' + oauthToken.access_token);
+        xhr.send(); */
+
+
+       /*   loadScript("https://www.google.com/jsapi", function() {
+            console.log(google)
+            m.google = google;
+            m.google.load("search",1)
+          }); */
+        
       })
+
+
 
 
   	</script>
