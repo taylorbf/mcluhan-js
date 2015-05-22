@@ -481,6 +481,38 @@ Manager.prototype.makeWall = function(num,config) {
 
 Manager.prototype.static = new StaticProject()
 
+
+
+
+
+/* GOOGLE THINGS */
+
+Manager.prototype.googleimage = function(keyword,callback) {
+
+  //currently searches for png. might want jpg later...
+  //uses my own api key and custom search e
+  $.ajax({
+    type: "GET",
+      url: "https://www.googleapis.com/customsearch/v1?q="+keyword+"&cx=009196469186626065537:vchqbejelag&key=AIzaSyCiMlsThmuedVfny63G7swWUvcNkX963PA&searchType=image&fileType=png",
+      crossDomain: true,
+      dataType: 'json',
+      contentType: "application/json",
+      success: function(data) {
+        var links = []
+        for(var i=0;i<data.items.length;i++) {
+          links.push(data.items[i].link)
+        }
+        callback(links)
+      },
+      error: function(err) {
+        console.log(err)
+      }
+  })
+}
+
+
+
+
 },{"../guides/static":5,"../media":9,"../utils/math":18,"events":69,"extend":100,"tone":247,"util":99}],4:[function(require,module,exports){
 
 // Template for all DOM-based items (video, audio, divs, embeds)
@@ -1381,6 +1413,8 @@ because transforming existing transformations is interesting, apparently
 
 Photo.prototype.load = function(src) {
 
+	this.master.width = this.master.width;
+
 	this.image = new Image()
 	this.image.onload = function() {
 		this.width = this.image.width;
@@ -1408,11 +1442,17 @@ Photo.prototype.load = function(src) {
 		}*/
 
 	}.bind(this)
-	this.image.src = "images/"+src+".jpg"
 
+	if (src.indexOf("http")==0) {
+		this.image.src = src
+		this.image.crossOrigin = "Anonymous";
+	} else {
+		this.image.src = "images/"+src+".jpg"
+	}
+	
 	return this;
-
 }
+
 
 Photo.prototype.propogateMaster = function() {
 	for (var i=0;i<this.context.length;i++) {

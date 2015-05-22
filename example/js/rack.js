@@ -739,6 +739,20 @@ var Parts = {
 				w: 100,
 				h: 60
 			}
+		},
+		{
+			type: "text",
+			label: "google image",
+			action: function(data) {
+				m.googleimage(data.text,function(links) {
+					console.log(links)
+					this.media.load(links[0])
+				}.bind(this))
+			},
+			size: {
+				w: 100,
+				h: 30
+			}
 		}
 	]}
 }
