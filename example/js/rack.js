@@ -49,6 +49,7 @@ var shelf = function(type) {
 	} */
 }
 
+//shelf 'type' is type of wall (i.e. grid4, big1, etc)
 function addShelf(type) {
 	var newshelf = new shelf(type)
 	shelves.push(newshelf)
@@ -365,6 +366,60 @@ var Parts = {
 				this.choices = ["mcluhan","mcluhan"]
 				this.init();
 			} 
+		},
+		{
+			type: "select",
+			label: "hack",
+			action: function(data) {
+				var newmedia = this.wall.hack(data.text)
+				addRack("hack",this.wall.shelf,newmedia)
+			},
+			size: {
+				w: 50,
+				h: 20
+			},
+			init: function() {
+				this.choices = ["en.wikipedia.org/wiki/art","en.wikipedia.org/wiki/life","google.com","foxnews.com"]
+				this.init();
+			} 
+		},
+		//hack,voice,lattice,paper,presence, color overlay
+		{
+			type: "colors",
+			label: "overlay",
+			action: function(data) {
+			//	console.log(data)
+				this.wall.color("rgba("+data.r+","+data.g+","+data.b+","+this.wall.coloralpha+")")
+			//	addRack("voice",this.wall.shelf,newmedia)
+			},
+			size: {
+				w: 60,
+				h: 60
+			}
+		},
+		{
+			type: "text",
+			label: "write",
+			action: function(data) {
+				var newmedia = this.wall.write(data.text)
+				addRack("paper",this.wall.shelf,newmedia)
+			},
+			size: {
+				w: 150,
+				h: 60
+			}
+		},
+		{
+			type: "text",
+			label: "map",
+			action: function(data) {
+				var newmedia = this.wall.explore(data.text)
+				addRack("map",this.wall.shelf,newmedia)
+			},
+			size: {
+				w: 120,
+				h: 30
+			}
 		}
 	]},
 
@@ -752,6 +807,168 @@ var Parts = {
 			size: {
 				w: 100,
 				h: 30
+			}
+		}
+		//left undone: glitch for URL images. more glitch settings (tile repeat, color overlay)
+	]},
+	//left to do: hack, paper, voice, lattice
+	"hack": { 
+		type: "hack",
+		widgets: [
+		{
+			type: "windows",
+			label: "shape",
+			action: function(data) {
+				this.media.move({x:(data.items[0].x-data.items[0].w)*1000, y:(data.items[0].y-data.items[0].h)*1000})
+				this.media.size({w:data.items[0].w*1000, h:data.items[0].h*1000})
+			},
+			size: {
+				w: 100,
+				h: 100
+			}
+		},
+		{
+			label: "scroll",
+			type: "position",
+			action: function(data) {
+			//	this.media.scroll(data.x*2000,m.scale(data.y,1,0,0,2000))
+			},
+			size: {
+				w: 100,
+				h: 100
+			}
+		},
+		{
+			type: "select",
+			label: "load",
+			action: function(data) {
+				this.media.load(data.text)
+			},
+			size: {
+				w: 100,
+				h: 30
+			},
+			init: function() {
+				this.choices = ["en.wikipedia.org/wiki/art","en.wikipedia.org/wiki/life","google.com","foxnews.com"]
+				this.init()
+			} 
+		},
+		{
+			type: "text",
+			label: "load",
+			action: function(data) {
+				this.media.load(data.text)
+			},
+			size: {
+				w: 150,
+				h: 30
+			}
+		},
+		{
+			type: "dial",
+			label: "zoom",
+			action: function(data) {
+				this.media.zoom(data.value*4)
+			},
+			size: {
+				w: 40,
+				h: 40
+			}
+		}
+	]},
+/*	"voice": { 
+		type: "voice",
+		widgets: [
+		{
+			type: "text",
+			label: "say",
+			action: function(data) {
+				if (data.text) {
+					this.media.say(data.text)
+				}
+			}
+		}
+	]}, */
+	"paper": { 
+		type: "hack",
+		widgets: [
+		{
+			type: "text",
+			label: "text",
+			action: function(data) {
+				this.media.read(data.text)
+			}
+		},
+		{
+			type: "select",
+			label: "style",
+			action: function(data) {
+				this.media.changeStyle(data.text)
+			},
+			size: {
+				w: 100,
+				h: 30
+			},
+			init: function() {
+				this.choices = ["normal","flip","wash"]
+				this.init()
+			} 
+		},
+		{
+			type: "button",
+			label: "empty",
+			action: function(data) {
+				if (data.press) {
+					//	this.media.empty()
+				}
+			},
+			size: {
+				w: 40,
+				h: 40
+			}
+		},
+		{
+			type: "button",
+			label: "restart",
+			action: function(data) {
+				if (data.press) {
+					//	this.media.restart()
+				}
+			},
+			size: {
+				w: 40,
+				h: 40
+			}
+		}
+	]},
+	"lattice": { 
+		type: "hack",
+		widgets: [
+		{
+			type: "button",
+			label: "glitch",
+			action: function(data) {
+				if (data.press) {
+					this.media.glitch()
+				}
+			}
+		}
+	]},
+	"map": { 
+		type: "map",
+		widgets: [
+		{
+			type: "dial",
+			label: "zoom",
+			action: function(data) {
+				this.media.zoom(Math.floor(data.value*16))
+			}
+		},
+		{
+			type: "position",
+			label: "stray",
+			action: function(data) {
+				this.media.stray(data.x, data.y)
 			}
 		}
 	]}

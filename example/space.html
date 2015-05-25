@@ -3,6 +3,7 @@
 <head>
 	<title>dream</title>
 	<link href='http://fonts.googleapis.com/css?family=Josefin+Sans:100,400' rel='stylesheet' type='text/css'>
+	<!--<script src="https://maps.googleapis.com/maps/api/js?v=3.exp"></script> -->
 </head>
 <body>
 
@@ -23,6 +24,20 @@
 	.normal {
 		padding:10px;
 	}
+
+	/* iframe zoom test */
+	iframe {
+		zoom: 2;
+	    -moz-transform:scale(2);
+	    -moz-transform-origin: 0 0;
+	    -o-transform: scale(2);
+	    -o-transform-origin: 0 0;
+	    -webkit-transform: scale(2);
+	    -webkit-transform-origin: 0 0; 
+	}
+
+
+
 </style>
 
 <canvas id="c" style="position:absolute;height:3000px;width:1500px;z-index:100"></canvas>

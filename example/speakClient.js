@@ -63,8 +63,21 @@ function speak(text, args) {
     audStream.connect(feedbackDelay)
   
     document.getElementById("player").play(); */
-    siri.element.pause()
+  //  siri.element.pause()
+  //
+    
+  /*  
+    explanation: 
+    siri = new voice() is called when mcluhan.js loads
+    siri.say() calls this speakClient.js function
+    the only 'voice' that exists is the siri variable
+    so we can set siri's attributes in this area
+    that way, we can use the siri object to attach to Tone.js, etc
+    and in this function, just deal with creating the audio file and playing it.
+   */
     siri.element.src = "data:audio/x-wav;base64,"+encode64(wav)
+    //this was a major need:
+    siri.element.crossOrigin = "Anonymous"
     siri.element.play()
   }
 

@@ -73,14 +73,14 @@ window.alt = function() {
 window.Tonify = function(el) {
 
 }
-
+/*
 window.say = function(text,speed,pitch) {
 	siri.say({
 		"text": text,
 		"speed": speed,
 		"pitch": pitch
 	})
-}
+} */
 
 
 //GLOBAL LIBARY CODE
@@ -128,5 +128,4 @@ window.loadScript = function (url, callback) {
 
     head.appendChild(script);
 }
-
 

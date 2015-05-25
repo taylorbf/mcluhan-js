@@ -11,6 +11,10 @@
     <script src="js/nexusUI.js"></script>
     <script src="js/rack.js"></script>
 
+    <!-- this is also in space.html ... needs to be encapsulated eventually -->
+    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp"></script>
+
+
 <!--
     <script>
         function startgapi() {
@@ -30,8 +34,6 @@
 
   	<header>mcluhan.js: &nbsp; real.time net.art</header>
 
- <!--   <canvas nx="select" id="wall1" choices=",line,grid4" style="border-radius:0px !important"></canvas> -->
-
     <div style="width:100%;overflow:auto:border:solid 1px white;margin:10px">
     <div style="width:10000px;">
 
@@ -44,10 +46,17 @@
         <button onclick="makewall(this.innerHTML)">big1</button>
         <button onclick="makewall(this.innerHTML)">grid4</button>
         <button onclick="makewall(this.innerHTML)">fauve</button>
-        <canvas nx="ghost" style="position:fixed;bottom:0px;right:0px"></canvas>
+
+        <canvas nx="toggle" id="presencecontrol"></canvas>
+        <br>presence
+        <br>
+        <canvas nx="text" id="voicecontrol" style="width:150px;height:60px"></canvas>
+        <br>voice
       </div>
     </div>
     </div>
+
+    <canvas nx="ghost" style="position:fixed;bottom:0px;right:0px"></canvas>
   	
 
   	<script>
@@ -57,89 +66,25 @@
       nx.onload = function() {
 
         nx.colorize("fill","white")
-      //  nx.colorize("accent","#777")
         nx.colorize("accent","#19D")
-      /*  wall1.on("text", function(data) {
-          new wall(data)
-        }) */
         ghost1.watch();
+
+        voicecontrol.on('*',function(data) {
+          if (data.text) {
+            siri.say(data.text)
+          }
+        })
+
       }
 
 
 
       $(function() {
 
-
-     /*   // AIzaSyCtqhb-u4gJyt8f-vuf7tDadc68MvaUDn4
-
-       $.ajax({
-          type: "GET",
-            url: "https://www.googleapis.com/customsearch/v1?q=test&cx=009196469186626065537:vchqbejelag&key=AIzaSyCiMlsThmuedVfny63G7swWUvcNkX963PA&searchType=image&fileType=png",
-            //&fileType=png
-            crossDomain: true,
-            dataType: 'json',
-            contentType: "application/json",
-            success: function(data) {
-              console.log(data);
-              for(var i=0;i<data.items.length;i++) {
-                var url = data.items[i].link
-                console.log(url)
-             //   $("body").append("<img src='"+url+"'>");
-              }
-            },
-            error: function(err) {
-              console.log(err)
-            }
-        })
-
-       /*   console.log(googleimage.search("a",{
-            page:1,
-            callback:function(a,b,c) {
-              console.log(a,b,c)
-            }
-          })) */
-
-/* this is the url i want
-http://ajax.googleapis.com/ajax/services/search/images?v=1.0&q=test&start=0
-*/
-
-//https://www.googleapis.com/customsearch/v1
-//
-//
-//
-//
-//
-//working!
-//https://www.googleapis.com/customsearch/v1?q=test&cx=009196469186626065537:vchqbejelag&key=AIzaSyCiMlsThmuedVfny63G7swWUvcNkX963PA
-//
-//
-//jpg only
-//https://www.googleapis.com/customsearch/v1?q=test&cx=009196469186626065537:vchqbejelag&key=AIzaSyCiMlsThmuedVfny63G7swWUvcNkX963PA&fileType=jpg
-
-
-      /*  $.get
-
-      http://ajax.googleapis.com/ajax/services/search/images?v=1.0&q=test&start=0
-      
-        var xhr = new XMLHttpRequest();
-        var oauthToken = gapi.auth.getToken();
-        xhr.open('GET',
-          'https://www.googleapis.com/plus/v1/people/me/activities/public');
-        xhr.setRequestHeader('Authorization',
-          'Bearer ' + oauthToken.access_token);
-        xhr.send(); */
-
-
-       /*   loadScript("https://www.google.com/jsapi", function() {
-            console.log(google)
-            m.google = google;
-            m.google.load("search",1)
-          }); */
+        // how to load this????
+       // loadScript("https://maps.googleapis.com/maps/api/js?v=3.exp");
         
       })
-
-
-
 
   	</script>
 
@@ -155,9 +100,6 @@ http://ajax.googleapis.com/ajax/services/search/images?v=1.0&q=test&start=0
        // theshelf.wall = new wall(type)
         addRack("wall",theshelf)
       }
-
-
-
 
     </script>
 
