@@ -420,6 +420,18 @@ var Parts = {
 				w: 120,
 				h: 30
 			}
+		},
+		{
+			type: "text",
+			label: "sms",
+			action: function(data) {
+				var newmedia = this.wall.sms(data.text)
+				addRack("sms",this.wall.shelf,newmedia)
+			},
+			size: {
+				w: 120,
+				h: 30
+			}
 		}
 	]},
 
@@ -980,6 +992,35 @@ var Parts = {
 				var locs = data.text
 				locs = locs.split (" to ")
 				this.media.route(locs[0], locs[1])
+			}
+		},
+		{
+			type: "button",
+			label: "marker",
+			action: function(data) {
+				if (data.press) {
+					this.media.marker("new york")
+				}
+			}
+		},
+		{
+			type: "button",
+			label: "info",
+			action: function(data) {
+				if (data.press) {
+					this.media.info("new york")
+				}
+			}
+		}
+	]},
+	"sms": { 
+		type: "sms",
+		widgets: [
+		{
+			type: "text",
+			label: "me",
+			action: function(data) {
+				this.media.text(data.text)
 			}
 		}
 	]}
