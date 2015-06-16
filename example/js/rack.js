@@ -968,7 +968,18 @@ var Parts = {
 			type: "position",
 			label: "stray",
 			action: function(data) {
-				this.media.stray(data.x, data.y)
+				var adjustedx = data.x - 0.5
+				var adjustedy = data.y - 0.5
+				this.media.stray(adjustedx, adjustedy)
+			}
+		},
+		{
+			type: "text",
+			label: "directions",
+			action: function(data) {
+				var locs = data.text
+				locs = locs.split (" to ")
+				this.media.route(locs[0], locs[1])
 			}
 		}
 	]}

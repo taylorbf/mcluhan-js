@@ -1251,6 +1251,7 @@ var Map = module.exports = function(params) {
 	Medium.call(this, params);
 
 	this.map = []
+	this.directionsDisplay = [] 
 
 	/* create map */
 	var mapOptions = {
@@ -1261,11 +1262,15 @@ var Map = module.exports = function(params) {
 	for (var i=0;i<this.element.length;i++) {
 		this.map.push(new google.maps.Map(this.element[i],
 	  		mapOptions));
+	 	this.directionsDisplay.push(new google.maps.DirectionsRenderer())
+		this.directionsDisplay[i].setMap(this.map[i])
 	}
 
 	/* helps find new locations */
 	this.geocoder = new google.maps.Geocoder();
+
 	
+	this.directionsService = new google.maps.DirectionsService();
 
 /*	var marker = new google.maps.Marker({
 	  position: new google.maps.LatLng(-34.397, 150.644),
@@ -1274,12 +1279,14 @@ var Map = module.exports = function(params) {
 	  title: 'Hello World!'
 	}); */
 
-	/* directions stuff */
-	// this.directionsDisplay = new google.maps.DirectionsRenderer();
-	// this.directionsService = new google.maps.DirectionsService();
-	// this.directionsDisplay.setMap(this.map);
+	/* directions stuff
+	 this.directionsDisplay = new google.maps.DirectionsRenderer();
+	 this.directionsService = new google.maps.DirectionsService();
+	 console.log(this.map[0])
+	 this.directionsDisplay.setMap();
+	*/
 
-	// this.calcRoute()
+	// this.route()
 
 	//google.maps.event.addDomListener(window, 'load', this.initialize.bind(this));
 
@@ -1287,9 +1294,9 @@ var Map = module.exports = function(params) {
 
 util.inherits(Map, Medium);
 
-Map.prototype.search = function() {
+Map.prototype.search = function(loc) {
 
-  this.geocoder.geocode( { 'address': 'Chicago'}, function(results, status) {
+  this.geocoder.geocode( { 'address': loc}, function(results, status) {
     if (status == google.maps.GeocoderStatus.OK) {
     	tester = results[0].geometry.location
         this.goto(results[0].geometry.location)
@@ -1312,34 +1319,45 @@ Map.prototype.goto = function(loc) {
 }
 
 Map.prototype.stray = function(x,y) {
+	console.log(this.map[0].zoom)
+	console.log(this.widget)
+	var scale = Math.floor(Math.pow(19/this.map[0].zoom,3))/2
 	var relloc = {
-		A: this.location.A + x,
-		F: this.location.F + y
+		lat: this.location.A + y * scale,
+		lng: this.location.F + x * scale
 	}
+
+//	this.relloc = new google.maps.Geocoder();
+//	this.location.A += x;
+//	this.location.F += y;
     for (var i=0;i<this.map.length;i++) {
         this.map[i].setCenter(relloc);
     }
 }
 
 /* directions stuff */
-Map.prototype.calcRoute = function() {
-  var start = "Charlottesville, VA"
-  var end = "Missoula, MT"
+Map.prototype.route = function(start, end) {
+  start = start ? start : "Charlottesville, VA"
+  end = end ? end : "Missoula, MT"
   var request = {
       origin:start,
       destination:end,
       travelMode: google.maps.TravelMode.DRIVING
   };
-  directionsService.route(request, function(response, status) {
+  this.directionsService.route(request, function(response, status) {
     if (status == google.maps.DirectionsStatus.OK) {
-      directionsDisplay.setDirections(response);
+		for (var i=0;i<this.directionsDisplay.length;i++) {
+			this.directionsDisplay[i].setDirections(response);
+		}
     }
-  });
+  }.bind(this));
 }
 
 
 
 Map.prototype.zoom = function(level) {
+	level +=3 ;
+	console.log ("zoom to "+level)
     for (var i=0;i<this.map.length;i++) {
 		this.map[i].setZoom(level);
 	}
