@@ -1022,6 +1022,18 @@ var Parts = {
 			action: function(data) {
 				this.media.text(data.text)
 			}
+		},
+		{
+			type: "toggle",
+			label: "rapid",
+			action: function(data) {
+				if (data.value) {
+					this.media.scroll()
+				} else {
+					this.media.scrolling = false
+				}
+				
+			}
 		}
 	]}
 }

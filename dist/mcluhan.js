@@ -84,7 +84,7 @@ window.say = function(text,speed,pitch) {
 } */
 
 
-//GLOBAL LIBARY CODE
+//GLOBAL BT LIBARY
 
 window.getCol = function(index,limit) {
 	return index%limit;
@@ -116,6 +116,13 @@ window.ramp = function(start,end,dur,callback) {
 	    easing: "linear",
 	    step: callback
 	})
+}
+
+window.cycle = function(input,min,max) {
+	if (input >= max) {
+		input = min;
+	}
+	return input;
 }
 
 window.loadScript = function (url, callback) {
@@ -1822,17 +1829,22 @@ var TextMessage = module.exports = function(params) {
 	Medium.call(this, params);
 
 	for (var i=0;i<this.element.length;i++) {
-		this.element[i].className = "textmessage"
+		this.element[i].className = "textcontainer"
+		this.element[i].inner = document.createElement("div")
+		this.element[i].inner.className = "textmessage"
+		this.element[i].appendChild(this.element[i].inner)
+
 	}
 
 	this.me = true;
 	this.history = []
+	this.histIndex = 0;
 
 }
 
 util.inherits(TextMessage, Medium);
 
-TextMessage.prototype.text = function(msg) {
+TextMessage.prototype.text = function(msg,skiplog) {
 
 	for (var i=0;i<this.element.length;i++) {
 
@@ -1843,19 +1855,39 @@ TextMessage.prototype.text = function(msg) {
 		var node2 = document.createElement('div')
 		node2.className = 'clear';
 
-		this.element[i].appendChild(node1)
-		this.element[i].appendChild(node2)
+		this.element[i].inner.appendChild(node1)
+		this.element[i].inner.appendChild(node2)
 
 		$(node1).fadeIn(300)
-		this.me = !this.me;
+		this.me = !this.me
 
+	}
+
+	if (!skiplog) {
+		this.history.push(msg)
 	}
 
 }
 
 TextMessage.prototype.scroll = function(msg) {
 
+	this.scrolling = true;
+	this.oneScroll()
 	
+}
+
+TextMessage.prototype.oneScroll = function() {
+
+	console.log(this.histIndex)
+
+	this.histIndex = cycle(this.histIndex,0,this.history.length)
+
+	this.text(this.history[this.histIndex],true)
+
+	if (this.scrolling) {
+		setTimeout(this.oneScroll.bind(this),200)
+	}
+
 }
 
 

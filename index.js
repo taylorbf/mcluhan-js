@@ -83,7 +83,7 @@ window.say = function(text,speed,pitch) {
 } */
 
 
-//GLOBAL LIBARY CODE
+//GLOBAL BT LIBARY
 
 window.getCol = function(index,limit) {
 	return index%limit;
@@ -115,6 +115,13 @@ window.ramp = function(start,end,dur,callback) {
 	    easing: "linear",
 	    step: callback
 	})
+}
+
+window.cycle = function(input,min,max) {
+	if (input >= max) {
+		input = min;
+	}
+	return input;
 }
 
 window.loadScript = function (url, callback) {
