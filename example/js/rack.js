@@ -178,7 +178,7 @@ var Parts = {
 							var x = ~~((data.items[i].x)*m.stage.w+m.stage.x) - w/2
 							var y = ~~((data.items[i].y)*m.stage.h+m.stage.y) - h/2
 							this.wall.elements[i].size(w,h)
-							this.wall.elements[i].move(x,y)
+						//	this.wall.elements[i].move(x,y)
 						}
 					}
 				}
@@ -1012,7 +1012,7 @@ var Parts = {
 			label: "marker",
 			action: function(data) {
 				if (data.press) {
-					this.media.marker("new york")
+					this.media.marker()
 				}
 			}
 		},
@@ -1021,7 +1021,7 @@ var Parts = {
 			label: "info",
 			action: function(data) {
 				if (data.press) {
-					this.media.info("new york")
+					this.media.info()
 				}
 			}
 		}

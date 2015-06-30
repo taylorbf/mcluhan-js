@@ -447,7 +447,9 @@ var Manager = module.exports = function() {
   this.stage.x = window.screen.width / 2 - this.stage.w / 2;
   this.stage.y = window.screen.height / 2 - this.stage.h / 2;
 
-  // Will use eventually
+  this.media = []
+
+  // May use eventually
   // EventEmitter.apply(this)
   
   extend(this,math)
@@ -607,11 +609,14 @@ var Medium = module.exports = function(params) {
 	// make element
 	this.element = [];
 	for (var i = 0; i<this.spaces.length; i++) {
-		this.element.push(document.createElement(this.type))
-		this.spaces[i].element.document.body.appendChild(this.element[i])
+		this.element[i] = document.createElement(this.type)
+		this.element[i].className = "media"
+		this.spaces[i].element.document.getElementById("allmedia").appendChild(this.element[i])
 	}
 
 	this.size(params)
+
+	m.media.push(this)
 }
 
 /**
@@ -658,6 +663,7 @@ Medium.prototype.kill = function(params) {
 	//	this.spaces[i].element.document.body.removeChild(this.element[i])
 		this.element[i].parentNode.removeChild(this.element[i])
 	}
+	m.media.splice(m.media.indexOf(this))
 }
 Medium.prototype.fade = function(level) {
 	for (var i = 0; i<this.element.length; i++) {
@@ -1001,7 +1007,6 @@ Film.prototype.unticker = function() {
 }
 
 Film.prototype.tick = function() {
-	console.log(this)
 	if (this.ticking) {
 		var w = 120
 		var h = 70
@@ -1421,6 +1426,11 @@ var Map = module.exports = function(params) {
 	
 	this.directionsService = new google.maps.DirectionsService();
 
+	this.location;
+
+	this.markers = []
+	this.popups = []
+
 /*	var marker = new google.maps.Marker({
 	  position: new google.maps.LatLng(-34.397, 150.644),
 	  map: map,
@@ -1447,8 +1457,8 @@ Map.prototype.search = function(loc) {
 
   this.geocoder.geocode( { 'address': loc}, function(results, status) {
     if (status == google.maps.GeocoderStatus.OK) {
-    	tester = results[0].geometry.location
-        this.goto(results[0].geometry.location)
+    	this.location = results[0].geometry.location
+        this.goto(this.location)
     }
   }.bind(this));
 
@@ -1464,8 +1474,8 @@ Map.prototype.goto = function(loc) {
 }
 
 Map.prototype.stray = function(x,y) {
-	console.log(this.map[0].zoom)
-	console.log(this.widget)
+	//console.log(this.map[0].zoom)
+	//console.log(this.widget)
 	var scale = Math.floor(Math.pow(19/this.map[0].zoom,3))/2
 	var relloc = {
 		lat: this.location.A + y * scale,
@@ -1500,39 +1510,50 @@ Map.prototype.route = function(start, end) {
 
 Map.prototype.zoom = function(level) {
 	level +=3 ;
-	console.log ("zoom to "+level)
+	//console.log ("zoom to "+level)
     for (var i=0;i<this.map.length;i++) {
 		this.map[i].setZoom(level);
 	}
 }
 
-Map.prototype.marker = function(loc) {
+Map.prototype.marker = function() {
 
-  this.geocoder.geocode( { 'address': loc}, function(results, status) {
-    if (status == google.maps.GeocoderStatus.OK) {
+  // if no argument, goes to this.location
+  // otherwise, jumps to new place and places marker w/ bounce
+  // markers is an array of arrays, with infowin attached to each
+  // a text field to define where each new one will go...
+  // no way to remove old ones, unless i create a new button in the rack.
+  // 
+  // 
+  // 
+  // how to remove them?
+  // 
+
+  //this.geocoder.geocode( { 'address': loc}, function(results, status) {
+  //  if (status == google.maps.GeocoderStatus.OK) {
 	    for (var i=0;i<this.map.length;i++) {
-	        this.map[i].newmarker = new google.maps.Marker({
+	        this.markers[i] = new google.maps.Marker({
 	            map: this.map[i],
-	            position: results[0].geometry.location
+	            position: this.location
 	        })
 	    }
-    }
-  }.bind(this));
+  //  }
+  //}.bind(this));
 
 }
 
 
 Map.prototype.info = function(content) {
 
+  var contentString = content ? content : '<div style="color:black;width:100px;height:100px;background-color:black;display:block">888</div>';
+
   for (var i=0;i<this.map.length;i++) {
-
-  	var contentString = '<div style="color:black;width:100px;height:100px;background-color:black;display:block">888</div>';
-
-  	this.map[i].infowindow = new google.maps.InfoWindow({
-      content: contentString
+  	
+  	this.popups[i] = new google.maps.InfoWindow({
+      content: contentString[i] ? contentString[i] : contentString
   	});
 
-  	this.map[i].infowindow.open(this.map[i],this.map[i].newmarker);
+  	this.popups[i].open(this.map[i],this.markers[i]);
 
   }
 
