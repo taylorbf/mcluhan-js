@@ -232,6 +232,7 @@ The "output" instructions for sending a widget's data to another application or 
 */
 
 manager.prototype.transmit = function(data) {
+    //nx.emit('alltraffic',this,data)
     this.makeOSC(this.emit, data);
     this.emit('*',data);
 } 

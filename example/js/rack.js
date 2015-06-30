@@ -106,6 +106,7 @@ var rack = function (type,shelf,media) {
 		widget.media = media ? media : false;
 
 		var action = parts[i].action
+		widget.actionstring = action.toString();
 		action = action.bind(widget)
 		widget.on('*', action)
 		if (parts[i].initial) {
@@ -331,7 +332,7 @@ var Parts = {
 				h: 20
 			},
 			init: function() {
-				this.choices = ["waves","kremlin"]
+				this.choices = ["waves","kremlin","Demo2"]
 				this.init();
 			} 
 		},
@@ -363,7 +364,7 @@ var Parts = {
 				h: 20
 			},
 			init: function() {
-				this.choices = ["mcluhan","mcluhan"]
+				this.choices = ["mcluhan","mcluhan","screen1.png","screen2.png","screen3.png","ios7icon-01.png"]
 				this.init();
 			} 
 		},
@@ -427,6 +428,18 @@ var Parts = {
 			action: function(data) {
 				var newmedia = this.wall.sms(data.text)
 				addRack("sms",this.wall.shelf,newmedia)
+			},
+			size: {
+				w: 120,
+				h: 30
+			}
+		},
+		{
+			type: "text",
+			label: "log",
+			action: function(data) {
+				var newmedia = this.wall.log(data.text)
+				addRack("log",this.wall.shelf,newmedia)
 			},
 			size: {
 				w: 120,
@@ -1033,6 +1046,17 @@ var Parts = {
 					this.media.scrolling = false
 				}
 				
+			}
+		}
+	]},
+	"log": { 
+		type: "log",
+		widgets: [
+		{
+			type: "text",
+			label: "me",
+			action: function(data) {
+				this.media.write(data.text)
 			}
 		}
 	]}

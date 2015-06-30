@@ -118,6 +118,7 @@ window.ramp = function(start,end,dur,callback) {
 }
 
 window.cycle = function(input,min,max) {
+	input++;
 	if (input >= max) {
 		input = min;
 	}
@@ -134,5 +135,72 @@ window.loadScript = function (url, callback) {
     script.onload = callback;
 
     head.appendChild(script);
+}
+
+
+window.SmartMatrix = function(cols,rows) {
+
+	this.rows = rows;
+	this.cols = cols;
+
+	this.row = 0;
+	this.col = 0;
+
+	this.index = 0;
+	this.max = this.rows * this.cols;
+
+	this.advance = function() {
+	
+		this.index++;
+
+		if (this.index >= this.max ) {
+			this.index = 0;
+		}
+
+		this.getCoordinate(this.index);
+
+	}
+
+	this.getCoordinate = function(index) {
+		this.index = index;
+		this.row = Math.floor(index/this.cols)
+		this.col = index - (this.row * this.cols)
+		this.ping();
+	}
+
+	this.ping = function() {
+		return {
+			row: this.row,
+			col: this.col
+		}
+	}
+
+	this.advanceRow = function() {
+		this.row++
+		if (this.row >= this.rows) {
+			this.row = 0
+		}
+		this.setIndex()
+		this.ping()
+	}
+
+	this.advanceCol = function() {
+		this.col++
+		if (this.col >= this.cols) {
+			this.col = 0
+		}
+		this.setIndex()
+		this.ping()
+	}
+
+	this.setIndex = function() {
+		this.index = this.col + (this.row * this.cols)
+	}
+
+	//have a 'translate index to row' func, same for col
+	//have a 'step through' function that returns an object with next row/col
+	//have a 'step row' that goes to next in row, then cycles around
+	//have a 'steo col' that goes through col and cycles around
+
 }
 

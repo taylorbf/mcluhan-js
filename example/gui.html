@@ -11,9 +11,9 @@
     <script src="js/nexusUI.js"></script>
     <script src="js/rack.js"></script>
 
-    <!-- this is also in space.html ... needs to be encapsulated eventually -->
+    <!-- this is also in space.html ... needs to be encapsulated eventually 
     <script src="https://maps.googleapis.com/maps/api/js?v=3.exp"></script>
-
+-->
 
 <!--
     <script>
@@ -74,8 +74,17 @@
             siri.say(data.text)
           }
         })
+/*
+        nx.on('alltraffic',function(widget,data) {
+           console.log(widget)
+           if (widget.action) {
+              console.log(widget.action.toString())
+           }
+           
+        })  */
 
       }
+
 
 
 
