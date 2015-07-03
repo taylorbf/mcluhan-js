@@ -1,0 +1,196 @@
+
+/* demo links */
+
+/* colors:
+#19D
+#FFF
+#F5F5F5
+#EEE
+#333
+#08C
+*/
+
+body {
+	margin:0;
+	padding:0;
+	height:100%;
+	width:100%;
+	background-color:#333;
+	font-family:"Quicksand", helvetica neue;
+}
+
+select {
+	margin:10px;
+}
+
+header {
+	font-family:"Quicksand", helvetica neue;
+	font-weight:100;
+	color:#1bd;
+	background-color:#111;
+	opacity:1;
+	padding:5px;
+	letter-spacing:1px;
+	box-shadow: 0px 2px 4px #111;
+}
+
+h1, button, footer {
+	font-family:"Quicksand", helvetica neue;
+	font-weight:100;
+	color:white;
+}
+
+h1 {
+	margin:5px;
+	font-size:17pt;
+	letter-spacing:1px;
+}
+
+button {
+	border:solid 1px #111;
+	padding:5px 24px;
+	background-color:#19d;
+	color:#fff;
+	font-size:12pt;
+	cursor:pointer;
+	width:180px;
+	text-align:center;
+    -webkit-transition: border .2s;
+    transition: border .2s;
+    margin-top:2px;
+    outline:none;
+}
+button:hover {
+	border:solid 1px #19d;
+}
+button:active {
+	background-color:#08c;
+	color:#fff;
+}
+
+
+
+/* RACKS */
+
+
+/* dragzone */
+
+.ugen {
+	border-left:solid 3px #0c7;
+}
+
+.fx {
+	border-left:solid 3px #777;
+}
+
+
+/* dropzone */
+
+.dropzone {
+	width:500px;
+	display:block;
+	background-color:none;
+	float:left;
+	margin:3px;
+}
+
+#dropzone0 {
+}
+
+.emptyrack {
+	margin-top:10px;
+	font:300 17px "Quicksand";
+	color:#fff;
+	text-align:center;
+	padding:20px;
+}
+
+.emptymedia {
+	display:none;
+}
+
+.emptywall {
+	color:#fff;
+	border-color:#fff;
+	margin:10px 0px;
+}
+
+
+/* hover */
+
+.rack-hover .emptyrack {
+	border-color:#000;
+}
+
+
+
+/* racks */
+
+.racks {
+	position:relative;
+	overflow:auto;
+	padding:1px;
+	margin:0px 0px 10px;
+}
+.ugenrack {
+	border:solid 1px #0c7 !important;
+	margin-bottom:5px;
+}
+.ugenrack .racktitle {
+	background-color:#0c7 !important;
+	color:white !important;
+}
+
+.rackunit { 
+	position:relative;
+	margin-right:3px;
+	margin-bottom:3px;
+	box-radius:border-box;
+	background-color:#111;
+	width:100%;
+	height:200px;
+	display: block;
+}
+
+.rackcol { 
+	margin: 2px; 
+	padding: 2px; 
+	display: block;
+ } 
+
+.racklabel { 
+	text-align: center; 
+	font: normal 10px "Quicksand"; 
+	color:#ccc; 
+	padding: 4px;
+}
+
+.racktitle { 
+	font: normal 10px "Quicksand"; 
+	color: #ccc; 
+	text-align:left;
+	padding: 2px 6px; 
+	margin:2px; 
+	position:absolute; 
+	top:0px; 
+	left:0px; 
+	background-color:#333;
+}
+
+.closer {
+	position:absolute;
+	top:0px;
+	right:0px;
+	color:#fff;
+	font-family:courier;
+	font-size:8pt;
+	background-color:#19d;
+	padding:2px 4px 3px;
+	line-height:8px;
+	letter-spacing:0;
+	cursor:pointer;
+}
+
+
+
+

@@ -49,7 +49,7 @@ gulp.task('jsdoc', function() {
 
 gulp.task('default', function(done) {
   //,'jsdoc'
-  runSequence('browserify', done)
+  runSequence('browserify','jsdoc',done)
 })
 
 

@@ -5853,8 +5853,8 @@ legend {
   color: #fff;
 }
 .toc-shim {
-  padding-top: 56px;
-  margin-top: -56px;
+  /*padding-top: 56px;
+  margin-top: -56px; */
   display: block;
 }
 .toc-h1 {
@@ -5972,3 +5972,49 @@ h1.page-title {
   right:0px;
   height:100%;
 }
+
+.row-fluid .span3 {
+  display:none !important;
+}
+
+.span8 {
+  width:100% !important;
+}
+
+h2 {
+  font-size: 66px;
+  font-weight: 200;
+  margin: 200px auto;
+  text-align: center;
+  font-family: helvetica neue;
+  letter-spacing: 1px;
+}
+
+h3 {
+  display:none !important;
+}
+
+h4 {
+  background-color:#EEE;
+  border:solid 1px #ccc;
+  padding:20px;
+  cursor:pointer;
+  -webkit-transition: background 0.25s linear;
+  -moz-transition: background 0.25s linear;
+  -ms-transition: background 0.25s linear;
+  -o-transition: background 0.25s linear;
+  transition: background 0.25s linear;
+}
+
+h4:hover {
+  background-color:#E3E3E3;
+}
+
+.nodd > dd {
+  display:none;
+}
+
+.container-overview dd {
+  display:block;
+}
+

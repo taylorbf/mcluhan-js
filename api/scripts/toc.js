@@ -182,6 +182,13 @@ $.fn.toc = function(options) {
     var searchHeight = $(".quick-search").height();
     $(".quick-search").css({'top': navHeight + 10 + 'px', 'position': 'fixed'});
     el.css('top', navHeight + searchHeight + 15 + 'px');
+
+    /* edits */
+    $("dt").click(function() {
+      $(".nodd > dd").hide(0);
+      $(this).next().show();
+    });   
+
   });
 };
 

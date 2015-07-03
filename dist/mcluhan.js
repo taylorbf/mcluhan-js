@@ -831,6 +831,10 @@ var Cassette = module.exports = function(params) {
 	this.setAll("volume", 0.5);
 	this.loop();
 
+	/**
+	 * Array of buffer nodes within Tone.js audio context
+	 * @type {Array}
+	 */
 	this._b = new Array();
 	for (var i=0;i<this.element.length;i++) {
 		var tonesource = Tone.context.createMediaElementSource(this.element[i]);
@@ -844,22 +848,36 @@ var Cassette = module.exports = function(params) {
 
 util.inherits(Cassette, Medium);
 
+/** Load an audio file via source string. 
+*	@param {String} src name of .mp3 file in /media folder. For example, .load("piano") will load "/media/piano.mp3"
+*/
 Cassette.prototype.load = function(src) {
 	src ? this.setAll("src","media/"+src+".mp3") : false;
 	this.all("play");
 	return this;
 }
 
+/**
+ * Play audio file
+ * @param  {float} rate Playback rate of audio file (0.25 - 4). DOES NOT CHANGE PITCH.
+ */
 Cassette.prototype.play = function(rate) {
 	this.rate = rate ? rate : this.rate;
 	this.all("play");
 	this.speed(this.rate)
 }
 
+/**
+ * Pause audio playback
+ */
 Cassette.prototype.stop = function() {
 	this.all("pause");
 }
 
+/**
+ * Turn audio looping on or off
+ * @param  {boolean} on Looping on (true) or off (false)
+ */
 Cassette.prototype.loop = function(on) {
 	if (on===false || on===0) {
 		this.setAll("loop",false);
@@ -868,7 +886,10 @@ Cassette.prototype.loop = function(on) {
 	}
 }
 
-
+/**
+ * Scrub to location in audio file.
+ * @param  {float} start New start time
+ */
 Cassette.prototype.jumpTo = function(start) {
 	if (start===0) {
 		start = start;
@@ -878,6 +899,11 @@ Cassette.prototype.jumpTo = function(start) {
 	this.setAll("currentTime",start);
 }
 
+/**
+ * Loop audio between two points
+ * @param  {float} start starting loop position
+ * @param  {float} stop  ending loop position
+ */
 Cassette.prototype.skip = function(start,stop) {
 	this.start = start ? start : 1;
 	this.stop = stop ? stop : 1.2;
@@ -890,6 +916,9 @@ Cassette.prototype.skip = function(start,stop) {
 	return this;
 }
 
+/**
+ * Stop skipping the audio file
+ */
 Cassette.prototype.unskip = function() {
 	this.skipping = false;
 	this.start = false;
@@ -899,6 +928,10 @@ Cassette.prototype.unskip = function() {
 	return this;
 }
 
+/**
+ * Change the audio file's playback rate
+ * @param  {float} rate Playback rate (0.25 - 4)
+ */
 Cassette.prototype.speed = function(rate) {
 	if (rate) {
 		this.setAll("playbackRate",rate);
@@ -922,6 +955,7 @@ var Medium = require('../core/medium')
 var Film = module.exports = function(params) {
 
 	this.defaultSize = { w: 900 }
+
 	this.src = false;
 	this.type = "video"
 
@@ -942,21 +976,36 @@ var Film = module.exports = function(params) {
 
 util.inherits(Film, Medium);
 
+
+/** Load a video via source string. 
+*	@param {String} src name of .mp4 file in /media folder. For example, .load("waves") will load "/media/waves.mp4"
+*/
 Film.prototype.load = function(src) {
 	src ? this.setAll("src","media/"+src+".mp4") : false;
 	this.all("play");
 }
 
+/**
+ * Play video
+ * @param  {float} rate Playback rate of video (0.25 - 4)
+ */
 Film.prototype.play = function(rate) {
 	this.rate = rate ? rate : this.rate;
 	this.all("play");
 	this.speed(this.rate)
 }
 
+/**
+ * Pause video
+ */
 Film.prototype.stop = function() {
 	this.all("pause");
 }
 
+/**
+ * Loop video
+ * @param  {boolean} on true if looping, false if not looping
+ */
 Film.prototype.loop = function(on) {
 	if (on===false || on===0) {
 		this.setAll("loop",false);
@@ -965,12 +1014,20 @@ Film.prototype.loop = function(on) {
 	}
 }
 
-
+/**
+ * Scrub to specific point
+ * @param  {integer} start New start time of video, in seconds
+ */
 Film.prototype.jumpTo = function(start) {
 	start = start ? start : this.start;
 	this.setAll("currentTime",start);
 }
 
+/**
+ * Loop video between two points
+ * @param  {float} start starting loop position
+ * @param  {float} stop  ending loop position
+ */
 Film.prototype.skip = function(start,stop) {
 	this.start = start ? start : 1;
 	this.stop = stop ? stop : 1.2;
@@ -982,6 +1039,9 @@ Film.prototype.skip = function(start,stop) {
 	this.skipping = true;
 }
 
+/**
+ * Stop skipping the video
+ */
 Film.prototype.unskip = function() {
 	this.skipping = false;
 	this.start = false;
@@ -990,6 +1050,10 @@ Film.prototype.unskip = function() {
 	this.interval = false;
 }
 
+/**
+ * Change the video's playback rate
+ * @param  {float} rate Playback rate (0.25 - 4)
+ */
 Film.prototype.speed = function(rate) {
 	if (rate) {
 		this.setAll("playbackRate",rate);
@@ -997,26 +1061,35 @@ Film.prototype.speed = function(rate) {
 	}
 }
 
+/**
+ * Turn on film-strip frame visualization
+ */
 Film.prototype.ticker = function() {
+	console.log(this)
 	this.ticking = true;
 	this.tick();	
 }
 
+/**
+ * Turn off film-strip ticker visualization
+ */
 Film.prototype.unticker = function() {
 	this.ticking = false;
 }
 
 Film.prototype.tick = function() {
+
 	if (this.ticking) {
 		var w = 120
 		var h = 70
 		var x = this.zoe.col * w
 		var y = this.zoe.row * h
+		console.log(x)
 		for (var i=0;i<this.spaces.length;i++) {
 			this.spaces[i].element.context.drawImage(this.element[i],x,y,w,h)
 		}
 		this.zoe.advance();
-		setTimeout(this.tick.bind(this),10)
+		setTimeout(this.tick.bind(this),20)
 	}
 }
 
