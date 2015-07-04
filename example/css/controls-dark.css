@@ -15,7 +15,7 @@ body {
 	padding:0;
 	height:100%;
 	width:100%;
-	background-color:#333;
+	background-color:#2d2d2d;
 	font-family:"Quicksand", helvetica neue;
 }
 
@@ -87,11 +87,11 @@ button:active {
 /* dropzone */
 
 .dropzone {
-	width:500px;
+	width:540px;
 	display:block;
 	background-color:none;
 	float:left;
-	margin:3px;
+	margin:0px;
 }
 
 #dropzone0 {
@@ -139,22 +139,25 @@ button:active {
 .ugenrack .racktitle {
 	background-color:#0c7 !important;
 	color:white !important;
+	display:none;
 }
 
 .rackunit { 
 	position:relative;
-	margin-right:3px;
-	margin-bottom:3px;
+	margin-right:2px;
+	margin-bottom:2px;
 	box-radius:border-box;
 	background-color:#111;
 	width:100%;
 	height:200px;
 	display: block;
+	border-radius:6px;
+	float:left;
 }
 
 .rackcol { 
-	margin: 2px; 
-	padding: 2px; 
+	margin: 0px; 
+	padding: 0px; 
 	display: block;
  } 
 

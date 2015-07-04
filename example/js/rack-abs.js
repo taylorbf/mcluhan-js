@@ -80,12 +80,17 @@ var rack = function (type,shelf,media) {
 		container.setAttribute("class", "rackunit wall")
 	}
 
+	if (rackinfo.size) {
+		container.style.width = rackinfo.size.w + "px"
+		container.style.height = rackinfo.size.h + "px"
+	}
+
 	parent.appendChild(container)
 
 	var title = document.createElement("div")
 	title.setAttribute("class", "racktitle")
 	title.innerHTML = rackinfo.type
-	container.appendChild(title)
+//	container.appendChild(title)
 
 
 	for (var i=0;i<parts.length;i++) {
@@ -96,8 +101,8 @@ var rack = function (type,shelf,media) {
 
 		if (parts[i].loc) {
 			col.style.position = "absolute"
-			col.style.left = parts[i].loc.x + "px"
-			col.style.top = parts[i].loc.y + "px"
+			col.style.left = parts[i].loc.x + 4 + "px"
+			col.style.top = parts[i].loc.y + 4 + "px"
 		} else {
 			col.style.position = "absolute"
 			col.style.left = "0px"
@@ -146,7 +151,7 @@ var rack = function (type,shelf,media) {
 	var closer = document.createElement("div")
 	closer.setAttribute("class", "closer")
 	closer.innerHTML = "x"
-	container.appendChild(closer)
+//	container.appendChild(closer)
 	closer.onclick = function() {
 		if (container.className.indexOf("wall")>=0) {
 			shelf.wall.kill()
@@ -162,12 +167,18 @@ var rack = function (type,shelf,media) {
 		
 	}
 
+	return 
+
 }
 
 var Parts = {
 	"wall": {
 		type: "wall",
 		ugen: false,
+		size: {
+			w: 330, 
+			h: 155
+		},
 		widgets: [
 		{
 			label: "windows",
@@ -176,12 +187,11 @@ var Parts = {
 				if (data.add) {
 					var w = ~~((data.add.w)*m.stage.w)
 					var h = ~~((data.add.h)*m.stage.h)
-					var x = ~~((data.add.x)*m.stage.w+m.stage.x) - w/2
-					var y = ~~((data.add.y)*m.stage.h+m.stage.y) - h/2
+					var x = ~~((data.add.x)*m.stage.w+m.stage.x)
+					var y = ~~((data.add.y)*m.stage.h+m.stage.y)
 					if (data.items.length>this.wall.elements.length) {
 						this.wall.elements.push(m.peer(x,y,w,h));
 					}
-					
 				}
 				if (data.remove || data.remove===0) {
 					this.wall.killWindow(data.remove)
@@ -191,8 +201,8 @@ var Parts = {
 						if (i<this.wall.elements.length) {
 							var w = ~~((data.items[i].w)*m.stage.w)
 							var h = ~~((data.items[i].h)*m.stage.h)
-							var x = ~~((data.items[i].x)*m.stage.w+m.stage.x) - w/2
-							var y = ~~((data.items[i].y)*m.stage.h+m.stage.y) - h/2
+							var x = ~~((data.items[i].x)*m.stage.w+m.stage.x)
+							var y = ~~((data.items[i].y)*m.stage.h+m.stage.y)
 							this.wall.elements[i].size(w,h)
 							this.wall.elements[i].move(x,y)
 						}
@@ -203,18 +213,18 @@ var Parts = {
 				for (var i=0;i<this.wall.elements.length;i++) {
 					var w = m.scale(this.wall.elements[i].w,0,m.stage.w,0,1)
 					var h = m.scale(this.wall.elements[i].h,0,m.stage.h,0,1)
-					var x = m.scale(this.wall.elements[i].x,m.stage.x,m.stage.w+m.stage.x,0,1) + w/2
-					var y = m.scale(this.wall.elements[i].y,m.stage.y,m.stage.h+m.stage.y,0,1) + h/2
+					var x = m.scale(this.wall.elements[i].x,m.stage.x,m.stage.w+m.stage.x,0,1)
+					var y = m.scale(this.wall.elements[i].y,m.stage.y,m.stage.h+m.stage.y,0,1)
 					this.add(x,y,w,h)
 				}
 			},
 			size: {
-				w: 200,
-				h: 150
+				w: 175,
+				h: 130
 			},
 			loc: {
 				x: 0,
-				y: 15
+				y: 0
 			}
 		},
 		{
@@ -231,12 +241,12 @@ var Parts = {
 				value: 0
 			},
 			size: {
-				w: 40,
-				h: 40
+				w: 30,
+				h: 30
 			},
 			loc: {
-				x: 203,
-				y: 15
+				x: 178,
+				y: 0
 			}
 		},
 		{
@@ -246,12 +256,12 @@ var Parts = {
 				this.wall.scroll(data.x*2000,m.scale(data.y,1,0,0,2000))
 			},
 			size: {
-				w: 100,
-				h: 100
+				w: 72,
+				h: 80
 			},
 			loc: {
-				x: 246,
-				y: 15
+				x: 211,
+				y: 0
 			}
 		},
 		{
@@ -261,15 +271,15 @@ var Parts = {
 				this.wall.autoscroll(data.value)
 			},
 			size: {
-				w: 40,
-				h: 40
+				w: 30,
+				h: 30
 			},
 			loc: {
-				x: 203,
-				y: 73
+				x: 178,
+				y: 50
 			}
 		},
-		{
+	/*	{
 			label: "xray",
 			type: "button",
 			action: function(data) {
@@ -283,8 +293,12 @@ var Parts = {
 			size: {
 				w: 25,
 				h: 25
+			},
+			loc: {
+				x: 203,
+				y: 15
 			}
-		},
+		}, */
 		{
 			label: "empty",
 			type: "button",
@@ -297,12 +311,16 @@ var Parts = {
 				value: 0
 			},
 			size: {
-				w: 25,
-				h: 25
+				w: 30,
+				h: 30
+			},
+			loc: {
+				x: 284,
+				y: 0
 			}
 		},
 		{
-			label: "scramble",
+			label: "scrollR",
 			type: "button",
 			action: function(data) {
 				if (data.press) {
@@ -313,11 +331,15 @@ var Parts = {
 				value: 0
 			},
 			size: {
-				w: 25,
-				h: 25
+				w: 30,
+				h: 30
+			},
+			loc: {
+				x: 284,
+				y: 47
 			}
 		},
-		{
+	/*	{
 			label: "refresh",
 			type: "button",
 			action: function(data) {
@@ -331,8 +353,12 @@ var Parts = {
 			size: {
 				w: 25,
 				h: 25
+			},
+			loc: {
+				x: 350,
+				y: 55
 			}
-		},
+		}, */
 		{
 			type: "select",
 			label: "pattern",
@@ -344,8 +370,12 @@ var Parts = {
 				}
 			},
 			size: {
-				w: 50,
-				h: 20
+				w: 142,
+				h: 30
+			},
+			loc: {
+				x: 178,
+				y: 100
 			},
 			init: function() {
 				this.choices = ["default","line","big1","grid4","fauve"]
@@ -489,7 +519,27 @@ var Parts = {
 
 	"film": { 
 		type: "film",
+		size: {
+			w: 190,
+			h: 155
+		},
 		widgets: [
+		{
+			type: "windows",
+			label: "shape",
+			action: function(data) {
+				this.media.move({x:(data.items[0].x)*1000, y:(data.items[0].y)*1000})
+				this.media.size({w:data.items[0].w*1000, h:data.items[0].h*1000})
+			},
+			size: {
+				w: 70,
+				h: 70
+			},
+			loc: {
+				x: 0,
+				y: 0
+			}
+		},
 		{
 			type: "select",
 			label: "load",
@@ -497,13 +547,17 @@ var Parts = {
 				this.media.load(data.text)
 			},
 			size: {
-				w: 50,
+				w: 100,
 				h: 20
 			},
 			init: function() {
 				this.choices = ["waves","kremlin"]
 				this.init();
-			} 
+			},
+			loc: {
+				x: 75,
+				y: 0
+			}
 		},
 		{
 			type: "dial",
@@ -512,12 +566,16 @@ var Parts = {
 				this.media.speed(data.value*4)
 			},
 			size: {
-				w: 40,
-				h: 40
+				w: 30,
+				h: 30
 			},
 			initial: {
 				value: 0.25
-			} 
+			},
+			loc: {
+				x: 75,
+				y: 100
+			}
 		},
 		{
 			type: "range",
@@ -526,9 +584,13 @@ var Parts = {
 				this.media.skip(data.start*10,data.stop*10)
 			},
 			size: {
-				w: 70,
-				h: 20
-			} 
+				w: 100,
+				h: 15
+			},
+			loc: {
+				x: 75,
+				y: 40
+			}
 		},
 		{
 			type: "toggle",
@@ -544,6 +606,10 @@ var Parts = {
 			size: {
 				w: 30,
 				h: 30
+			},
+			loc: {
+				x: 0,
+				y: 90
 			}
 		},
 		{
@@ -553,9 +619,13 @@ var Parts = {
 				this.media.jumpTo(data.value*10)
 			},
 			size: {
-				w: 70,
-				h: 20
-			} 
+				w: 100,
+				h: 15
+			},
+			loc: {
+				x: 75,
+				y: 70
+			}
 		},
 		{
 			type: "dial",
@@ -564,23 +634,15 @@ var Parts = {
 				this.media.fade(data.value)
 			},
 			size: {
-				w: 40,
-				h: 40
+				w: 30,
+				h: 30
 			},
 			initial: {
 				value: 1
-			}
-		},
-		{
-			type: "windows",
-			label: "shape",
-			action: function(data) {
-				this.media.move({x:(data.items[0].x-data.items[0].w)*1000, y:(data.items[0].y-data.items[0].h)*1000})
-				this.media.size({w:data.items[0].w*1000, h:data.items[0].h*1000})
 			},
-			size: {
-				w: 100,
-				h: 100
+			loc: {
+				x: 110,
+				y: 100
 			}
 		},
 		{
@@ -594,8 +656,12 @@ var Parts = {
 				}
 			},
 			size: {
-				w: 40,
-				h: 40
+				w: 30,
+				h: 30
+			},
+			loc: {
+				x: 40,
+				y: 90
 			}
 		}
 		// left undone: glitch settings dropdown, glitch button, effects settings dropdown

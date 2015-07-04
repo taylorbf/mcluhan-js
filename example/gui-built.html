@@ -107,11 +107,18 @@
         var theshelf = addShelf(type)
        // theshelf.wall = new wall(type)
         addRack("wall",theshelf)
+        return theshelf.wall;
       }
 
-      makewall("line")
+      var a = makewall("line")
 
-      makewall("line")
+      var b = makewall("line")
+
+
+      setTimeout(function() {
+        a.video = a.watch("kremlin")
+        addRack("film",a.shelf,a.video)
+      },4000)
 
 
     </script>
