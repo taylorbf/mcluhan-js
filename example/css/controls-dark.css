@@ -128,8 +128,6 @@ button:active {
 
 .racks {
 	position:relative;
-	overflow:auto;
-	padding:1px;
 	margin:0px 0px 10px;
 }
 .ugenrack {
@@ -194,6 +192,47 @@ button:active {
 	cursor:pointer;
 }
 
+/* playlist stuff */
+
+.playlist {
+	border:solid 3px #444;
+	width:94px;
+	height:200px;
+	background-color:#444;
+
+}
+
+.playlist > .item {
+	background-color:#222;
+	border-bottom:solid 1px #444;
+	cursor:pointer;
+	position:relative;
+	overflow:hidden;
+}
+
+.playlist > .item > .text {
+	text-align:left;
+	font-size:9pt;
+	font-weight:bold;
+	padding:4px 10px;
+	box-sizing:border-box;
+	line-height:1em;
+	cursor:pointer;
+	position:relative;
+	z-index:2;
+	color:#fff;
+}
+
+.playlist > .item > .vis {
+	background-color:#0bd;
+	cursor:pointer;
+	width:0px;
+	height:100%;
+	position:absolute;
+	top:0px;
+	left:0px;
+	z-index:0;
+}
 
 
 
