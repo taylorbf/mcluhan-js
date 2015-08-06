@@ -3000,6 +3000,9 @@ ghostlist.prototype.log = function() {
 			}
 		} else {
 			val = sender.val
+			if (!jest.nexttitle) {
+				jest.nexttitle = sender.canvasID
+			}
 		}
 		this.write(this.components[i].tapeNum,val);
 	}
