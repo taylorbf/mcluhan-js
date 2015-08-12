@@ -268,7 +268,13 @@ var Parts = {
 			label: "xray",
 			type: "toggle",
 			action: function(data) {
-				this.wall.autoscroll(data.value)
+				console.log(data.value)
+				if (data.value) {
+					this.wall.xray();
+					this.wall.autoscroll(true)
+				} else {
+					this.wall.autoscroll(false)
+				}
 			},
 			size: {
 				w: 30,
@@ -279,26 +285,6 @@ var Parts = {
 				y: 50
 			}
 		},
-	/*	{
-			label: "xray",
-			type: "button",
-			action: function(data) {
-				if (data.press) {
-					this.wall.xray()
-				}
-			},
-			initial: {
-				value: 0
-			},
-			size: {
-				w: 25,
-				h: 25
-			},
-			loc: {
-				x: 203,
-				y: 15
-			}
-		}, */
 		{
 			label: "empty",
 			type: "button",
@@ -668,7 +654,28 @@ var Parts = {
 	]},
 	"cassette": { 
 		type: "cassette",
+		size: {
+			w: 522,
+			h: 150
+		},
 		widgets: [
+
+		{
+			type: "windows",
+			label: "shape",
+			action: function(data) {
+				this.media.move({x:(data.items[0].x-data.items[0].w)*1000, y:(data.items[0].y-data.items[0].h)*1000})
+				this.media.size({w:data.items[0].w*1000, h:data.items[0].h*1000})
+			},
+			size: {
+				w: 70,
+				h: 60
+			},
+			loc: {
+				x: 0,
+				y: 0
+			}
+		},
 		{
 			type: "select",
 			label: "load",
@@ -676,8 +683,12 @@ var Parts = {
 				this.media.load(data.text)
 			},
 			size: {
-				w: 50,
+				w: 60,
 				h: 20
+			},
+			loc: {
+				x: 0,
+				y: 70
 			},
 			init: function() {
 				this.choices = ["pno","pnoc3"]
@@ -685,17 +696,43 @@ var Parts = {
 			} 
 		},
 		{
+			type: "toggle",
+			label: "pause",
+			action: function(data) {
+				if (data.value) {
+					this.media.stop()
+					this.media.hide()
+				} else {
+					this.media.play()
+					this.media.show()
+				}
+				
+			},
+			size: {
+				w: 20,
+				h: 20
+			},
+			loc: {
+				x: 65,
+				y: 70
+			} 
+		},
+		{
 			type: "dial",
-			label: "speed",
+			label: "sp",
 			action: function(data) {
 				this.media.speed(data.value*4)
 			},
 			size: {
-				w: 40,
-				h: 40
+				w: 25,
+				h: 25
 			},
 			initial: {
 				value: 0.25
+			},
+			loc: {
+				x: 65,
+				y: 0
 			} 
 		},
 		{
@@ -705,27 +742,33 @@ var Parts = {
 				this.media.skip(data.start*10,data.stop*10)
 			},
 			size: {
-				w: 70,
-				h: 20
+				w: 100,
+				h: 40
+			},
+			loc: {
+				x: 0,
+				y: 100
 			} 
-		},
-		{
-			type: "toggle",
-			label: "pause",
+		}
+	/*	{
+			type: "crossfade",
+			label: "pan",
 			action: function(data) {
-				if (data.value) {
-					this.media.stop()
-				} else {
-					this.media.play()
-				}
-				
+				// this.media.pan(data.value)
 			},
 			size: {
-				w: 30,
-				h: 30
-			}
-		},
-		{
+				w: 75,
+				h: 20
+			},
+			initial: {
+				value: 0
+			},
+			loc: {
+				x: 0,
+				y: 85
+			} 
+		} */
+	/*	{
 			type: "slider",
 			label: "scrub",
 			action: function(data) {
@@ -749,20 +792,8 @@ var Parts = {
 			initial: {
 				value: 1
 			}
-		},
-		{
-			type: "windows",
-			label: "shape",
-			action: function(data) {
-				this.media.move({x:(data.items[0].x-data.items[0].w)*1000, y:(data.items[0].y-data.items[0].h)*1000})
-				this.media.size({w:data.items[0].w*1000, h:data.items[0].h*1000})
-			},
-			size: {
-				w: 100,
-				h: 100
-			}
-		},
-		{
+		}, */
+	/*	{
 			type: "toggle",
 			label: "hide",
 			action: function(data) {
@@ -775,6 +806,10 @@ var Parts = {
 			size: {
 				w: 40,
 				h: 40
+			},
+			loc: {
+				x: 65,
+				y: 0
 			}
 		},
 		{
@@ -787,8 +822,12 @@ var Parts = {
 				}
 			},
 			size: {
-				w: 40,
-				h: 40
+				w: 30,
+				h: 30
+			},
+			loc: {
+				x: 100,
+				y: 0
 			}
 		},
 		{
@@ -841,21 +880,7 @@ var Parts = {
 				w: 40,
 				h: 40
 			}
-		},
-		{
-			type: "crossfade",
-			label: "pan",
-			action: function(data) {
-				// this.media.pan(data.value)
-			},
-			size: {
-				w: 70,
-				h: 20
-			},
-			initial: {
-				value: 0
-			}
-		}
+		}, */
 		// left undone: glitch settings dropdown, glitch button, effects settings dropdown
 	]},
 	"photo": { 
