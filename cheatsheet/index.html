@@ -2,29 +2,70 @@
 <head>
 	<script src="core.json"></script>
 	<script src="media.json"></script>
+	<script src="palette.js"></script>
 </head>
 <body>
+
+	<style>
+
+		.column {
+			width:150px;
+			float:left;
+			border-right:solid 1px #eee;
+			height:600px;
+		}
+
+	</style>
+
+	<div class="column" id="col1"></div>
+	<div class="column" id="col2"></div>
+	<div class="column" id="col3"></div>
+	<div class="column" id="col4"></div>
+	<div class="column" id="col5"></div>
+	<div class="column" id="col6"></div>
+	<div class="column" id="col7"></div>
 	<script>
+
+
 		var html = ""
+		var lines = 0;
 		for (var i=0;i<media.classes.length;i++) {
 			core.classes.push(media.classes[i])
 		}
 
+		//colors
+	  var seq = palette('tol-rainbow', core.classes.length);
+
 		for (var i=0;i<core.classes.length;i++) {
+			lines+=2;
+			html = ""
+		  html += '<div style="color:#'+seq[i]+';font-family:courier;font-weight:light;padding:10px;border:solid 1px #'+seq[i]+';border-bottom:0px;line-height:1.5em;">'
+
 			var thisclass = core.classes[i]
 		  html += "<b>"+ thisclass.name + "</b><br>"
 
 		  if (thisclass.functions) {
 				for (var j=0;j<thisclass.functions.length;j++) {
+					lines++;
 					var thisfunction = thisclass.functions[j]
 			  	html += thisfunction.name + "()<br>"
 
 				}
 			}
+		  if (thisclass.properties) {
+				for (var j=0;j<thisclass.properties.length;j++) {
+					lines++;
+					var thisprop = thisclass.properties[j]
+			  	html += thisprop.name + "<br>"
 
-			html += "<br>"
+				}
+			}
+
+			html += "</div>"
+			var thiscol = Math.floor(lines/20)+1
+			document.getElementById("col"+thiscol).innerHTML += html
 		}
-		document.write(html)
+		//document.write(html)
 	</script>
 </body>
 </html>
