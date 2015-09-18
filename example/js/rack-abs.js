@@ -655,8 +655,8 @@ var Parts = {
 	"cassette": { 
 		type: "cassette",
 		size: {
-			w: 522,
-			h: 150
+			w: 130,
+			h: 170
 		},
 		widgets: [
 
@@ -688,7 +688,7 @@ var Parts = {
 			},
 			loc: {
 				x: 0,
-				y: 70
+				y: 75
 			},
 			init: function() {
 				this.choices = ["pno","pnoc3"]
@@ -714,7 +714,7 @@ var Parts = {
 			},
 			loc: {
 				x: 65,
-				y: 70
+				y: 75
 			} 
 		},
 		{
@@ -724,14 +724,14 @@ var Parts = {
 				this.media.speed(data.value*4)
 			},
 			size: {
-				w: 25,
-				h: 25
+				w: 35,
+				h: 35
 			},
 			initial: {
 				value: 0.25
 			},
 			loc: {
-				x: 65,
+				x: 75,
 				y: 0
 			} 
 		},
@@ -747,7 +747,7 @@ var Parts = {
 			},
 			loc: {
 				x: 0,
-				y: 100
+				y: 110
 			} 
 		}
 	/*	{

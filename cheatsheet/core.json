@@ -1,0 +1,134 @@
+var core = {
+    "classes": [
+        {
+            "name": "Manager",
+            "description": "",
+            "extends": [],
+            "access": "",
+            "virtual": false,
+            "fires": "",
+            "constructor": {
+                "name": "Manager",
+                "description": "Methods for all global actions that affect groups of media objects.",
+                "parameters": [],
+                "examples": []
+            },
+            "functions": [
+                {
+                    "name": "init",
+                    "access": "",
+                    "virtual": false,
+                    "description": "initialize and open all browser windows to use",
+                    "parameters": [],
+                    "examples": []
+                },
+                {
+                    "name": "add",
+                    "access": "",
+                    "virtual": false,
+                    "description": "Add a new media object",
+                    "parameters": [
+                        {
+                            "name": "type",
+                            "type": "string",
+                            "description": "Type of media object to add",
+                            "default": "",
+                            "optional": "",
+                            "nullable": ""
+                        },
+                        {
+                            "name": "arr",
+                            "type": "Array",
+                            "description": "Array that this object is added into",
+                            "default": "",
+                            "optional": "",
+                            "nullable": ""
+                        },
+                        {
+                            "name": "params",
+                            "type": "object",
+                            "description": "parameters (x,y,w,h,spaces,parent)",
+                            "default": "",
+                            "optional": "",
+                            "nullable": ""
+                        }
+                    ],
+                    "examples": []
+                }
+            ]
+        },
+        {
+            "name": "Medium",
+            "description": "Medium",
+            "extends": [],
+            "access": "",
+            "virtual": false,
+            "fires": "",
+            "constructor": {
+                "name": "Medium",
+                "description": "Template for all DOM-based media items (video, audio, text, etc)",
+                "parameters": [
+                    {
+                        "name": "Params",
+                        "type": "object",
+                        "description": "(see Params)",
+                        "default": "",
+                        "optional": "",
+                        "nullable": ""
+                    }
+                ],
+                "examples": []
+            },
+            "functions": [
+                {
+                    "name": "setAll",
+                    "access": "",
+                    "virtual": false,
+                    "description": "Set a property of all window elements in this media element's wall",
+                    "parameters": [
+                        {
+                            "name": "property",
+                            "type": "String",
+                            "description": "key",
+                            "default": "",
+                            "optional": "",
+                            "nullable": ""
+                        },
+                        {
+                            "name": "value",
+                            "type": "Unknown",
+                            "description": "",
+                            "default": "",
+                            "optional": "",
+                            "nullable": ""
+                        }
+                    ],
+                    "examples": []
+                }
+            ]
+        },
+        {
+            "name": "Rhythm",
+            "description": "Rhythm",
+            "extends": [],
+            "access": "",
+            "virtual": false,
+            "fires": "",
+            "constructor": {
+                "name": "Rhythm",
+                "description": "Template for all animation pulses",
+                "parameters": [
+                    {
+                        "name": "Params",
+                        "type": "object",
+                        "description": "(see Params)",
+                        "default": "",
+                        "optional": "",
+                        "nullable": ""
+                    }
+                ],
+                "examples": []
+            }
+        }
+    ]
+}

@@ -1,0 +1,30 @@
+<html>
+<head>
+	<script src="core.json"></script>
+	<script src="media.json"></script>
+</head>
+<body>
+	<script>
+		var html = ""
+		for (var i=0;i<media.classes.length;i++) {
+			core.classes.push(media.classes[i])
+		}
+
+		for (var i=0;i<core.classes.length;i++) {
+			var thisclass = core.classes[i]
+		  html += "<b>"+ thisclass.name + "</b><br>"
+
+		  if (thisclass.functions) {
+				for (var j=0;j<thisclass.functions.length;j++) {
+					var thisfunction = thisclass.functions[j]
+			  	html += thisfunction.name + "()<br>"
+
+				}
+			}
+
+			html += "<br>"
+		}
+		document.write(html)
+	</script>
+</body>
+</html>
