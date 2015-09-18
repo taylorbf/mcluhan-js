@@ -77,6 +77,10 @@
 		var tutspace = document.getElementById("tutspace")
 
 	  var seq;
+	  var mediumclass = {
+	  	funcs: [],
+	  	props: []
+	  }
 
 
 		function setup() {
@@ -91,31 +95,42 @@
 
 			  if (thisclass.functions) {
 					for (var j=0;j<thisclass.functions.length;j++) {
-						lines++;
-						var thisfunction = thisclass.functions[j]
-				  	html += "<a href='javascript:funkytut("+i+","+j+")'>"+thisfunction.name + "("
+						if (mediumclass.funcs.indexOf(thisclass.functions[j].name)==-1) {
+							lines++;
+							var thisfunction = thisclass.functions[j]
+					  	html += "<a href='javascript:funkytut("+i+","+j+")'>"+thisfunction.name + "("
 
-				  	html += '<span style="font-size:8pt">'
-				  	for (var k=0;k<thisfunction.parameters.length;k++) {
-				  		if (k>=1) {
-				  			html += ", "
-				  		}
-				  		html += thisfunction.parameters[k].name
+					  	html += '<span style="font-size:8pt">'
+					  	for (var k=0;k<thisfunction.parameters.length;k++) {
+					  		if (k>=1) {
+					  			html += ", "
+					  		}
+					  		html += thisfunction.parameters[k].name
 
-				  	}
-				  	html += '</span>'
+					  	}
+					  	html += '</span>'
 
 
-				  	html +=	")<br>"
+					  	html +=	")<br>"
+
+							if (thisclass.name == "Medium") {
+								mediumclass.funcs.push(thisfunction.name)
+							}
+						}
 
 					}
 				}
 			  if (thisclass.properties) {
 					for (var j=0;j<thisclass.properties.length;j++) {
-						lines++;
-						var thisprop = thisclass.properties[j]
-				  	html += thisprop.name + "<br>"
+						if (mediumclass.props.indexOf(thisclass.properties[j].name)==-1) {
+							lines++;
+							var thisprop = thisclass.properties[j]
+					  	html += thisprop.name + "<br>"
 
+							if (thisclass.name == "Medium") {
+								mediumclass.funcs.push(thisfunction.name)
+							}
+						}
 					}
 				}
 

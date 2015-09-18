@@ -84,7 +84,7 @@
                     "name": "setAll",
                     "access": "",
                     "virtual": false,
-                    "description": "Set a property of all window elements in this media element's wall",
+                    "description": "Set a property on this media element in all windows",
                     "parameters": [
                         {
                             "name": "property",
@@ -115,6 +115,31 @@
                             "name": "method",
                             "type": "String",
                             "description": "name",
+                            "default": "",
+                            "optional": "",
+                            "nullable": ""
+                        }
+                    ],
+                    "examples": []
+                },
+                {
+                    "name": "size",
+                    "access": "",
+                    "virtual": false,
+                    "description": "Resize this media element",
+                    "parameters": [
+                        {
+                            "name": "w",
+                            "type": "number",
+                            "description": "width in px",
+                            "default": "",
+                            "optional": "",
+                            "nullable": ""
+                        },
+                        {
+                            "name": "h",
+                            "type": "number",
+                            "description": "height in px",
                             "default": "",
                             "optional": "",
                             "nullable": ""
@@ -302,7 +327,7 @@
                     "name": "setAll",
                     "access": "",
                     "virtual": false,
-                    "description": "Set a property of all window elements in this media element's wall",
+                    "description": "Set a property on this media element in all windows",
                     "parameters": [
                         {
                             "name": "property",
@@ -333,6 +358,31 @@
                             "name": "method",
                             "type": "String",
                             "description": "name",
+                            "default": "",
+                            "optional": "",
+                            "nullable": ""
+                        }
+                    ],
+                    "examples": []
+                },
+                {
+                    "name": "size",
+                    "access": "",
+                    "virtual": false,
+                    "description": "Resize this media element",
+                    "parameters": [
+                        {
+                            "name": "w",
+                            "type": "number",
+                            "description": "width in px",
+                            "default": "",
+                            "optional": "",
+                            "nullable": ""
+                        },
+                        {
+                            "name": "h",
+                            "type": "number",
+                            "description": "height in px",
                             "default": "",
                             "optional": "",
                             "nullable": ""
@@ -513,7 +563,7 @@
                     "name": "setAll",
                     "access": "",
                     "virtual": false,
-                    "description": "Set a property of all window elements in this media element's wall",
+                    "description": "Set a property on this media element in all windows",
                     "parameters": [
                         {
                             "name": "property",
@@ -544,6 +594,31 @@
                             "name": "method",
                             "type": "String",
                             "description": "name",
+                            "default": "",
+                            "optional": "",
+                            "nullable": ""
+                        }
+                    ],
+                    "examples": []
+                },
+                {
+                    "name": "size",
+                    "access": "",
+                    "virtual": false,
+                    "description": "Resize this media element",
+                    "parameters": [
+                        {
+                            "name": "w",
+                            "type": "number",
+                            "description": "width in px",
+                            "default": "",
+                            "optional": "",
+                            "nullable": ""
+                        },
+                        {
+                            "name": "h",
+                            "type": "number",
+                            "description": "height in px",
                             "default": "",
                             "optional": "",
                             "nullable": ""
@@ -582,7 +657,7 @@
                     "name": "setAll",
                     "access": "",
                     "virtual": false,
-                    "description": "Set a property of all window elements in this media element's wall",
+                    "description": "Set a property on this media element in all windows",
                     "parameters": [
                         {
                             "name": "property",
@@ -613,6 +688,31 @@
                             "name": "method",
                             "type": "String",
                             "description": "name",
+                            "default": "",
+                            "optional": "",
+                            "nullable": ""
+                        }
+                    ],
+                    "examples": []
+                },
+                {
+                    "name": "size",
+                    "access": "",
+                    "virtual": false,
+                    "description": "Resize this media element",
+                    "parameters": [
+                        {
+                            "name": "w",
+                            "type": "number",
+                            "description": "width in px",
+                            "default": "",
+                            "optional": "",
+                            "nullable": ""
+                        },
+                        {
+                            "name": "h",
+                            "type": "number",
+                            "description": "height in px",
                             "default": "",
                             "optional": "",
                             "nullable": ""
@@ -651,7 +751,7 @@
                     "name": "setAll",
                     "access": "",
                     "virtual": false,
-                    "description": "Set a property of all window elements in this media element's wall",
+                    "description": "Set a property on this media element in all windows",
                     "parameters": [
                         {
                             "name": "property",
@@ -682,6 +782,31 @@
                             "name": "method",
                             "type": "String",
                             "description": "name",
+                            "default": "",
+                            "optional": "",
+                            "nullable": ""
+                        }
+                    ],
+                    "examples": []
+                },
+                {
+                    "name": "size",
+                    "access": "",
+                    "virtual": false,
+                    "description": "Resize this media element",
+                    "parameters": [
+                        {
+                            "name": "w",
+                            "type": "number",
+                            "description": "width in px",
+                            "default": "",
+                            "optional": "",
+                            "nullable": ""
+                        },
+                        {
+                            "name": "h",
+                            "type": "number",
+                            "description": "height in px",
                             "default": "",
                             "optional": "",
                             "nullable": ""
@@ -720,7 +845,7 @@
                     "name": "setAll",
                     "access": "",
                     "virtual": false,
-                    "description": "Set a property of all window elements in this media element's wall",
+                    "description": "Set a property on this media element in all windows",
                     "parameters": [
                         {
                             "name": "property",
@@ -751,6 +876,31 @@
                             "name": "method",
                             "type": "String",
                             "description": "name",
+                            "default": "",
+                            "optional": "",
+                            "nullable": ""
+                        }
+                    ],
+                    "examples": []
+                },
+                {
+                    "name": "size",
+                    "access": "",
+                    "virtual": false,
+                    "description": "Resize this media element",
+                    "parameters": [
+                        {
+                            "name": "w",
+                            "type": "number",
+                            "description": "width in px",
+                            "default": "",
+                            "optional": "",
+                            "nullable": ""
+                        },
+                        {
+                            "name": "h",
+                            "type": "number",
+                            "description": "height in px",
                             "default": "",
                             "optional": "",
                             "nullable": ""
@@ -789,7 +939,7 @@
                     "name": "setAll",
                     "access": "",
                     "virtual": false,
-                    "description": "Set a property of all window elements in this media element's wall",
+                    "description": "Set a property on this media element in all windows",
                     "parameters": [
                         {
                             "name": "property",
@@ -820,6 +970,31 @@
                             "name": "method",
                             "type": "String",
                             "description": "name",
+                            "default": "",
+                            "optional": "",
+                            "nullable": ""
+                        }
+                    ],
+                    "examples": []
+                },
+                {
+                    "name": "size",
+                    "access": "",
+                    "virtual": false,
+                    "description": "Resize this media element",
+                    "parameters": [
+                        {
+                            "name": "w",
+                            "type": "number",
+                            "description": "width in px",
+                            "default": "",
+                            "optional": "",
+                            "nullable": ""
+                        },
+                        {
+                            "name": "h",
+                            "type": "number",
+                            "description": "height in px",
                             "default": "",
                             "optional": "",
                             "nullable": ""
@@ -858,7 +1033,7 @@
                     "name": "setAll",
                     "access": "",
                     "virtual": false,
-                    "description": "Set a property of all window elements in this media element's wall",
+                    "description": "Set a property on this media element in all windows",
                     "parameters": [
                         {
                             "name": "property",
@@ -889,6 +1064,31 @@
                             "name": "method",
                             "type": "String",
                             "description": "name",
+                            "default": "",
+                            "optional": "",
+                            "nullable": ""
+                        }
+                    ],
+                    "examples": []
+                },
+                {
+                    "name": "size",
+                    "access": "",
+                    "virtual": false,
+                    "description": "Resize this media element",
+                    "parameters": [
+                        {
+                            "name": "w",
+                            "type": "number",
+                            "description": "width in px",
+                            "default": "",
+                            "optional": "",
+                            "nullable": ""
+                        },
+                        {
+                            "name": "h",
+                            "type": "number",
+                            "description": "height in px",
                             "default": "",
                             "optional": "",
                             "nullable": ""
@@ -927,7 +1127,7 @@
                     "name": "setAll",
                     "access": "",
                     "virtual": false,
-                    "description": "Set a property of all window elements in this media element's wall",
+                    "description": "Set a property on this media element in all windows",
                     "parameters": [
                         {
                             "name": "property",
@@ -958,6 +1158,31 @@
                             "name": "method",
                             "type": "String",
                             "description": "name",
+                            "default": "",
+                            "optional": "",
+                            "nullable": ""
+                        }
+                    ],
+                    "examples": []
+                },
+                {
+                    "name": "size",
+                    "access": "",
+                    "virtual": false,
+                    "description": "Resize this media element",
+                    "parameters": [
+                        {
+                            "name": "w",
+                            "type": "number",
+                            "description": "width in px",
+                            "default": "",
+                            "optional": "",
+                            "nullable": ""
+                        },
+                        {
+                            "name": "h",
+                            "type": "number",
+                            "description": "height in px",
                             "default": "",
                             "optional": "",
                             "nullable": ""
@@ -996,7 +1221,7 @@
                     "name": "setAll",
                     "access": "",
                     "virtual": false,
-                    "description": "Set a property of all window elements in this media element's wall",
+                    "description": "Set a property on this media element in all windows",
                     "parameters": [
                         {
                             "name": "property",
@@ -1027,6 +1252,31 @@
                             "name": "method",
                             "type": "String",
                             "description": "name",
+                            "default": "",
+                            "optional": "",
+                            "nullable": ""
+                        }
+                    ],
+                    "examples": []
+                },
+                {
+                    "name": "size",
+                    "access": "",
+                    "virtual": false,
+                    "description": "Resize this media element",
+                    "parameters": [
+                        {
+                            "name": "w",
+                            "type": "number",
+                            "description": "width in px",
+                            "default": "",
+                            "optional": "",
+                            "nullable": ""
+                        },
+                        {
+                            "name": "h",
+                            "type": "number",
+                            "description": "height in px",
                             "default": "",
                             "optional": "",
                             "nullable": ""
@@ -1088,7 +1338,7 @@
                     "name": "setAll",
                     "access": "",
                     "virtual": false,
-                    "description": "Set a property of all window elements in this media element's wall",
+                    "description": "Set a property on this media element in all windows",
                     "parameters": [
                         {
                             "name": "property",
@@ -1119,6 +1369,31 @@
                             "name": "method",
                             "type": "String",
                             "description": "name",
+                            "default": "",
+                            "optional": "",
+                            "nullable": ""
+                        }
+                    ],
+                    "examples": []
+                },
+                {
+                    "name": "size",
+                    "access": "",
+                    "virtual": false,
+                    "description": "Resize this media element",
+                    "parameters": [
+                        {
+                            "name": "w",
+                            "type": "number",
+                            "description": "width in px",
+                            "default": "",
+                            "optional": "",
+                            "nullable": ""
+                        },
+                        {
+                            "name": "h",
+                            "type": "number",
+                            "description": "height in px",
                             "default": "",
                             "optional": "",
                             "nullable": ""
