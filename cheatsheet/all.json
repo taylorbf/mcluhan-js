@@ -13,6 +13,19 @@
                 "parameters": [],
                 "examples": []
             },
+            "properties": [
+                {
+                    "name": "this.stage",
+                    "access": "",
+                    "virtual": false,
+                    "description": "The dimensions that will be used",
+                    "type": {
+                        "names": [
+                            "Object"
+                        ]
+                    }
+                }
+            ],
             "functions": [
                 {
                     "name": "init",
@@ -146,31 +159,74 @@
                         }
                     ],
                     "examples": []
+                },
+                {
+                    "name": "move",
+                    "access": "",
+                    "virtual": false,
+                    "description": "Move this element",
+                    "parameters": [
+                        {
+                            "name": "x",
+                            "type": "number",
+                            "description": "x position in px",
+                            "default": "",
+                            "optional": "",
+                            "nullable": ""
+                        },
+                        {
+                            "name": "y",
+                            "type": "number",
+                            "description": "y position in px",
+                            "default": "",
+                            "optional": "",
+                            "nullable": ""
+                        }
+                    ],
+                    "examples": []
+                },
+                {
+                    "name": "kill",
+                    "access": "",
+                    "virtual": false,
+                    "description": "Remove this element and destroy all references to it",
+                    "parameters": [],
+                    "examples": []
+                },
+                {
+                    "name": "fade",
+                    "access": "",
+                    "virtual": false,
+                    "description": "Set the element's opacity",
+                    "parameters": [
+                        {
+                            "name": "level",
+                            "type": "number",
+                            "description": "opacity level",
+                            "default": "",
+                            "optional": "",
+                            "nullable": ""
+                        }
+                    ],
+                    "examples": []
+                },
+                {
+                    "name": "hide",
+                    "access": "",
+                    "virtual": false,
+                    "description": "Make the element disappear, but do not remove it. A/V files will keep playing and making sound.",
+                    "parameters": [],
+                    "examples": []
+                },
+                {
+                    "name": "show",
+                    "access": "",
+                    "virtual": false,
+                    "description": "If the element is hidden, show it.",
+                    "parameters": [],
+                    "examples": []
                 }
             ]
-        },
-        {
-            "name": "Rhythm",
-            "description": "Rhythm",
-            "extends": [],
-            "access": "",
-            "virtual": false,
-            "fires": "",
-            "constructor": {
-                "name": "Rhythm",
-                "description": "Template for all animation pulses",
-                "parameters": [
-                    {
-                        "name": "Params",
-                        "type": "object",
-                        "description": "(see Params)",
-                        "default": "",
-                        "optional": "",
-                        "nullable": ""
-                    }
-                ],
-                "examples": []
-            }
         },
         {
             "name": "Cassette",
@@ -388,6 +444,72 @@
                             "nullable": ""
                         }
                     ],
+                    "examples": []
+                },
+                {
+                    "name": "move",
+                    "access": "",
+                    "virtual": false,
+                    "description": "Move this element",
+                    "parameters": [
+                        {
+                            "name": "x",
+                            "type": "number",
+                            "description": "x position in px",
+                            "default": "",
+                            "optional": "",
+                            "nullable": ""
+                        },
+                        {
+                            "name": "y",
+                            "type": "number",
+                            "description": "y position in px",
+                            "default": "",
+                            "optional": "",
+                            "nullable": ""
+                        }
+                    ],
+                    "examples": []
+                },
+                {
+                    "name": "kill",
+                    "access": "",
+                    "virtual": false,
+                    "description": "Remove this element and destroy all references to it",
+                    "parameters": [],
+                    "examples": []
+                },
+                {
+                    "name": "fade",
+                    "access": "",
+                    "virtual": false,
+                    "description": "Set the element's opacity",
+                    "parameters": [
+                        {
+                            "name": "level",
+                            "type": "number",
+                            "description": "opacity level",
+                            "default": "",
+                            "optional": "",
+                            "nullable": ""
+                        }
+                    ],
+                    "examples": []
+                },
+                {
+                    "name": "hide",
+                    "access": "",
+                    "virtual": false,
+                    "description": "Make the element disappear, but do not remove it. A/V files will keep playing and making sound.",
+                    "parameters": [],
+                    "examples": []
+                },
+                {
+                    "name": "show",
+                    "access": "",
+                    "virtual": false,
+                    "description": "If the element is hidden, show it.",
+                    "parameters": [],
                     "examples": []
                 }
             ]
@@ -625,6 +747,72 @@
                         }
                     ],
                     "examples": []
+                },
+                {
+                    "name": "move",
+                    "access": "",
+                    "virtual": false,
+                    "description": "Move this element",
+                    "parameters": [
+                        {
+                            "name": "x",
+                            "type": "number",
+                            "description": "x position in px",
+                            "default": "",
+                            "optional": "",
+                            "nullable": ""
+                        },
+                        {
+                            "name": "y",
+                            "type": "number",
+                            "description": "y position in px",
+                            "default": "",
+                            "optional": "",
+                            "nullable": ""
+                        }
+                    ],
+                    "examples": []
+                },
+                {
+                    "name": "kill",
+                    "access": "",
+                    "virtual": false,
+                    "description": "Remove this element and destroy all references to it",
+                    "parameters": [],
+                    "examples": []
+                },
+                {
+                    "name": "fade",
+                    "access": "",
+                    "virtual": false,
+                    "description": "Set the element's opacity",
+                    "parameters": [
+                        {
+                            "name": "level",
+                            "type": "number",
+                            "description": "opacity level",
+                            "default": "",
+                            "optional": "",
+                            "nullable": ""
+                        }
+                    ],
+                    "examples": []
+                },
+                {
+                    "name": "hide",
+                    "access": "",
+                    "virtual": false,
+                    "description": "Make the element disappear, but do not remove it. A/V files will keep playing and making sound.",
+                    "parameters": [],
+                    "examples": []
+                },
+                {
+                    "name": "show",
+                    "access": "",
+                    "virtual": false,
+                    "description": "If the element is hidden, show it.",
+                    "parameters": [],
+                    "examples": []
                 }
             ]
         },
@@ -719,6 +907,72 @@
                         }
                     ],
                     "examples": []
+                },
+                {
+                    "name": "move",
+                    "access": "",
+                    "virtual": false,
+                    "description": "Move this element",
+                    "parameters": [
+                        {
+                            "name": "x",
+                            "type": "number",
+                            "description": "x position in px",
+                            "default": "",
+                            "optional": "",
+                            "nullable": ""
+                        },
+                        {
+                            "name": "y",
+                            "type": "number",
+                            "description": "y position in px",
+                            "default": "",
+                            "optional": "",
+                            "nullable": ""
+                        }
+                    ],
+                    "examples": []
+                },
+                {
+                    "name": "kill",
+                    "access": "",
+                    "virtual": false,
+                    "description": "Remove this element and destroy all references to it",
+                    "parameters": [],
+                    "examples": []
+                },
+                {
+                    "name": "fade",
+                    "access": "",
+                    "virtual": false,
+                    "description": "Set the element's opacity",
+                    "parameters": [
+                        {
+                            "name": "level",
+                            "type": "number",
+                            "description": "opacity level",
+                            "default": "",
+                            "optional": "",
+                            "nullable": ""
+                        }
+                    ],
+                    "examples": []
+                },
+                {
+                    "name": "hide",
+                    "access": "",
+                    "virtual": false,
+                    "description": "Make the element disappear, but do not remove it. A/V files will keep playing and making sound.",
+                    "parameters": [],
+                    "examples": []
+                },
+                {
+                    "name": "show",
+                    "access": "",
+                    "virtual": false,
+                    "description": "If the element is hidden, show it.",
+                    "parameters": [],
+                    "examples": []
                 }
             ]
         },
@@ -813,6 +1067,72 @@
                         }
                     ],
                     "examples": []
+                },
+                {
+                    "name": "move",
+                    "access": "",
+                    "virtual": false,
+                    "description": "Move this element",
+                    "parameters": [
+                        {
+                            "name": "x",
+                            "type": "number",
+                            "description": "x position in px",
+                            "default": "",
+                            "optional": "",
+                            "nullable": ""
+                        },
+                        {
+                            "name": "y",
+                            "type": "number",
+                            "description": "y position in px",
+                            "default": "",
+                            "optional": "",
+                            "nullable": ""
+                        }
+                    ],
+                    "examples": []
+                },
+                {
+                    "name": "kill",
+                    "access": "",
+                    "virtual": false,
+                    "description": "Remove this element and destroy all references to it",
+                    "parameters": [],
+                    "examples": []
+                },
+                {
+                    "name": "fade",
+                    "access": "",
+                    "virtual": false,
+                    "description": "Set the element's opacity",
+                    "parameters": [
+                        {
+                            "name": "level",
+                            "type": "number",
+                            "description": "opacity level",
+                            "default": "",
+                            "optional": "",
+                            "nullable": ""
+                        }
+                    ],
+                    "examples": []
+                },
+                {
+                    "name": "hide",
+                    "access": "",
+                    "virtual": false,
+                    "description": "Make the element disappear, but do not remove it. A/V files will keep playing and making sound.",
+                    "parameters": [],
+                    "examples": []
+                },
+                {
+                    "name": "show",
+                    "access": "",
+                    "virtual": false,
+                    "description": "If the element is hidden, show it.",
+                    "parameters": [],
+                    "examples": []
                 }
             ]
         },
@@ -906,6 +1226,72 @@
                             "nullable": ""
                         }
                     ],
+                    "examples": []
+                },
+                {
+                    "name": "move",
+                    "access": "",
+                    "virtual": false,
+                    "description": "Move this element",
+                    "parameters": [
+                        {
+                            "name": "x",
+                            "type": "number",
+                            "description": "x position in px",
+                            "default": "",
+                            "optional": "",
+                            "nullable": ""
+                        },
+                        {
+                            "name": "y",
+                            "type": "number",
+                            "description": "y position in px",
+                            "default": "",
+                            "optional": "",
+                            "nullable": ""
+                        }
+                    ],
+                    "examples": []
+                },
+                {
+                    "name": "kill",
+                    "access": "",
+                    "virtual": false,
+                    "description": "Remove this element and destroy all references to it",
+                    "parameters": [],
+                    "examples": []
+                },
+                {
+                    "name": "fade",
+                    "access": "",
+                    "virtual": false,
+                    "description": "Set the element's opacity",
+                    "parameters": [
+                        {
+                            "name": "level",
+                            "type": "number",
+                            "description": "opacity level",
+                            "default": "",
+                            "optional": "",
+                            "nullable": ""
+                        }
+                    ],
+                    "examples": []
+                },
+                {
+                    "name": "hide",
+                    "access": "",
+                    "virtual": false,
+                    "description": "Make the element disappear, but do not remove it. A/V files will keep playing and making sound.",
+                    "parameters": [],
+                    "examples": []
+                },
+                {
+                    "name": "show",
+                    "access": "",
+                    "virtual": false,
+                    "description": "If the element is hidden, show it.",
+                    "parameters": [],
                     "examples": []
                 }
             ]
@@ -1001,6 +1387,72 @@
                         }
                     ],
                     "examples": []
+                },
+                {
+                    "name": "move",
+                    "access": "",
+                    "virtual": false,
+                    "description": "Move this element",
+                    "parameters": [
+                        {
+                            "name": "x",
+                            "type": "number",
+                            "description": "x position in px",
+                            "default": "",
+                            "optional": "",
+                            "nullable": ""
+                        },
+                        {
+                            "name": "y",
+                            "type": "number",
+                            "description": "y position in px",
+                            "default": "",
+                            "optional": "",
+                            "nullable": ""
+                        }
+                    ],
+                    "examples": []
+                },
+                {
+                    "name": "kill",
+                    "access": "",
+                    "virtual": false,
+                    "description": "Remove this element and destroy all references to it",
+                    "parameters": [],
+                    "examples": []
+                },
+                {
+                    "name": "fade",
+                    "access": "",
+                    "virtual": false,
+                    "description": "Set the element's opacity",
+                    "parameters": [
+                        {
+                            "name": "level",
+                            "type": "number",
+                            "description": "opacity level",
+                            "default": "",
+                            "optional": "",
+                            "nullable": ""
+                        }
+                    ],
+                    "examples": []
+                },
+                {
+                    "name": "hide",
+                    "access": "",
+                    "virtual": false,
+                    "description": "Make the element disappear, but do not remove it. A/V files will keep playing and making sound.",
+                    "parameters": [],
+                    "examples": []
+                },
+                {
+                    "name": "show",
+                    "access": "",
+                    "virtual": false,
+                    "description": "If the element is hidden, show it.",
+                    "parameters": [],
+                    "examples": []
                 }
             ]
         },
@@ -1094,6 +1546,72 @@
                             "nullable": ""
                         }
                     ],
+                    "examples": []
+                },
+                {
+                    "name": "move",
+                    "access": "",
+                    "virtual": false,
+                    "description": "Move this element",
+                    "parameters": [
+                        {
+                            "name": "x",
+                            "type": "number",
+                            "description": "x position in px",
+                            "default": "",
+                            "optional": "",
+                            "nullable": ""
+                        },
+                        {
+                            "name": "y",
+                            "type": "number",
+                            "description": "y position in px",
+                            "default": "",
+                            "optional": "",
+                            "nullable": ""
+                        }
+                    ],
+                    "examples": []
+                },
+                {
+                    "name": "kill",
+                    "access": "",
+                    "virtual": false,
+                    "description": "Remove this element and destroy all references to it",
+                    "parameters": [],
+                    "examples": []
+                },
+                {
+                    "name": "fade",
+                    "access": "",
+                    "virtual": false,
+                    "description": "Set the element's opacity",
+                    "parameters": [
+                        {
+                            "name": "level",
+                            "type": "number",
+                            "description": "opacity level",
+                            "default": "",
+                            "optional": "",
+                            "nullable": ""
+                        }
+                    ],
+                    "examples": []
+                },
+                {
+                    "name": "hide",
+                    "access": "",
+                    "virtual": false,
+                    "description": "Make the element disappear, but do not remove it. A/V files will keep playing and making sound.",
+                    "parameters": [],
+                    "examples": []
+                },
+                {
+                    "name": "show",
+                    "access": "",
+                    "virtual": false,
+                    "description": "If the element is hidden, show it.",
+                    "parameters": [],
                     "examples": []
                 }
             ]
@@ -1189,6 +1707,72 @@
                         }
                     ],
                     "examples": []
+                },
+                {
+                    "name": "move",
+                    "access": "",
+                    "virtual": false,
+                    "description": "Move this element",
+                    "parameters": [
+                        {
+                            "name": "x",
+                            "type": "number",
+                            "description": "x position in px",
+                            "default": "",
+                            "optional": "",
+                            "nullable": ""
+                        },
+                        {
+                            "name": "y",
+                            "type": "number",
+                            "description": "y position in px",
+                            "default": "",
+                            "optional": "",
+                            "nullable": ""
+                        }
+                    ],
+                    "examples": []
+                },
+                {
+                    "name": "kill",
+                    "access": "",
+                    "virtual": false,
+                    "description": "Remove this element and destroy all references to it",
+                    "parameters": [],
+                    "examples": []
+                },
+                {
+                    "name": "fade",
+                    "access": "",
+                    "virtual": false,
+                    "description": "Set the element's opacity",
+                    "parameters": [
+                        {
+                            "name": "level",
+                            "type": "number",
+                            "description": "opacity level",
+                            "default": "",
+                            "optional": "",
+                            "nullable": ""
+                        }
+                    ],
+                    "examples": []
+                },
+                {
+                    "name": "hide",
+                    "access": "",
+                    "virtual": false,
+                    "description": "Make the element disappear, but do not remove it. A/V files will keep playing and making sound.",
+                    "parameters": [],
+                    "examples": []
+                },
+                {
+                    "name": "show",
+                    "access": "",
+                    "virtual": false,
+                    "description": "If the element is hidden, show it.",
+                    "parameters": [],
+                    "examples": []
                 }
             ]
         },
@@ -1282,6 +1866,72 @@
                             "nullable": ""
                         }
                     ],
+                    "examples": []
+                },
+                {
+                    "name": "move",
+                    "access": "",
+                    "virtual": false,
+                    "description": "Move this element",
+                    "parameters": [
+                        {
+                            "name": "x",
+                            "type": "number",
+                            "description": "x position in px",
+                            "default": "",
+                            "optional": "",
+                            "nullable": ""
+                        },
+                        {
+                            "name": "y",
+                            "type": "number",
+                            "description": "y position in px",
+                            "default": "",
+                            "optional": "",
+                            "nullable": ""
+                        }
+                    ],
+                    "examples": []
+                },
+                {
+                    "name": "kill",
+                    "access": "",
+                    "virtual": false,
+                    "description": "Remove this element and destroy all references to it",
+                    "parameters": [],
+                    "examples": []
+                },
+                {
+                    "name": "fade",
+                    "access": "",
+                    "virtual": false,
+                    "description": "Set the element's opacity",
+                    "parameters": [
+                        {
+                            "name": "level",
+                            "type": "number",
+                            "description": "opacity level",
+                            "default": "",
+                            "optional": "",
+                            "nullable": ""
+                        }
+                    ],
+                    "examples": []
+                },
+                {
+                    "name": "hide",
+                    "access": "",
+                    "virtual": false,
+                    "description": "Make the element disappear, but do not remove it. A/V files will keep playing and making sound.",
+                    "parameters": [],
+                    "examples": []
+                },
+                {
+                    "name": "show",
+                    "access": "",
+                    "virtual": false,
+                    "description": "If the element is hidden, show it.",
+                    "parameters": [],
                     "examples": []
                 }
             ]
@@ -1399,6 +2049,72 @@
                             "nullable": ""
                         }
                     ],
+                    "examples": []
+                },
+                {
+                    "name": "move",
+                    "access": "",
+                    "virtual": false,
+                    "description": "Move this element",
+                    "parameters": [
+                        {
+                            "name": "x",
+                            "type": "number",
+                            "description": "x position in px",
+                            "default": "",
+                            "optional": "",
+                            "nullable": ""
+                        },
+                        {
+                            "name": "y",
+                            "type": "number",
+                            "description": "y position in px",
+                            "default": "",
+                            "optional": "",
+                            "nullable": ""
+                        }
+                    ],
+                    "examples": []
+                },
+                {
+                    "name": "kill",
+                    "access": "",
+                    "virtual": false,
+                    "description": "Remove this element and destroy all references to it",
+                    "parameters": [],
+                    "examples": []
+                },
+                {
+                    "name": "fade",
+                    "access": "",
+                    "virtual": false,
+                    "description": "Set the element's opacity",
+                    "parameters": [
+                        {
+                            "name": "level",
+                            "type": "number",
+                            "description": "opacity level",
+                            "default": "",
+                            "optional": "",
+                            "nullable": ""
+                        }
+                    ],
+                    "examples": []
+                },
+                {
+                    "name": "hide",
+                    "access": "",
+                    "virtual": false,
+                    "description": "Make the element disappear, but do not remove it. A/V files will keep playing and making sound.",
+                    "parameters": [],
+                    "examples": []
+                },
+                {
+                    "name": "show",
+                    "access": "",
+                    "virtual": false,
+                    "description": "If the element is hidden, show it.",
+                    "parameters": [],
                     "examples": []
                 }
             ]

@@ -433,11 +433,14 @@ var spacer = false;
 
 var Manager = module.exports = function() {
 
-  /** @type {Number} */
+  // windows in this wall
   this.spaceLimit = 8;
 
-  //space to discern and define the area of screen that will be used
-  // including offset, etc
+  /**
+   * The dimensions that will be used
+   * @type {Object} 
+   * @memberOf Manager
+   */
   this.stage = {
     w: 800,
     h: 600
@@ -603,10 +606,10 @@ var Medium = module.exports = function(params) {
 	// handle parameters
 	this.params = params ? params : new Object()
 
-	// define space
+	// define spaces
 	this.spaces = this.params.spaces ? this.params.spaces : [0];
 
-	// make element
+	// make elements
 	this.element = [];
 	for (var i = 0; i<this.spaces.length; i++) {
 		this.element[i] = document.createElement(this.type)
@@ -658,12 +661,13 @@ Medium.prototype.size = function(params,h) {
 		this.element[i].style.width = params.w ? params.w+"px" : this.defaultSize.w+"px";
 		this.element[i].style.height = params.h ? params.h+"px" : this.defaultSize.h+"px";
 	}
-	/*this.params.w ? this.element.style.width = this.params.w+"px" : false;
-	this.params.width ? this.element.style.width = this.params.width+"px" : false;
-	this.params.h ? this.element.style.width = this.params.h+"px" : false;
-	this.params.height ? this.element.style.width = this.params.height+"px" : false;*/
 }
 
+/**
+ * Move this element
+ * @param {number} x  x position in px
+ * @param {number} y  y position in px
+ */
 Medium.prototype.move = function(params,y) {
 	if (typeof params == "number") {
 		params = {
@@ -678,26 +682,38 @@ Medium.prototype.move = function(params,y) {
 	}
 }
 
-Medium.prototype.kill = function(params) {
-//	console.log("-----------------")
-//	console.log(this.spaces)
+/**
+ * Remove this element and destroy all references to it
+ */
+Medium.prototype.kill = function() {
 	for (var i = 0; i<this.element.length; i++) {
-	//	console.log(this.spaces[i])
-	//	this.spaces[i].element.document.body.removeChild(this.element[i])
 		this.element[i].parentNode.removeChild(this.element[i])
 	}
 	m.media.splice(m.media.indexOf(this))
 }
+
+/**
+ * Set the element's opacity
+ * @param {number} level  opacity level
+ */
 Medium.prototype.fade = function(level) {
 	for (var i = 0; i<this.element.length; i++) {
 		this.element[i].style.opacity = level;
 	}
 }
+
+/**
+ * Make the element disappear, but do not remove it. A/V files will keep playing and making sound.
+ */
 Medium.prototype.hide = function() {
 	for (var i = 0; i<this.element.length; i++) {
 		this.element[i].style.visibility = "hidden";
 	}
 }
+
+/**
+ * If the element is hidden, show it.
+ */
 Medium.prototype.show = function(level) {
 	for (var i = 0; i<this.element.length; i++) {
 		this.element[i].style.visibility = "visible";

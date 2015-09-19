@@ -122,6 +122,7 @@
 				}
 			  if (thisclass.properties) {
 					for (var j=0;j<thisclass.properties.length;j++) {
+						console.log(thisclass.properties[j])
 						if (mediumclass.props.indexOf(thisclass.properties[j].name)==-1) {
 							lines++;
 							var thisprop = thisclass.properties[j]
@@ -135,7 +136,7 @@
 				}
 
 				html += "</div>"
-				var thiscol = Math.floor(lines/30)+1
+				var thiscol = Math.floor(lines/35)+1
 				console.log(thisclass.name,lines,thiscol)
 				document.getElementById("col"+thiscol).innerHTML += html
 			}
