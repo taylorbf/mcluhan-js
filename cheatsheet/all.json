@@ -18,7 +18,7 @@
                     "name": "this.stage",
                     "access": "",
                     "virtual": false,
-                    "description": "The dimensions that will be used",
+                    "description": "Dimensions of the screen area to be used for the performance. Default 800x600.",
                     "type": {
                         "names": [
                             "Object"
@@ -28,10 +28,27 @@
             ],
             "functions": [
                 {
-                    "name": "init",
+                    "name": "deck",
                     "access": "",
                     "virtual": false,
-                    "description": "initialize and open all browser windows to use",
+                    "description": "Initialize and open all browser windows to use",
+                    "parameters": [
+                        {
+                            "name": "limit",
+                            "type": "integer",
+                            "description": "How many total windows will be used",
+                            "default": "",
+                            "optional": true,
+                            "nullable": ""
+                        }
+                    ],
+                    "examples": []
+                },
+                {
+                    "name": "start",
+                    "access": "",
+                    "virtual": false,
+                    "description": "*static mode only* Start the event timeline.",
                     "parameters": [],
                     "examples": []
                 },
@@ -63,6 +80,23 @@
                             "description": "parameters (x,y,w,h,spaces,parent)",
                             "default": "",
                             "optional": "",
+                            "nullable": ""
+                        }
+                    ],
+                    "examples": []
+                },
+                {
+                    "name": "makeSpace",
+                    "access": "",
+                    "virtual": false,
+                    "description": "Add a new window to the deck. Not recommended. Use m.deck() instead.",
+                    "parameters": [
+                        {
+                            "name": "params",
+                            "type": "object",
+                            "description": "key value pairs of params such as x/y/w/h",
+                            "default": "",
+                            "optional": true,
                             "nullable": ""
                         }
                     ],
