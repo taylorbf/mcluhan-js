@@ -86,15 +86,23 @@
                     "examples": []
                 },
                 {
-                    "name": "makeSpace",
+                    "name": "googleimage",
                     "access": "",
                     "virtual": false,
-                    "description": "Add a new window to the deck. Not recommended. Use m.deck() instead.",
+                    "description": "Google image search and use the results in a callback func. Should this be made into adding it was a photo with wall.see()?",
                     "parameters": [
                         {
-                            "name": "params",
-                            "type": "object",
-                            "description": "key value pairs of params such as x/y/w/h",
+                            "name": "word",
+                            "type": "string",
+                            "description": "Word to search for",
+                            "default": "",
+                            "optional": true,
+                            "nullable": ""
+                        },
+                        {
+                            "name": "cb",
+                            "type": "function",
+                            "description": "callback to use the data",
                             "default": "",
                             "optional": true,
                             "nullable": ""
@@ -876,6 +884,65 @@
             },
             "functions": [
                 {
+                    "name": "load",
+                    "access": "",
+                    "virtual": false,
+                    "description": "Load a URL.",
+                    "parameters": [
+                        {
+                            "name": "address",
+                            "type": "string",
+                            "description": "URL to load. No http:// necessary.",
+                            "default": "",
+                            "optional": true,
+                            "nullable": ""
+                        }
+                    ],
+                    "examples": []
+                },
+                {
+                    "name": "scroll",
+                    "access": "",
+                    "virtual": false,
+                    "description": "Scroll the webpage (not working yet).",
+                    "parameters": [
+                        {
+                            "name": "x",
+                            "type": "number",
+                            "description": "X scroll.",
+                            "default": "",
+                            "optional": true,
+                            "nullable": ""
+                        },
+                        {
+                            "name": "y",
+                            "type": "number",
+                            "description": "Y scroll.",
+                            "default": "",
+                            "optional": true,
+                            "nullable": ""
+                        }
+                    ],
+                    "examples": []
+                },
+                {
+                    "name": "zoom",
+                    "access": "",
+                    "virtual": false,
+                    "description": "Zoom in on the website. (maybe not working yet)",
+                    "parameters": [
+                        {
+                            "name": "level",
+                            "type": "number",
+                            "description": "Zoom scroll (e.g. 1 is normal. 0.5 is zoomed out, 2 is zoomed in).",
+                            "default": "",
+                            "optional": true,
+                            "nullable": ""
+                        }
+                    ],
+                    "examples": []
+                },
+                {
                     "name": "setAll",
                     "access": "",
                     "virtual": false,
@@ -1036,165 +1103,61 @@
             },
             "functions": [
                 {
-                    "name": "setAll",
+                    "name": "play",
                     "access": "",
                     "virtual": false,
-                    "description": "Set a property on this media element in all windows",
-                    "parameters": [
-                        {
-                            "name": "property",
-                            "type": "String",
-                            "description": "key",
-                            "default": "",
-                            "optional": "",
-                            "nullable": ""
-                        },
-                        {
-                            "name": "value",
-                            "type": "Unknown",
-                            "description": "",
-                            "default": "",
-                            "optional": "",
-                            "nullable": ""
-                        }
-                    ],
-                    "examples": []
-                },
-                {
-                    "name": "all",
-                    "access": "",
-                    "virtual": false,
-                    "description": "Call a method on this media element in all windows",
-                    "parameters": [
-                        {
-                            "name": "method",
-                            "type": "String",
-                            "description": "name",
-                            "default": "",
-                            "optional": "",
-                            "nullable": ""
-                        }
-                    ],
-                    "examples": []
-                },
-                {
-                    "name": "size",
-                    "access": "",
-                    "virtual": false,
-                    "description": "Resize this media element",
-                    "parameters": [
-                        {
-                            "name": "w",
-                            "type": "number",
-                            "description": "width in px",
-                            "default": "",
-                            "optional": "",
-                            "nullable": ""
-                        },
-                        {
-                            "name": "h",
-                            "type": "number",
-                            "description": "height in px",
-                            "default": "",
-                            "optional": "",
-                            "nullable": ""
-                        }
-                    ],
-                    "examples": []
-                },
-                {
-                    "name": "move",
-                    "access": "",
-                    "virtual": false,
-                    "description": "Move this element",
-                    "parameters": [
-                        {
-                            "name": "x",
-                            "type": "number",
-                            "description": "x position in px",
-                            "default": "",
-                            "optional": "",
-                            "nullable": ""
-                        },
-                        {
-                            "name": "y",
-                            "type": "number",
-                            "description": "y position in px",
-                            "default": "",
-                            "optional": "",
-                            "nullable": ""
-                        }
-                    ],
-                    "examples": []
-                },
-                {
-                    "name": "kill",
-                    "access": "",
-                    "virtual": false,
-                    "description": "Remove this element and destroy all references to it",
+                    "description": ".",
                     "parameters": [],
                     "examples": []
                 },
                 {
-                    "name": "fade",
+                    "name": "wander",
                     "access": "",
                     "virtual": false,
-                    "description": "Set the element's opacity",
-                    "parameters": [
-                        {
-                            "name": "level",
-                            "type": "number",
-                            "description": "opacity level",
-                            "default": "",
-                            "optional": "",
-                            "nullable": ""
-                        }
-                    ],
-                    "examples": []
-                },
-                {
-                    "name": "hide",
-                    "access": "",
-                    "virtual": false,
-                    "description": "Make the element disappear, but do not remove it. A/V files will keep playing and making sound.",
+                    "description": ".",
                     "parameters": [],
                     "examples": []
                 },
                 {
-                    "name": "show",
+                    "name": "stop",
                     "access": "",
                     "virtual": false,
-                    "description": "If the element is hidden, show it.",
+                    "description": ".",
                     "parameters": [],
                     "examples": []
-                }
-            ]
-        },
-        {
-            "name": "Lattice",
-            "description": "Lattice",
-            "extends": [
-                "Medium"
-            ],
-            "access": "",
-            "virtual": false,
-            "fires": "",
-            "constructor": {
-                "name": "Lattice",
-                "description": "Interactive PITCH LATTICE",
-                "parameters": [
-                    {
-                        "name": "Params",
-                        "type": "object",
-                        "description": "(see Params)",
-                        "default": "",
-                        "optional": "",
-                        "nullable": ""
-                    }
-                ],
-                "examples": []
-            },
-            "functions": [
+                },
+                {
+                    "name": "nextxyz",
+                    "access": "",
+                    "virtual": false,
+                    "description": ".",
+                    "parameters": [],
+                    "examples": []
+                },
+                {
+                    "name": "nextx",
+                    "access": "",
+                    "virtual": false,
+                    "description": ".",
+                    "parameters": [],
+                    "examples": []
+                },
+                {
+                    "name": "nexty",
+                    "access": "",
+                    "virtual": false,
+                    "description": ".",
+                    "parameters": [],
+                    "examples": []
+                },
+                {
+                    "name": "nextz",
+                    "access": "",
+                    "virtual": false,
+                    "description": ".",
+                    "parameters": [],
+                    "examples": []
+                },
                 {
                     "name": "setAll",
                     "access": "",
@@ -1356,6 +1319,14 @@
             },
             "functions": [
                 {
+                    "name": "write",
+                    "access": "",
+                    "virtual": false,
+                    "description": ".",
+                    "parameters": [],
+                    "examples": []
+                },
+                {
                     "name": "setAll",
                     "access": "",
                     "virtual": false,
@@ -1515,6 +1486,62 @@
                 "examples": []
             },
             "functions": [
+                {
+                    "name": "search",
+                    "access": "",
+                    "virtual": false,
+                    "description": ".",
+                    "parameters": [],
+                    "examples": []
+                },
+                {
+                    "name": "goto",
+                    "access": "",
+                    "virtual": false,
+                    "description": ".",
+                    "parameters": [],
+                    "examples": []
+                },
+                {
+                    "name": "stray",
+                    "access": "",
+                    "virtual": false,
+                    "description": ".",
+                    "parameters": [],
+                    "examples": []
+                },
+                {
+                    "name": "route",
+                    "access": "",
+                    "virtual": false,
+                    "description": ".",
+                    "parameters": [],
+                    "examples": []
+                },
+                {
+                    "name": "zoom",
+                    "access": "",
+                    "virtual": false,
+                    "description": ".",
+                    "parameters": [],
+                    "examples": []
+                },
+                {
+                    "name": "marker",
+                    "access": "",
+                    "virtual": false,
+                    "description": ".",
+                    "parameters": [],
+                    "examples": []
+                },
+                {
+                    "name": "info",
+                    "access": "",
+                    "virtual": false,
+                    "description": ".",
+                    "parameters": [],
+                    "examples": []
+                },
                 {
                     "name": "setAll",
                     "access": "",
@@ -1676,6 +1703,94 @@
             },
             "functions": [
                 {
+                    "name": "read",
+                    "access": "",
+                    "virtual": false,
+                    "description": ".",
+                    "parameters": [],
+                    "examples": []
+                },
+                {
+                    "name": "readFile",
+                    "access": "",
+                    "virtual": false,
+                    "description": ".",
+                    "parameters": [],
+                    "examples": []
+                },
+                {
+                    "name": "write",
+                    "access": "",
+                    "virtual": false,
+                    "description": ".",
+                    "parameters": [],
+                    "examples": []
+                },
+                {
+                    "name": "and",
+                    "access": "",
+                    "virtual": false,
+                    "description": ".",
+                    "parameters": [],
+                    "examples": []
+                },
+                {
+                    "name": "writeAcross",
+                    "access": "",
+                    "virtual": false,
+                    "description": ".",
+                    "parameters": [],
+                    "examples": []
+                },
+                {
+                    "name": "flip",
+                    "access": "",
+                    "virtual": false,
+                    "description": ".",
+                    "parameters": [],
+                    "examples": []
+                },
+                {
+                    "name": "flipOne",
+                    "access": "",
+                    "virtual": false,
+                    "description": ".",
+                    "parameters": [],
+                    "examples": []
+                },
+                {
+                    "name": "unflip",
+                    "access": "",
+                    "virtual": false,
+                    "description": ".",
+                    "parameters": [],
+                    "examples": []
+                },
+                {
+                    "name": "wash",
+                    "access": "",
+                    "virtual": false,
+                    "description": ".",
+                    "parameters": [],
+                    "examples": []
+                },
+                {
+                    "name": "washOne",
+                    "access": "",
+                    "virtual": false,
+                    "description": ".",
+                    "parameters": [],
+                    "examples": []
+                },
+                {
+                    "name": "unwash",
+                    "access": "",
+                    "virtual": false,
+                    "description": ".",
+                    "parameters": [],
+                    "examples": []
+                },
+                {
                     "name": "setAll",
                     "access": "",
                     "virtual": false,
@@ -1836,6 +1951,38 @@
             },
             "functions": [
                 {
+                    "name": "load",
+                    "access": "",
+                    "virtual": false,
+                    "description": ".",
+                    "parameters": [],
+                    "examples": []
+                },
+                {
+                    "name": "propogateMaster",
+                    "access": "",
+                    "virtual": false,
+                    "description": ".",
+                    "parameters": [],
+                    "examples": []
+                },
+                {
+                    "name": "glitch",
+                    "access": "",
+                    "virtual": false,
+                    "description": ".",
+                    "parameters": [],
+                    "examples": []
+                },
+                {
+                    "name": "zoom",
+                    "access": "",
+                    "virtual": false,
+                    "description": ".",
+                    "parameters": [],
+                    "examples": []
+                },
+                {
                     "name": "setAll",
                     "access": "",
                     "virtual": false,
@@ -1991,7 +2138,33 @@
                     }
                 ],
                 "examples": []
-            }
+            },
+            "functions": [
+                {
+                    "name": "snapshot",
+                    "access": "",
+                    "virtual": false,
+                    "description": ".",
+                    "parameters": [],
+                    "examples": []
+                },
+                {
+                    "name": "start",
+                    "access": "",
+                    "virtual": false,
+                    "description": ".",
+                    "parameters": [],
+                    "examples": []
+                },
+                {
+                    "name": "stop",
+                    "access": "",
+                    "virtual": false,
+                    "description": ".",
+                    "parameters": [],
+                    "examples": []
+                }
+            ]
         },
         {
             "name": "TextMessage",
@@ -2018,6 +2191,30 @@
                 "examples": []
             },
             "functions": [
+                {
+                    "name": "text",
+                    "access": "",
+                    "virtual": false,
+                    "description": ".",
+                    "parameters": [],
+                    "examples": []
+                },
+                {
+                    "name": "scroll",
+                    "access": "",
+                    "virtual": false,
+                    "description": ".",
+                    "parameters": [],
+                    "examples": []
+                },
+                {
+                    "name": "oneScroll",
+                    "access": "",
+                    "virtual": false,
+                    "description": ".",
+                    "parameters": [],
+                    "examples": []
+                },
                 {
                     "name": "setAll",
                     "access": "",
@@ -2174,7 +2371,57 @@
                     }
                 ],
                 "examples": []
-            }
+            },
+            "functions": [
+                {
+                    "name": "say",
+                    "access": "",
+                    "virtual": false,
+                    "description": ".",
+                    "parameters": [],
+                    "examples": []
+                },
+                {
+                    "name": "load",
+                    "access": "",
+                    "virtual": false,
+                    "description": ".",
+                    "parameters": [],
+                    "examples": []
+                },
+                {
+                    "name": "play",
+                    "access": "",
+                    "virtual": false,
+                    "description": ".",
+                    "parameters": [],
+                    "examples": []
+                },
+                {
+                    "name": "stop",
+                    "access": "",
+                    "virtual": false,
+                    "description": ".",
+                    "parameters": [],
+                    "examples": []
+                },
+                {
+                    "name": "loop",
+                    "access": "",
+                    "virtual": false,
+                    "description": ".",
+                    "parameters": [],
+                    "examples": []
+                },
+                {
+                    "name": "jumpTo",
+                    "access": "",
+                    "virtual": false,
+                    "description": ".",
+                    "parameters": [],
+                    "examples": []
+                }
+            ]
         },
         {
             "name": "Wall",
@@ -2586,7 +2833,105 @@
                     }
                 ],
                 "examples": []
-            }
+            },
+            "functions": [
+                {
+                    "name": "show",
+                    "access": "",
+                    "virtual": false,
+                    "description": ".",
+                    "parameters": [],
+                    "examples": []
+                },
+                {
+                    "name": "hide",
+                    "access": "",
+                    "virtual": false,
+                    "description": ".",
+                    "parameters": [],
+                    "examples": []
+                },
+                {
+                    "name": "load",
+                    "access": "",
+                    "virtual": false,
+                    "description": ".",
+                    "parameters": [],
+                    "examples": []
+                },
+                {
+                    "name": "scroll",
+                    "access": "",
+                    "virtual": false,
+                    "description": ".",
+                    "parameters": [],
+                    "examples": []
+                },
+                {
+                    "name": "kill",
+                    "access": "",
+                    "virtual": false,
+                    "description": ".",
+                    "parameters": [],
+                    "examples": []
+                },
+                {
+                    "name": "empty",
+                    "access": "",
+                    "virtual": false,
+                    "description": ".",
+                    "parameters": [],
+                    "examples": []
+                },
+                {
+                    "name": "scroll",
+                    "access": "",
+                    "virtual": false,
+                    "description": ".",
+                    "parameters": [],
+                    "examples": []
+                },
+                {
+                    "name": "xray",
+                    "access": "",
+                    "virtual": false,
+                    "description": ".",
+                    "parameters": [],
+                    "examples": []
+                },
+                {
+                    "name": "scramble",
+                    "access": "",
+                    "virtual": false,
+                    "description": ".",
+                    "parameters": [],
+                    "examples": []
+                },
+                {
+                    "name": "refresh",
+                    "access": "",
+                    "virtual": false,
+                    "description": ".",
+                    "parameters": [],
+                    "examples": []
+                },
+                {
+                    "name": "move",
+                    "access": "",
+                    "virtual": false,
+                    "description": ".",
+                    "parameters": [],
+                    "examples": []
+                },
+                {
+                    "name": "size",
+                    "access": "",
+                    "virtual": false,
+                    "description": ".",
+                    "parameters": [],
+                    "examples": []
+                }
+            ]
         }
     ],
     "functions": [

@@ -521,7 +521,7 @@ Manager.prototype.film = function(src,params) {
     src ? films[i].load(src) : false;
 }
 
-/**
+/*
  * Add a new window to the deck. Not recommended. Use m.deck() instead.
  * @param { object } [params] key value pairs of params such as x/y/w/h
  */
@@ -585,6 +585,11 @@ Manager.prototype.static = new StaticProject()
 // should this be moved to be a Wall method or a global function?
 // or should there be a component with all of these and other new aesthetic functions as methods?
 
+/** 
+ * Google image search and use the results in a callback func. Should this be made into adding it was a photo with wall.see()?
+ * @param { string } [word] Word to search for
+ * @param { function } [cb] callback to use the data
+ */
 Manager.prototype.googleimage = function(keyword,callback) {
 
   //currently searches for png. might want jpg later...
@@ -1191,6 +1196,11 @@ var Hack = module.exports = function(params) {
 
 util.inherits(Hack, Medium);
 
+
+/** 
+ * Load a URL.
+ * @param { string } [address] URL to load. No http:// necessary.
+ */
 Hack.prototype.load = function(src) {
 
 	if (src.indexOf("http")==0) {
@@ -1211,7 +1221,11 @@ Hack.prototype.load = function(src) {
 
 }
 
-
+/** 
+ * Scroll the webpage (not working yet).
+ * @param { number } [x] X scroll.
+ * @param { number } [y] Y scroll.
+ */
 // cannot scroll across origins
 // can be circumvented by embedding the iframe in a div and scrolling the div.
 Hack.prototype.scroll = function() {
@@ -1219,13 +1233,15 @@ Hack.prototype.scroll = function() {
 
 }
 
-// cannot scroll across origins
-// can be circumvented by embedding the iframe in a div and scrolling the div.
+/** 
+ * Zoom in on the website. (maybe not working yet)
+ * @param { number } [level] Zoom scroll (e.g. 1 is normal. 0.5 is zoomed out, 2 is zoomed in).
+ */
 Hack.prototype.zoom = function(level) {
 
 	for (var i=0;i<this.spaces.length;i++) {
 		this.element[i].style.zoom = level
-	}	
+	}	 
 
 	/* 
 	zoom: 0.15;
@@ -1354,15 +1370,27 @@ Lattice.prototype.draw = function(src) {
 
 }
 
+/** 
+ * .
+ */
 Lattice.prototype.play = function() {
 	this.instrument[0].notes[this.place.z][this.place.x][this.place.y].play()
 }
+/** 
+ * .
+ */
 Lattice.prototype.wander = function(speed) {
 	this.int = setInterval(this.nextxyz.bind(this),speed)
 }
+/** 
+ * .
+ */
 Lattice.prototype.stop = function() {
 	clearInterval(this.int)
 }
+/** 
+ * .
+ */
 Lattice.prototype.nextxyz = function() {
 	var dir = random(3)
 	if (dir==0) {
@@ -1380,18 +1408,27 @@ Lattice.prototype.nextxyz = function() {
 	this.place.z = this.place.z<0 ? 1 : this.place.z;
 	this.play()
 }
+/** 
+ * .
+ */
 Lattice.prototype.nextx = function() {
 	this.place.x++
 	this.place.x = this.place.x>=this.dimension.x ? 0 : this.place.x;
 	this.place.x = this.place.x<0 ? this.dimension.x : this.place.x;
 	this.play()
 }
+/** 
+ * .
+ */
 Lattice.prototype.nexty = function() {
 	this.place.y++
 	this.place.y = this.place.y>=this.dimension.y ? 0 : this.place.y;
 	this.place.y = this.place.y<0 ? this.dimension.y : this.place.y;
 	this.play()
 }
+/** 
+ * .
+ */
 Lattice.prototype.nextz = function() {
 	this.place.z++
 	this.place.z = this.place.z>=this.dimension.z ? 0 : this.place.z;
@@ -1507,6 +1544,10 @@ var Log = module.exports = function(params) {
 
 util.inherits(Log, Medium);
 
+
+/** 
+ * .
+ */
 Log.prototype.write = function(text) {
 	for (var i=0;i<this.element.length;i++) {
 		this.element[i].innerHTML += "<br>" + text
@@ -1584,6 +1625,10 @@ var Map = module.exports = function(params) {
 
 util.inherits(Map, Medium);
 
+
+/** 
+ * .
+ */
 Map.prototype.search = function(loc) {
 
   this.geocoder.geocode( { 'address': loc}, function(results, status) {
@@ -1595,6 +1640,9 @@ Map.prototype.search = function(loc) {
 
 }
 
+/** 
+ * .
+ */
 Map.prototype.goto = function(loc) {
 	if (loc) {
 		this.location = loc
@@ -1604,6 +1652,10 @@ Map.prototype.goto = function(loc) {
     }
 }
 
+
+/** 
+ * .
+ */
 Map.prototype.stray = function(x,y) {
 	//console.log(this.map[0].zoom)
 	//console.log(this.widget)
@@ -1621,7 +1673,11 @@ Map.prototype.stray = function(x,y) {
     }
 }
 
+
 /* directions stuff */
+/** 
+ * .
+ */
 Map.prototype.route = function(start, end) {
   start = start ? start : "Charlottesville, VA"
   end = end ? end : "Missoula, MT"
@@ -1639,6 +1695,9 @@ Map.prototype.route = function(start, end) {
   }.bind(this));
 }
 
+/** 
+ * .
+ */
 Map.prototype.zoom = function(level) {
 	level +=3 ;
 	//console.log ("zoom to "+level)
@@ -1647,6 +1706,9 @@ Map.prototype.zoom = function(level) {
 	}
 }
 
+/** 
+ * .
+ */
 Map.prototype.marker = function() {
 
   // if no argument, goes to this.location
@@ -1674,6 +1736,9 @@ Map.prototype.marker = function() {
 }
 
 
+/** 
+ * .
+ */
 Map.prototype.info = function(content) {
 
   var contentString = content ? content : '<div style="color:black;width:100px;height:100px;background-color:black;display:block">888</div>';
@@ -1725,6 +1790,9 @@ var Paper = module.exports = function(params) {
 
 util.inherits(Paper, Medium);
 
+/** 
+ * .
+ */
 Paper.prototype.read = function(text) {
 	if (journal[text]) {
 		this.text = journal[text];
@@ -1739,6 +1807,9 @@ Paper.prototype.read = function(text) {
 /* eventually move this to happen at start up for all files in
 /media/text folder, and to make them stored in journals object
 with filname as object key */
+/** 
+ * .
+ */
 Paper.prototype.readFile = function(file,callback) {
 	file = file ? file : "hello"
 	this.text
@@ -1750,20 +1821,26 @@ Paper.prototype.readFile = function(file,callback) {
 	    bc(data);
 	}.bind(this), 'text');
 }
-
+/** 
+ * .
+ */
 Paper.prototype.write = function() {
 	for (var i=0;i<this.element.length;i++) {
 		this.element[i].innerHTML = this.text
 	}
 	return this;
 }
-
+/** 
+ * .
+ */
 Paper.prototype.and = function() {
 	for (var i=0;i<this.element.length;i++) {
 		this.element[i].innerHTML = this.elements[i].innerHTML + this.text
 	}
 }
-
+/** 
+ * .
+ */
 Paper.prototype.writeAcross = function() {
 	for (var i=0;i<this.element.length;i++) {
 		this.element[i].className = "fullScreen"
@@ -1775,12 +1852,16 @@ Paper.prototype.writeAcross = function() {
 		}
 	}
 }
-
+/** 
+ * .
+ */
 Paper.prototype.flip = function(time) {
 	time ? this.time = time : null;
 	this.flipint = setInterval(this.flipOne.bind(this), time)
 }
-
+/** 
+ * .
+ */
 Paper.prototype.flipOne = function() {
 	this.element[this.flipSpace].innerHTML = this.words[this.flipWord];
 	this.flipSpace++;
@@ -1792,12 +1873,16 @@ Paper.prototype.flipOne = function() {
 		this.flipWord=0;
 	}
 }
-
+/** 
+ * .
+ */
 Paper.prototype.unflip = function(file) {
 	clearInterval(this.flipint);
 }
 
-
+/** 
+ * .
+ */
 Paper.prototype.wash = function(time) {
 	time ? this.time = time : null;
 	this.washWord = 0;
@@ -1809,7 +1894,9 @@ Paper.prototype.wash = function(time) {
 	}
 	this.washint = setInterval(this.washOne.bind(this), time)
 }
-
+/** 
+ * .
+ */
 Paper.prototype.washOne = function() {
 	for (var i=0;i<this.element.length;i++) {
 		if (!this.strobe) {
@@ -1830,7 +1917,9 @@ Paper.prototype.washOne = function() {
 		//this.unwash()
 	}
 }
-
+/** 
+ * .
+ */
 Paper.prototype.unwash = function(file) {
 	clearInterval(this.washint);
 }
@@ -1910,6 +1999,9 @@ because transforming existing transformations is interesting, apparently
 
  */
 
+/** 
+ * .
+ */
 Photo.prototype.load = function(src) {
 
 	this.master.width = this.master.width;
@@ -1960,13 +2052,18 @@ Photo.prototype.load = function(src) {
 	return this;
 }
 
-
+/** 
+ * .
+ */
 Photo.prototype.propogateMaster = function() {
 	for (var i=0;i<this.context.length;i++) {
 		this.context[i].drawImage(this.master, this.zoomstate.x, this.zoomstate.y,this.zoomstate.level*this.width,this.zoomstate.level*this.height,0,0,this.width,this.height );
 	}
 }
 
+/** 
+ * .
+ */
 Photo.prototype.glitch = function(file,callback) {
 	this.data = this.mastercontext.getImageData( 0, 0, this.width, this.height );
 
@@ -1983,6 +2080,9 @@ Photo.prototype.glitch = function(file,callback) {
 		
 }
 
+/** 
+ * .
+ */
 Photo.prototype.zoom = function(params) {
 	if (params.level) {
 		this.zoomstate.level = params.level
@@ -2061,6 +2161,9 @@ var Presence = module.exports = function(params) {
 
 }
 
+/** 
+ * .
+ */
 Presence.prototype.snapshot = function(src) {
 	this.context.fillStyle = "#eee";
     this.context.fillRect(0,0,this.canvas.width,this.canvas.height)
@@ -2099,12 +2202,18 @@ Presence.prototype.snapshot = function(src) {
   }
 }
 
+/** 
+ * .
+ */
 Presence.prototype.start = function(src) {
 	this.boundSnapshot = this.snapshot.bind(this)
 	this.interval = setInterval(this.boundSnapshot,1000/this.fps)
 	return this;
 }
 
+/** 
+ * .
+ */
 Presence.prototype.stop = function(rate) {
 	clearInterval(this.interval)
 }
@@ -2145,6 +2254,9 @@ var TextMessage = module.exports = function(params) {
 
 util.inherits(TextMessage, Medium);
 
+/** 
+ * .
+ */
 TextMessage.prototype.text = function(msg,skiplog) {
 
 	for (var i=0;i<this.element.length;i++) {
@@ -2174,6 +2286,9 @@ TextMessage.prototype.text = function(msg,skiplog) {
 
 }
 
+/** 
+ * .
+ */
 TextMessage.prototype.scroll = function(msg) {
 
 	this.scrolling = true;
@@ -2181,6 +2296,9 @@ TextMessage.prototype.scroll = function(msg) {
 	
 }
 
+/** 
+ * .
+ */
 TextMessage.prototype.oneScroll = function() {
 
 	this.histIndex = cycle(this.histIndex,0,this.history.length)
@@ -2287,6 +2405,9 @@ var Voice = module.exports = function(params) {
 
 }
 
+/** 
+ * .
+ */
 Voice.prototype.say = function(phrase, params) {
 	this.text = phrase;
 	this.speed = 175;
@@ -2303,22 +2424,34 @@ Voice.prototype.say = function(phrase, params) {
 	it occurs in speakClient.js */
 }
 
+/** 
+ * .
+ */
 Voice.prototype.load = function(src) {
 	src ? this.setAll("src","media/"+src+".mp3") : false;
 	this.all("play");
 	return this;
 }
 
+/** 
+ * .
+ */
 Voice.prototype.play = function(rate) {
 	this.rate = rate ? rate : this.rate;
 	this.all("play");
 	this.speed(this.rate)
 }
 
+/** 
+ *
+ * .
+ */
 Voice.prototype.stop = function() {
 	this.all("pause");
 }
-
+/** 
+ * .
+ */
 Voice.prototype.loop = function(on) {
 	if (on===false || on===0) {
 		this.setAll("loop",false);
@@ -2327,7 +2460,9 @@ Voice.prototype.loop = function(on) {
 	}
 }
 
-
+/** 
+ * .
+ */
 Voice.prototype.jumpTo = function(start) {
 	start = start ? start : this.start;
 	this.setAll("currentTime",start);
@@ -2943,6 +3078,9 @@ var Window = module.exports = function(params) {
 	
 }
 
+/** 
+ * .
+ */
 Window.prototype.show = function(params) {
 
 	this.element.close();
@@ -2974,6 +3112,9 @@ Window.prototype.show = function(params) {
 
 }
 
+/** 
+ * .
+ */
 Window.prototype.hide = function() {
 	with (this.element) {
 		resizeTo(100,100)
@@ -2984,19 +3125,32 @@ Window.prototype.hide = function() {
 	this.visible = false;
 }
 
+/** 
+ * .
+ */
 Window.prototype.load = function(src) {
 	src ? this.element.src = src : false;
 }
 
+/**
+ *  
+ * .
+ */
 Window.prototype.scroll = function(x,y) {
 	this.element.scroll.x = x
 	this.element.scroll.x = y
 }
 
+/** 
+ * .
+ */
 Window.prototype.kill = function() {
 	this.element.close()
 }
 
+/** 
+ * .
+ */
 Window.prototype.empty = function() {
 	this.element.document.body.innerHTML = "";
 }
@@ -3006,6 +3160,9 @@ Window.prototype.testDraw = function() {
 	this.context.fillRect(0,0,100,100)
 }
 
+/** 
+ * .
+ */
 Window.prototype.scroll = function(x,y,time) {
 	if (!time) {
 		this.element.scrollTo(x,y)
@@ -3014,21 +3171,31 @@ Window.prototype.scroll = function(x,y,time) {
 	}
 }
 
+/** 
+ * .
+ */
 Window.prototype.xray = function(time) {
 	this.scroll(this.element.screenX-m.stage.x,this.element.screenY-m.stage.y,time)
 }
 
+/** 
+ * .
+ */
 Window.prototype.scramble = function(time) {
 	var w = this.element.document.body.clientWidth
 	var h = this.element.document.body.clientHeight
 	this.scroll(random(w),random(h),time)
 }
 
-
+/** 
+ * .
+ */
 Window.prototype.refresh = function() {
 }
 
-
+/** 
+ * .
+ */
 Window.prototype.move = function(x,y,time,callback) {
 	if (time && time > 99) {
 		callback = callback ? callback : function() { }
@@ -3068,7 +3235,9 @@ Window.prototype.move = function(x,y,time,callback) {
 */
 
 }
-
+/** 
+ * .
+ */
 Window.prototype.size = function(w,h,time) {
 	if (time && time > 99) {
 		callback = callback ? callback : function() { }
