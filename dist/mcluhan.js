@@ -3301,13 +3301,10 @@ Window.prototype.moveseq = function(x,y,time,callback) {
 },{"util":102}],20:[function(require,module,exports){
 
 
-/** @method toPolar 
-    Receives cartesian coordinates and returns polar coordinates as an object with 'radius' and 'angle' properties.
+/** @method  toPolar
+    @description Receives cartesian coordinates and returns polar coordinates as an object with 'radius' and 'angle' properties.
     @param {float} [x] 
     @param {float} [y] 
-    ```js
-    var ImOnACircle = nx.toPolar({ x: 20, y: 50 }})
-    ```
 */
 window.toPolar = function(x,y) {
   var r = Math.sqrt(x*x + y*y);
@@ -3319,8 +3316,8 @@ window.toPolar = function(x,y) {
   return {radius: r, angle: theta};
 }
 
-/** @method toCartesian 
-    Receives polar coordinates and returns cartesian coordinates as an object with 'x' and 'y' properties.
+/** @method  toCartesian
+    @description Receives polar coordinates and returns cartesian coordinates as an object with 'x' and 'y' properties.
     @param {float} [radius] 
     @param {float} [angle] 
 */
@@ -3331,29 +3328,20 @@ window.toCartesian = function(radius, angle){
 }
 
 
-/** @method clip 
-    Limits a number to within low and high values.
+/** @method  clip
+    @description Limits a number to within low and high values.
     @param {float} [input value] 
     @param {float} [low limit] 
-    @param {float} [high limit] 
-    ```js
-    nx.clip(5,0,10) // returns 5
-    nx.clip(15,0,10) // returns 10
-    nx.clip(-1,0,10) // returns 0
-    ```
+    @param {float} [high limit]
 */
 window.clip = function(value, low, high) {
   return Math.min(high, Math.max(low, value));
 }
 
-/** @method prune 
-    Limits a float to within a certain number of decimal places
+/** @method prune
+    @description Limits a float to within a certain number of decimal places
     @param {float} [input value] 
     @param {integer} [max decimal places] 
-    ```js
-    nx.prine(1.2345, 3) // returns 1.234
-    nx.prune(1.2345, 1) // returns 1.2
-    ```
 */
 
 window.prune = function(data, scale) {
@@ -3371,7 +3359,7 @@ window.prune = function(data, scale) {
 
 
 /** @method scale 
-    Scales an input number to a new range of numbers
+    @description Scales an input number to a new range of numbers
     @param {float} [input value] 
     @param {float} [low1]  input range (low)
     @param {float} [high1] input range (high)
@@ -3387,12 +3375,9 @@ window.scale = function(inNum, inMin, inMax, outMin, outMax) {
 }
 
 /** @method invert 
-    Equivalent to nx.scale(input,0,1,1,0). Inverts a normalized (0-1) number. 
+    @description Equivalent to nx.scale(input,0,1,1,0). Inverts a normalized (0-1) number. 
     @param {float} [input value]  
-    ```js
-    nx.invert(0.25) // returns 0.75
-    nx.invert(0) // returns 1
-    ```
+    
 */
 window.invert = function (inNum) {
   return scale(inNum, 1, 0, 0, 1);
@@ -3410,11 +3395,9 @@ window.bounce = function(posIn, borderMin, borderMax, delta) {
 
 
 /** @method mtof 
-    MIDI to frequency conversion. Returns frequency in Hz.
+    @description MIDI to frequency conversion. Returns frequency in Hz.
     @param {float} [MIDI] MIDI value to convert
-    ```js
-    nx.mtof(69) // returns 440
-    ```
+    
 */
 window.mtof = function(midi) {
   return Math.pow(2, ((midi-69)/12)) * 440;
@@ -3422,12 +3405,9 @@ window.mtof = function(midi) {
 
 
 /** @method random 
-    Returns a random integer between 0 and a given scale parameter.
+    @description Returns a random integer between 0 and a given scale parameter.
     @param {float} [scale] Upper limit of random range.
-    ```js
-    nx.random(10) // returns a random number from 0 to 9.
-    nx.random(10,20) // returns a random number from 10 to 19.
-    ```
+    
 */
 window.random = function(scale,max) {
 	if (max) {

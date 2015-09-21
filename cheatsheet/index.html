@@ -143,6 +143,42 @@
 				console.log(thisclass.name,lines,thiscol)
 				document.getElementById("col"+thiscol).innerHTML += html
 			}
+
+			// global functions
+			
+			lines+=4;
+			html = ""
+		  html += '<div style="color:#'+seq[i]+';padding:10px;border-top:solid 1px #'+seq[i]+';border-bottom:0px;line-height:1.5em;">'
+		  html += "<b>Global</b><br>"
+
+			for (var i=0;i<core.functions.length;i++) {
+				
+				var thisfunction = core.functions[i]
+				console.log(thisfunction.name)
+				
+				lines++;
+		  	html += "<a href='javascript:funkytut("+i+")'>"+thisfunction.name + "("
+
+		  	html += '<span style="font-size:8pt">'
+		  	for (var k=0;k<thisfunction.parameters.length;k++) {
+		  		if (k>=1) {
+		  			html += ", "
+		  		}
+		  		html += thisfunction.parameters[k].name
+
+		  	}
+		  	html += '</span>'
+
+
+		  	html +=	")<br>"
+
+			}
+
+
+			html += "</div>"
+			var thiscol = Math.floor(lines/35)+1
+			document.getElementById("col"+thiscol).innerHTML += html
+		
 		}
 			
 

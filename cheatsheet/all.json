@@ -2936,10 +2936,10 @@
     ],
     "functions": [
         {
-            "name": "toPolar \n    Receives cartesian coordinates and returns polar coordinates as an object with 'radius' and 'angle' properties.",
+            "name": "toPolar",
             "access": "",
             "virtual": false,
-            "description": "",
+            "description": "Receives cartesian coordinates and returns polar coordinates as an object with 'radius' and 'angle' properties.",
             "parameters": [
                 {
                     "name": "x",
@@ -2952,7 +2952,7 @@
                 {
                     "name": "y",
                     "type": "float",
-                    "description": "```js\n    var ImOnACircle = nx.toPolar({ x: 20, y: 50 }})\n    ```",
+                    "description": "",
                     "default": "",
                     "optional": true,
                     "nullable": ""
@@ -2961,10 +2961,10 @@
             "examples": []
         },
         {
-            "name": "toCartesian \n    Receives polar coordinates and returns cartesian coordinates as an object with 'x' and 'y' properties.",
+            "name": "toCartesian",
             "access": "",
             "virtual": false,
-            "description": "",
+            "description": "Receives polar coordinates and returns cartesian coordinates as an object with 'x' and 'y' properties.",
             "parameters": [
                 {
                     "name": "radius",
@@ -2986,10 +2986,10 @@
             "examples": []
         },
         {
-            "name": "clip \n    Limits a number to within low and high values.",
+            "name": "clip",
             "access": "",
             "virtual": false,
-            "description": "",
+            "description": "Limits a number to within low and high values.",
             "parameters": [
                 {
                     "name": "input value",
@@ -3010,7 +3010,7 @@
                 {
                     "name": "high limit",
                     "type": "float",
-                    "description": "```js\n    nx.clip(5,0,10) // returns 5\n    nx.clip(15,0,10) // returns 10\n    nx.clip(-1,0,10) // returns 0\n    ```",
+                    "description": "",
                     "default": "",
                     "optional": true,
                     "nullable": ""
@@ -3019,10 +3019,10 @@
             "examples": []
         },
         {
-            "name": "prune \n    Limits a float to within a certain number of decimal places",
+            "name": "prune",
             "access": "",
             "virtual": false,
-            "description": "",
+            "description": "Limits a float to within a certain number of decimal places",
             "parameters": [
                 {
                     "name": "input value",
@@ -3035,7 +3035,7 @@
                 {
                     "name": "max decimal places",
                     "type": "integer",
-                    "description": "```js\n    nx.prine(1.2345, 3) // returns 1.234\n    nx.prune(1.2345, 1) // returns 1.2\n    ```",
+                    "description": "",
                     "default": "",
                     "optional": true,
                     "nullable": ""
@@ -3044,10 +3044,10 @@
             "examples": []
         },
         {
-            "name": "scale \n    Scales an input number to a new range of numbers",
+            "name": "scale",
             "access": "",
             "virtual": false,
-            "description": "",
+            "description": "Scales an input number to a new range of numbers",
             "parameters": [
                 {
                     "name": "input value",
@@ -3093,15 +3093,15 @@
             "examples": []
         },
         {
-            "name": "invert \n    Equivalent to nx.scale(input,0,1,1,0). Inverts a normalized (0-1) number.",
+            "name": "invert",
             "access": "",
             "virtual": false,
-            "description": "",
+            "description": "Equivalent to nx.scale(input,0,1,1,0). Inverts a normalized (0-1) number.",
             "parameters": [
                 {
                     "name": "input value",
                     "type": "float",
-                    "description": "```js\n    nx.invert(0.25) // returns 0.75\n    nx.invert(0) // returns 1\n    ```",
+                    "description": "",
                     "default": "",
                     "optional": true,
                     "nullable": ""
@@ -3110,15 +3110,15 @@
             "examples": []
         },
         {
-            "name": "mtof \n    MIDI to frequency conversion. Returns frequency in Hz.",
+            "name": "mtof",
             "access": "",
             "virtual": false,
-            "description": "",
+            "description": "MIDI to frequency conversion. Returns frequency in Hz.",
             "parameters": [
                 {
                     "name": "MIDI",
                     "type": "float",
-                    "description": "MIDI value to convert\n    ```js\n    nx.mtof(69) // returns 440\n    ```",
+                    "description": "MIDI value to convert",
                     "default": "",
                     "optional": true,
                     "nullable": ""
@@ -3127,15 +3127,15 @@
             "examples": []
         },
         {
-            "name": "random \n    Returns a random integer between 0 and a given scale parameter.",
+            "name": "random",
             "access": "",
             "virtual": false,
-            "description": "",
+            "description": "Returns a random integer between 0 and a given scale parameter.",
             "parameters": [
                 {
                     "name": "scale",
                     "type": "float",
-                    "description": "Upper limit of random range.\n    ```js\n    nx.random(10) // returns a random number from 0 to 9.\n    nx.random(10,20) // returns a random number from 10 to 19.\n    ```",
+                    "description": "Upper limit of random range.",
                     "default": "",
                     "optional": true,
                     "nullable": ""
