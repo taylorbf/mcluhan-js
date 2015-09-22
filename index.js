@@ -1,5 +1,5 @@
 var Manager = require('./lib/core/manager');
-var math = require('./lib/utils/math');
+//var math = require('./lib/utils/math');
 var extend = require('extend');
 require('nexusui');
 window._ = require("underscore")

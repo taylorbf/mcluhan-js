@@ -3144,22 +3144,63 @@
             "examples": []
         },
         {
-            "name": "toPolar test1\n    Receives cartesian coordinates and returns polar coordinates as an object with 'radius' and 'angle' properties.",
+            "name": "interp",
             "access": "",
             "virtual": false,
-            "description": "",
+            "description": "Interpolate between two numbers, using 0-1 as input.",
             "parameters": [
                 {
-                    "name": "x",
+                    "name": "lookup",
                     "type": "float",
+                    "description": "0-1 location between values",
+                    "default": "",
+                    "optional": true,
+                    "nullable": ""
+                },
+                {
+                    "name": "point1",
+                    "type": "float",
+                    "description": "value to interpolate from (0)",
+                    "default": "",
+                    "optional": true,
+                    "nullable": ""
+                },
+                {
+                    "name": "point2",
+                    "type": "float",
+                    "description": "value to interpolate to (1)",
+                    "default": "",
+                    "optional": true,
+                    "nullable": ""
+                }
+            ],
+            "examples": []
+        },
+        {
+            "name": "randomColor",
+            "access": "",
+            "virtual": false,
+            "description": "SHOULD BE RENAMED/SHORTENED Get a random color value",
+            "parameters": [],
+            "examples": []
+        },
+        {
+            "name": "interval",
+            "access": "",
+            "virtual": false,
+            "description": "interval with controllable speed / interval time",
+            "parameters": [
+                {
+                    "name": "rate",
+                    "type": "number",
                     "description": "",
                     "default": "",
                     "optional": true,
                     "nullable": ""
                 },
                 {
-                    "name": "y",
-                    "type": "float",
+                    "name": "callback",
+                    "type": "function",
                     "description": "",
                     "default": "",
                     "optional": true,
@@ -3169,181 +3210,15 @@
             "examples": []
         },
         {
-            "name": "toCartesian \n    Receives polar coordinates and returns cartesian coordinates as an object with 'x' and 'y' properties.",
+            "name": "rand",
             "access": "",
             "virtual": false,
-            "description": "",
-            "parameters": [
-                {
-                    "name": "radius",
-                    "type": "float",
-                    "description": "",
-                    "default": "",
-                    "optional": true,
-                    "nullable": ""
-                },
-                {
-                    "name": "angle",
-                    "type": "float",
-                    "description": "",
-                    "default": "",
-                    "optional": true,
-                    "nullable": ""
-                }
-            ],
-            "examples": []
-        },
-        {
-            "name": "clip \n    Limits a number to within low and high values.",
-            "access": "",
-            "virtual": false,
-            "description": "",
-            "parameters": [
-                {
-                    "name": "input value",
-                    "type": "float",
-                    "description": "",
-                    "default": "",
-                    "optional": true,
-                    "nullable": ""
-                },
-                {
-                    "name": "low limit",
-                    "type": "float",
-                    "description": "",
-                    "default": "",
-                    "optional": true,
-                    "nullable": ""
-                },
-                {
-                    "name": "high limit",
-                    "type": "float",
-                    "description": "",
-                    "default": "",
-                    "optional": true,
-                    "nullable": ""
-                }
-            ],
-            "examples": []
-        },
-        {
-            "name": "prune \n    Limits a float to within a certain number of decimal places",
-            "access": "",
-            "virtual": false,
-            "description": "",
-            "parameters": [
-                {
-                    "name": "input value",
-                    "type": "float",
-                    "description": "",
-                    "default": "",
-                    "optional": true,
-                    "nullable": ""
-                },
-                {
-                    "name": "max decimal places",
-                    "type": "integer",
-                    "description": "",
-                    "default": "",
-                    "optional": true,
-                    "nullable": ""
-                }
-            ],
-            "examples": []
-        },
-        {
-            "name": "scale \n    Scales an input number to a new range of numbers",
-            "access": "",
-            "virtual": false,
-            "description": "",
-            "parameters": [
-                {
-                    "name": "input value",
-                    "type": "float",
-                    "description": "",
-                    "default": "",
-                    "optional": true,
-                    "nullable": ""
-                },
-                {
-                    "name": "low1",
-                    "type": "float",
-                    "description": "input range (low)",
-                    "default": "",
-                    "optional": true,
-                    "nullable": ""
-                },
-                {
-                    "name": "high1",
-                    "type": "float",
-                    "description": "input range (high)",
-                    "default": "",
-                    "optional": true,
-                    "nullable": ""
-                },
-                {
-                    "name": "low2",
-                    "type": "float",
-                    "description": "output range (low)",
-                    "default": "",
-                    "optional": true,
-                    "nullable": ""
-                },
-                {
-                    "name": "high2",
-                    "type": "float",
-                    "description": "output range (high)",
-                    "default": "",
-                    "optional": true,
-                    "nullable": ""
-                }
-            ],
-            "examples": []
-        },
-        {
-            "name": "invert \n    Equivalent to nx.scale(input,0,1,1,0). Inverts a normalized (0-1) number.",
-            "access": "",
-            "virtual": false,
-            "description": "",
-            "parameters": [
-                {
-                    "name": "input value",
-                    "type": "float",
-                    "description": "",
-                    "default": "",
-                    "optional": true,
-                    "nullable": ""
-                }
-            ],
-            "examples": []
-        },
-        {
-            "name": "mtof \n    MIDI to frequency conversion. Returns frequency in Hz.",
-            "access": "",
-            "virtual": false,
-            "description": "",
-            "parameters": [
-                {
-                    "name": "MIDI",
-                    "type": "float",
-                    "description": "MIDI value to convert",
-                    "default": "",
-                    "optional": true,
-                    "nullable": ""
-                }
-            ],
-            "examples": []
-        },
-        {
-            "name": "random \n    Returns a random integer between 0 a given scale parameter.",
-            "access": "",
-            "virtual": false,
-            "description": "",
+            "description": "random function that executes (returns new num) each time",
             "parameters": [
                 {
                     "name": "scale",
-                    "type": "float",
-                    "description": "Upper limit of random range.",
+                    "type": "number",
+                    "description": "",
                     "default": "",
                     "optional": true,
                     "nullable": ""
