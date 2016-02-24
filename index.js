@@ -30,11 +30,19 @@ for (var key in window.components) {
 	window[key] = window.components[key]
 }
 
-window.feedbackDelay = new Tone.PingPongDelay({
-    "delayTime" : 0.07,
-    "feedback" : 0.94,
-    "wet" : 0.5
-}).toMaster();
+
+/* audio setup */
+
+window.player = m.player;
+window.pitch = m.pitch;
+window.bp = m.bp;
+window.echo = m.echo;
+window.hall = m.hall;
+window.vol = m.vol;
+window.pan = m.pan;
+
+
+
 window.siri = new voice()
 
 window.onload = function() {

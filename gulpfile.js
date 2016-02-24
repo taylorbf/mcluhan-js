@@ -21,7 +21,8 @@ gulp.task('browserify', function() {
     .bundle()
     .on('error', gutil.log)
     .pipe(source('mcluhan.js'))
-    .pipe(gulp.dest('./dist/'))
+    //.pipe(gulp.dest('./dist/'))
+    .pipe(gulp.dest('../mcluhan-perf/pages/js/'))
 })
 
 //gulp.task('jsdoc', function() {

@@ -628,16 +628,15 @@
                     "access": "",
                     "virtual": false,
                     "description": "Loop video",
-                    "parameters": [
-                        {
-                            "name": "on",
-                            "type": "boolean",
-                            "description": "true if looping, false if not looping",
-                            "default": "",
-                            "optional": "",
-                            "nullable": ""
-                        }
-                    ],
+                    "parameters": [],
+                    "examples": []
+                },
+                {
+                    "name": "unloop",
+                    "access": "",
+                    "virtual": false,
+                    "description": "Unloop video",
+                    "parameters": [],
                     "examples": []
                 },
                 {
@@ -720,6 +719,839 @@
                     "access": "",
                     "virtual": false,
                     "description": "Turn off film-strip ticker visualization",
+                    "parameters": [],
+                    "examples": []
+                },
+                {
+                    "name": "load",
+                    "access": "",
+                    "virtual": false,
+                    "description": "Load a video via source string.",
+                    "parameters": [
+                        {
+                            "name": "src",
+                            "type": "String",
+                            "description": "name of .mp4 file in /media folder. For example, .load(\"waves\") will load \"/media/waves.mp4\"",
+                            "default": "",
+                            "optional": "",
+                            "nullable": ""
+                        }
+                    ],
+                    "examples": []
+                },
+                {
+                    "name": "play",
+                    "access": "",
+                    "virtual": false,
+                    "description": "Play video",
+                    "parameters": [
+                        {
+                            "name": "rate",
+                            "type": "float",
+                            "description": "Playback rate of video (0.25 - 4)",
+                            "default": "",
+                            "optional": "",
+                            "nullable": ""
+                        }
+                    ],
+                    "examples": []
+                },
+                {
+                    "name": "stop",
+                    "access": "",
+                    "virtual": false,
+                    "description": "Pause video",
+                    "parameters": [],
+                    "examples": []
+                },
+                {
+                    "name": "propogateMaster",
+                    "access": "",
+                    "virtual": false,
+                    "description": ".",
+                    "parameters": [],
+                    "examples": []
+                },
+                {
+                    "name": "loop",
+                    "access": "",
+                    "virtual": false,
+                    "description": "Loop video",
+                    "parameters": [],
+                    "examples": []
+                },
+                {
+                    "name": "unloop",
+                    "access": "",
+                    "virtual": false,
+                    "description": "Unloop video",
+                    "parameters": [],
+                    "examples": []
+                },
+                {
+                    "name": "jumpTo",
+                    "access": "",
+                    "virtual": false,
+                    "description": "Scrub to specific point",
+                    "parameters": [
+                        {
+                            "name": "start",
+                            "type": "integer",
+                            "description": "New start time of video, in seconds",
+                            "default": "",
+                            "optional": "",
+                            "nullable": ""
+                        }
+                    ],
+                    "examples": []
+                },
+                {
+                    "name": "skip",
+                    "access": "",
+                    "virtual": false,
+                    "description": "Loop video between two points",
+                    "parameters": [
+                        {
+                            "name": "start",
+                            "type": "float",
+                            "description": "starting loop position",
+                            "default": "",
+                            "optional": "",
+                            "nullable": ""
+                        },
+                        {
+                            "name": "stop",
+                            "type": "float",
+                            "description": "ending loop position",
+                            "default": "",
+                            "optional": "",
+                            "nullable": ""
+                        }
+                    ],
+                    "examples": []
+                },
+                {
+                    "name": "unskip",
+                    "access": "",
+                    "virtual": false,
+                    "description": "Stop skipping the video",
+                    "parameters": [],
+                    "examples": []
+                },
+                {
+                    "name": "speed",
+                    "access": "",
+                    "virtual": false,
+                    "description": "Change the video's playback rate",
+                    "parameters": [
+                        {
+                            "name": "rate",
+                            "type": "float",
+                            "description": "Playback rate (0.25 - 4)",
+                            "default": "",
+                            "optional": "",
+                            "nullable": ""
+                        }
+                    ],
+                    "examples": []
+                },
+                {
+                    "name": "zoom",
+                    "access": "",
+                    "virtual": false,
+                    "description": "Zoom in",
+                    "parameters": [
+                        {
+                            "name": "level",
+                            "type": "float",
+                            "description": "Zoom level",
+                            "default": "",
+                            "optional": "",
+                            "nullable": ""
+                        }
+                    ],
+                    "examples": []
+                },
+                {
+                    "name": "ticker",
+                    "access": "",
+                    "virtual": false,
+                    "description": "Turn on film-strip frame visualization",
+                    "parameters": [],
+                    "examples": []
+                },
+                {
+                    "name": "unticker",
+                    "access": "",
+                    "virtual": false,
+                    "description": "Turn off film-strip ticker visualization",
+                    "parameters": [],
+                    "examples": []
+                },
+                {
+                    "name": "setAll",
+                    "access": "",
+                    "virtual": false,
+                    "description": "Set a property on this media element in all windows",
+                    "parameters": [
+                        {
+                            "name": "property",
+                            "type": "String",
+                            "description": "key",
+                            "default": "",
+                            "optional": "",
+                            "nullable": ""
+                        },
+                        {
+                            "name": "value",
+                            "type": "Unknown",
+                            "description": "",
+                            "default": "",
+                            "optional": "",
+                            "nullable": ""
+                        }
+                    ],
+                    "examples": []
+                },
+                {
+                    "name": "all",
+                    "access": "",
+                    "virtual": false,
+                    "description": "Call a method on this media element in all windows",
+                    "parameters": [
+                        {
+                            "name": "method",
+                            "type": "String",
+                            "description": "name",
+                            "default": "",
+                            "optional": "",
+                            "nullable": ""
+                        }
+                    ],
+                    "examples": []
+                },
+                {
+                    "name": "size",
+                    "access": "",
+                    "virtual": false,
+                    "description": "Resize this media element",
+                    "parameters": [
+                        {
+                            "name": "w",
+                            "type": "number",
+                            "description": "width in px",
+                            "default": "",
+                            "optional": "",
+                            "nullable": ""
+                        },
+                        {
+                            "name": "h",
+                            "type": "number",
+                            "description": "height in px",
+                            "default": "",
+                            "optional": "",
+                            "nullable": ""
+                        }
+                    ],
+                    "examples": []
+                },
+                {
+                    "name": "move",
+                    "access": "",
+                    "virtual": false,
+                    "description": "Move this element",
+                    "parameters": [
+                        {
+                            "name": "x",
+                            "type": "number",
+                            "description": "x position in px",
+                            "default": "",
+                            "optional": "",
+                            "nullable": ""
+                        },
+                        {
+                            "name": "y",
+                            "type": "number",
+                            "description": "y position in px",
+                            "default": "",
+                            "optional": "",
+                            "nullable": ""
+                        }
+                    ],
+                    "examples": []
+                },
+                {
+                    "name": "kill",
+                    "access": "",
+                    "virtual": false,
+                    "description": "Remove this element and destroy all references to it",
+                    "parameters": [],
+                    "examples": []
+                },
+                {
+                    "name": "fade",
+                    "access": "",
+                    "virtual": false,
+                    "description": "Set the element's opacity",
+                    "parameters": [
+                        {
+                            "name": "level",
+                            "type": "number",
+                            "description": "opacity level",
+                            "default": "",
+                            "optional": "",
+                            "nullable": ""
+                        }
+                    ],
+                    "examples": []
+                },
+                {
+                    "name": "hide",
+                    "access": "",
+                    "virtual": false,
+                    "description": "Make the element disappear, but do not remove it. A/V files will keep playing and making sound.",
+                    "parameters": [],
+                    "examples": []
+                },
+                {
+                    "name": "show",
+                    "access": "",
+                    "virtual": false,
+                    "description": "If the element is hidden, show it.",
+                    "parameters": [],
+                    "examples": []
+                }
+            ]
+        },
+        {
+            "name": "Film",
+            "description": "",
+            "extends": [
+                "Medium"
+            ],
+            "access": "",
+            "virtual": false,
+            "fires": "",
+            "constructor": {
+                "name": "Film",
+                "description": "Performative VIDEO media element",
+                "parameters": [
+                    {
+                        "name": "Params",
+                        "type": "object",
+                        "description": "(see Params)",
+                        "default": "",
+                        "optional": "",
+                        "nullable": ""
+                    }
+                ],
+                "examples": []
+            },
+            "functions": [
+                {
+                    "name": "load",
+                    "access": "",
+                    "virtual": false,
+                    "description": "Load a video via source string.",
+                    "parameters": [
+                        {
+                            "name": "src",
+                            "type": "String",
+                            "description": "name of .mp4 file in /media folder. For example, .load(\"waves\") will load \"/media/waves.mp4\"",
+                            "default": "",
+                            "optional": "",
+                            "nullable": ""
+                        }
+                    ],
+                    "examples": []
+                },
+                {
+                    "name": "play",
+                    "access": "",
+                    "virtual": false,
+                    "description": "Play video",
+                    "parameters": [
+                        {
+                            "name": "rate",
+                            "type": "float",
+                            "description": "Playback rate of video (0.25 - 4)",
+                            "default": "",
+                            "optional": "",
+                            "nullable": ""
+                        }
+                    ],
+                    "examples": []
+                },
+                {
+                    "name": "stop",
+                    "access": "",
+                    "virtual": false,
+                    "description": "Pause video",
+                    "parameters": [],
+                    "examples": []
+                },
+                {
+                    "name": "loop",
+                    "access": "",
+                    "virtual": false,
+                    "description": "Loop video",
+                    "parameters": [],
+                    "examples": []
+                },
+                {
+                    "name": "unloop",
+                    "access": "",
+                    "virtual": false,
+                    "description": "Unloop video",
+                    "parameters": [],
+                    "examples": []
+                },
+                {
+                    "name": "jumpTo",
+                    "access": "",
+                    "virtual": false,
+                    "description": "Scrub to specific point",
+                    "parameters": [
+                        {
+                            "name": "start",
+                            "type": "integer",
+                            "description": "New start time of video, in seconds",
+                            "default": "",
+                            "optional": "",
+                            "nullable": ""
+                        }
+                    ],
+                    "examples": []
+                },
+                {
+                    "name": "skip",
+                    "access": "",
+                    "virtual": false,
+                    "description": "Loop video between two points",
+                    "parameters": [
+                        {
+                            "name": "start",
+                            "type": "float",
+                            "description": "starting loop position",
+                            "default": "",
+                            "optional": "",
+                            "nullable": ""
+                        },
+                        {
+                            "name": "stop",
+                            "type": "float",
+                            "description": "ending loop position",
+                            "default": "",
+                            "optional": "",
+                            "nullable": ""
+                        }
+                    ],
+                    "examples": []
+                },
+                {
+                    "name": "unskip",
+                    "access": "",
+                    "virtual": false,
+                    "description": "Stop skipping the video",
+                    "parameters": [],
+                    "examples": []
+                },
+                {
+                    "name": "speed",
+                    "access": "",
+                    "virtual": false,
+                    "description": "Change the video's playback rate",
+                    "parameters": [
+                        {
+                            "name": "rate",
+                            "type": "float",
+                            "description": "Playback rate (0.25 - 4)",
+                            "default": "",
+                            "optional": "",
+                            "nullable": ""
+                        }
+                    ],
+                    "examples": []
+                },
+                {
+                    "name": "ticker",
+                    "access": "",
+                    "virtual": false,
+                    "description": "Turn on film-strip frame visualization",
+                    "parameters": [],
+                    "examples": []
+                },
+                {
+                    "name": "unticker",
+                    "access": "",
+                    "virtual": false,
+                    "description": "Turn off film-strip ticker visualization",
+                    "parameters": [],
+                    "examples": []
+                },
+                {
+                    "name": "load",
+                    "access": "",
+                    "virtual": false,
+                    "description": "Load a video via source string.",
+                    "parameters": [
+                        {
+                            "name": "src",
+                            "type": "String",
+                            "description": "name of .mp4 file in /media folder. For example, .load(\"waves\") will load \"/media/waves.mp4\"",
+                            "default": "",
+                            "optional": "",
+                            "nullable": ""
+                        }
+                    ],
+                    "examples": []
+                },
+                {
+                    "name": "play",
+                    "access": "",
+                    "virtual": false,
+                    "description": "Play video",
+                    "parameters": [
+                        {
+                            "name": "rate",
+                            "type": "float",
+                            "description": "Playback rate of video (0.25 - 4)",
+                            "default": "",
+                            "optional": "",
+                            "nullable": ""
+                        }
+                    ],
+                    "examples": []
+                },
+                {
+                    "name": "stop",
+                    "access": "",
+                    "virtual": false,
+                    "description": "Pause video",
+                    "parameters": [],
+                    "examples": []
+                },
+                {
+                    "name": "propogateMaster",
+                    "access": "",
+                    "virtual": false,
+                    "description": ".",
+                    "parameters": [],
+                    "examples": []
+                },
+                {
+                    "name": "loop",
+                    "access": "",
+                    "virtual": false,
+                    "description": "Loop video",
+                    "parameters": [],
+                    "examples": []
+                },
+                {
+                    "name": "unloop",
+                    "access": "",
+                    "virtual": false,
+                    "description": "Unloop video",
+                    "parameters": [],
+                    "examples": []
+                },
+                {
+                    "name": "jumpTo",
+                    "access": "",
+                    "virtual": false,
+                    "description": "Scrub to specific point",
+                    "parameters": [
+                        {
+                            "name": "start",
+                            "type": "integer",
+                            "description": "New start time of video, in seconds",
+                            "default": "",
+                            "optional": "",
+                            "nullable": ""
+                        }
+                    ],
+                    "examples": []
+                },
+                {
+                    "name": "skip",
+                    "access": "",
+                    "virtual": false,
+                    "description": "Loop video between two points",
+                    "parameters": [
+                        {
+                            "name": "start",
+                            "type": "float",
+                            "description": "starting loop position",
+                            "default": "",
+                            "optional": "",
+                            "nullable": ""
+                        },
+                        {
+                            "name": "stop",
+                            "type": "float",
+                            "description": "ending loop position",
+                            "default": "",
+                            "optional": "",
+                            "nullable": ""
+                        }
+                    ],
+                    "examples": []
+                },
+                {
+                    "name": "unskip",
+                    "access": "",
+                    "virtual": false,
+                    "description": "Stop skipping the video",
+                    "parameters": [],
+                    "examples": []
+                },
+                {
+                    "name": "speed",
+                    "access": "",
+                    "virtual": false,
+                    "description": "Change the video's playback rate",
+                    "parameters": [
+                        {
+                            "name": "rate",
+                            "type": "float",
+                            "description": "Playback rate (0.25 - 4)",
+                            "default": "",
+                            "optional": "",
+                            "nullable": ""
+                        }
+                    ],
+                    "examples": []
+                },
+                {
+                    "name": "zoom",
+                    "access": "",
+                    "virtual": false,
+                    "description": "Zoom in",
+                    "parameters": [
+                        {
+                            "name": "level",
+                            "type": "float",
+                            "description": "Zoom level",
+                            "default": "",
+                            "optional": "",
+                            "nullable": ""
+                        }
+                    ],
+                    "examples": []
+                },
+                {
+                    "name": "ticker",
+                    "access": "",
+                    "virtual": false,
+                    "description": "Turn on film-strip frame visualization",
+                    "parameters": [],
+                    "examples": []
+                },
+                {
+                    "name": "unticker",
+                    "access": "",
+                    "virtual": false,
+                    "description": "Turn off film-strip ticker visualization",
+                    "parameters": [],
+                    "examples": []
+                },
+                {
+                    "name": "setAll",
+                    "access": "",
+                    "virtual": false,
+                    "description": "Set a property on this media element in all windows",
+                    "parameters": [
+                        {
+                            "name": "property",
+                            "type": "String",
+                            "description": "key",
+                            "default": "",
+                            "optional": "",
+                            "nullable": ""
+                        },
+                        {
+                            "name": "value",
+                            "type": "Unknown",
+                            "description": "",
+                            "default": "",
+                            "optional": "",
+                            "nullable": ""
+                        }
+                    ],
+                    "examples": []
+                },
+                {
+                    "name": "all",
+                    "access": "",
+                    "virtual": false,
+                    "description": "Call a method on this media element in all windows",
+                    "parameters": [
+                        {
+                            "name": "method",
+                            "type": "String",
+                            "description": "name",
+                            "default": "",
+                            "optional": "",
+                            "nullable": ""
+                        }
+                    ],
+                    "examples": []
+                },
+                {
+                    "name": "size",
+                    "access": "",
+                    "virtual": false,
+                    "description": "Resize this media element",
+                    "parameters": [
+                        {
+                            "name": "w",
+                            "type": "number",
+                            "description": "width in px",
+                            "default": "",
+                            "optional": "",
+                            "nullable": ""
+                        },
+                        {
+                            "name": "h",
+                            "type": "number",
+                            "description": "height in px",
+                            "default": "",
+                            "optional": "",
+                            "nullable": ""
+                        }
+                    ],
+                    "examples": []
+                },
+                {
+                    "name": "move",
+                    "access": "",
+                    "virtual": false,
+                    "description": "Move this element",
+                    "parameters": [
+                        {
+                            "name": "x",
+                            "type": "number",
+                            "description": "x position in px",
+                            "default": "",
+                            "optional": "",
+                            "nullable": ""
+                        },
+                        {
+                            "name": "y",
+                            "type": "number",
+                            "description": "y position in px",
+                            "default": "",
+                            "optional": "",
+                            "nullable": ""
+                        }
+                    ],
+                    "examples": []
+                },
+                {
+                    "name": "kill",
+                    "access": "",
+                    "virtual": false,
+                    "description": "Remove this element and destroy all references to it",
+                    "parameters": [],
+                    "examples": []
+                },
+                {
+                    "name": "fade",
+                    "access": "",
+                    "virtual": false,
+                    "description": "Set the element's opacity",
+                    "parameters": [
+                        {
+                            "name": "level",
+                            "type": "number",
+                            "description": "opacity level",
+                            "default": "",
+                            "optional": "",
+                            "nullable": ""
+                        }
+                    ],
+                    "examples": []
+                },
+                {
+                    "name": "hide",
+                    "access": "",
+                    "virtual": false,
+                    "description": "Make the element disappear, but do not remove it. A/V files will keep playing and making sound.",
+                    "parameters": [],
+                    "examples": []
+                },
+                {
+                    "name": "show",
+                    "access": "",
+                    "virtual": false,
+                    "description": "If the element is hidden, show it.",
+                    "parameters": [],
+                    "examples": []
+                }
+            ]
+        },
+        {
+            "name": "Photo",
+            "description": "Gif",
+            "extends": [
+                "Medium"
+            ],
+            "access": "",
+            "virtual": false,
+            "fires": "",
+            "constructor": {
+                "name": "Photo",
+                "description": "Performative GIF media element",
+                "parameters": [
+                    {
+                        "name": "Params",
+                        "type": "object",
+                        "description": "(see Params)",
+                        "default": "",
+                        "optional": "",
+                        "nullable": ""
+                    }
+                ],
+                "examples": []
+            },
+            "functions": [
+                {
+                    "name": "load",
+                    "access": "",
+                    "virtual": false,
+                    "description": ".",
+                    "parameters": [],
+                    "examples": []
+                },
+                {
+                    "name": "load",
+                    "access": "",
+                    "virtual": false,
+                    "description": ".",
+                    "parameters": [],
+                    "examples": []
+                },
+                {
+                    "name": "propogateMaster",
+                    "access": "",
+                    "virtual": false,
+                    "description": ".",
+                    "parameters": [],
+                    "examples": []
+                },
+                {
+                    "name": "glitch",
+                    "access": "",
+                    "virtual": false,
+                    "description": ".",
+                    "parameters": [],
+                    "examples": []
+                },
+                {
+                    "name": "zoom",
+                    "access": "",
+                    "virtual": false,
+                    "description": ".",
                     "parameters": [],
                     "examples": []
                 },
@@ -1304,7 +2136,7 @@
             "fires": "",
             "constructor": {
                 "name": "Log",
-                "description": "Visually log all executed code",
+                "description": "Visually log code",
                 "parameters": [
                     {
                         "name": "Params",
@@ -1320,6 +2152,38 @@
             "functions": [
                 {
                     "name": "write",
+                    "access": "",
+                    "virtual": false,
+                    "description": "Write",
+                    "parameters": [],
+                    "examples": []
+                },
+                {
+                    "name": "load",
+                    "access": "",
+                    "virtual": false,
+                    "description": ".",
+                    "parameters": [],
+                    "examples": []
+                },
+                {
+                    "name": "tick",
+                    "access": "",
+                    "virtual": false,
+                    "description": ".",
+                    "parameters": [],
+                    "examples": []
+                },
+                {
+                    "name": "start",
+                    "access": "",
+                    "virtual": false,
+                    "description": ".",
+                    "parameters": [],
+                    "examples": []
+                },
+                {
+                    "name": "stop",
                     "access": "",
                     "virtual": false,
                     "description": ".",
@@ -1959,6 +2823,14 @@
                     "examples": []
                 },
                 {
+                    "name": "load",
+                    "access": "",
+                    "virtual": false,
+                    "description": ".",
+                    "parameters": [],
+                    "examples": []
+                },
+                {
                     "name": "propogateMaster",
                     "access": "",
                     "virtual": false,
@@ -2138,33 +3010,7 @@
                     }
                 ],
                 "examples": []
-            },
-            "functions": [
-                {
-                    "name": "snapshot",
-                    "access": "",
-                    "virtual": false,
-                    "description": ".",
-                    "parameters": [],
-                    "examples": []
-                },
-                {
-                    "name": "start",
-                    "access": "",
-                    "virtual": false,
-                    "description": ".",
-                    "parameters": [],
-                    "examples": []
-                },
-                {
-                    "name": "stop",
-                    "access": "",
-                    "virtual": false,
-                    "description": ".",
-                    "parameters": [],
-                    "examples": []
-                }
-            ]
+            }
         },
         {
             "name": "TextMessage",
@@ -2600,6 +3446,27 @@
                     }
                 },
                 {
+                    "name": "gif",
+                    "access": "",
+                    "virtual": false,
+                    "description": "Add a gif to the wall",
+                    "parameters": [
+                        {
+                            "name": "source",
+                            "type": "String",
+                            "description": "filename (w/o file extension, i.e. \"piano\" not \"piano.mp3\"",
+                            "default": "",
+                            "optional": "",
+                            "nullable": ""
+                        }
+                    ],
+                    "examples": [],
+                    "returns": {
+                        "type": "Photo",
+                        "description": ""
+                    }
+                },
+                {
                     "name": "hack",
                     "access": "",
                     "virtual": false,
@@ -2714,6 +3581,18 @@
                     "access": "",
                     "virtual": false,
                     "description": "Scroll each window to a random position",
+                    "parameters": [],
+                    "examples": [],
+                    "returns": {
+                        "type": "Wall",
+                        "description": ""
+                    }
+                },
+                {
+                    "name": "shape",
+                    "access": "",
+                    "virtual": false,
+                    "description": "Change the pattern of the wall",
                     "parameters": [],
                     "examples": [],
                     "returns": {
