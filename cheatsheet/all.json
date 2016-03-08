@@ -236,6 +236,14 @@
                     "examples": []
                 },
                 {
+                    "name": "_destroy",
+                    "access": "",
+                    "virtual": false,
+                    "description": "Empty function to be overwritten within each element if necessary\nCalled by .kill()",
+                    "parameters": [],
+                    "examples": []
+                },
+                {
                     "name": "fade",
                     "access": "",
                     "virtual": false,
@@ -262,6 +270,14 @@
                 },
                 {
                     "name": "show",
+                    "access": "",
+                    "virtual": false,
+                    "description": "If the element is hidden, show it.",
+                    "parameters": [],
+                    "examples": []
+                },
+                {
+                    "name": "bomb",
                     "access": "",
                     "virtual": false,
                     "description": "If the element is hidden, show it.",
@@ -522,6 +538,14 @@
                     "examples": []
                 },
                 {
+                    "name": "_destroy",
+                    "access": "",
+                    "virtual": false,
+                    "description": "Empty function to be overwritten within each element if necessary\nCalled by .kill()",
+                    "parameters": [],
+                    "examples": []
+                },
+                {
                     "name": "fade",
                     "access": "",
                     "virtual": false,
@@ -548,6 +572,14 @@
                 },
                 {
                     "name": "show",
+                    "access": "",
+                    "virtual": false,
+                    "description": "If the element is hidden, show it.",
+                    "parameters": [],
+                    "examples": []
+                },
+                {
+                    "name": "bomb",
                     "access": "",
                     "virtual": false,
                     "description": "If the element is hidden, show it.",
@@ -989,6 +1021,14 @@
                     "examples": []
                 },
                 {
+                    "name": "_destroy",
+                    "access": "",
+                    "virtual": false,
+                    "description": "Empty function to be overwritten within each element if necessary\nCalled by .kill()",
+                    "parameters": [],
+                    "examples": []
+                },
+                {
                     "name": "fade",
                     "access": "",
                     "virtual": false,
@@ -1015,6 +1055,14 @@
                 },
                 {
                     "name": "show",
+                    "access": "",
+                    "virtual": false,
+                    "description": "If the element is hidden, show it.",
+                    "parameters": [],
+                    "examples": []
+                },
+                {
+                    "name": "bomb",
                     "access": "",
                     "virtual": false,
                     "description": "If the element is hidden, show it.",
@@ -1456,6 +1504,14 @@
                     "examples": []
                 },
                 {
+                    "name": "_destroy",
+                    "access": "",
+                    "virtual": false,
+                    "description": "Empty function to be overwritten within each element if necessary\nCalled by .kill()",
+                    "parameters": [],
+                    "examples": []
+                },
+                {
                     "name": "fade",
                     "access": "",
                     "virtual": false,
@@ -1482,6 +1538,14 @@
                 },
                 {
                     "name": "show",
+                    "access": "",
+                    "virtual": false,
+                    "description": "If the element is hidden, show it.",
+                    "parameters": [],
+                    "examples": []
+                },
+                {
+                    "name": "bomb",
                     "access": "",
                     "virtual": false,
                     "description": "If the element is hidden, show it.",
@@ -1656,6 +1720,14 @@
                     "examples": []
                 },
                 {
+                    "name": "_destroy",
+                    "access": "",
+                    "virtual": false,
+                    "description": "Empty function to be overwritten within each element if necessary\nCalled by .kill()",
+                    "parameters": [],
+                    "examples": []
+                },
+                {
                     "name": "fade",
                     "access": "",
                     "virtual": false,
@@ -1682,6 +1754,14 @@
                 },
                 {
                     "name": "show",
+                    "access": "",
+                    "virtual": false,
+                    "description": "If the element is hidden, show it.",
+                    "parameters": [],
+                    "examples": []
+                },
+                {
+                    "name": "bomb",
                     "access": "",
                     "virtual": false,
                     "description": "If the element is hidden, show it.",
@@ -1875,6 +1955,14 @@
                     "examples": []
                 },
                 {
+                    "name": "_destroy",
+                    "access": "",
+                    "virtual": false,
+                    "description": "Empty function to be overwritten within each element if necessary\nCalled by .kill()",
+                    "parameters": [],
+                    "examples": []
+                },
+                {
                     "name": "fade",
                     "access": "",
                     "virtual": false,
@@ -1901,6 +1989,14 @@
                 },
                 {
                     "name": "show",
+                    "access": "",
+                    "virtual": false,
+                    "description": "If the element is hidden, show it.",
+                    "parameters": [],
+                    "examples": []
+                },
+                {
+                    "name": "bomb",
                     "access": "",
                     "virtual": false,
                     "description": "If the element is hidden, show it.",
@@ -2091,6 +2187,14 @@
                     "examples": []
                 },
                 {
+                    "name": "_destroy",
+                    "access": "",
+                    "virtual": false,
+                    "description": "Empty function to be overwritten within each element if necessary\nCalled by .kill()",
+                    "parameters": [],
+                    "examples": []
+                },
+                {
                     "name": "fade",
                     "access": "",
                     "virtual": false,
@@ -2117,6 +2221,14 @@
                 },
                 {
                     "name": "show",
+                    "access": "",
+                    "virtual": false,
+                    "description": "If the element is hidden, show it.",
+                    "parameters": [],
+                    "examples": []
+                },
+                {
+                    "name": "bomb",
                     "access": "",
                     "virtual": false,
                     "description": "If the element is hidden, show it.",
@@ -2291,6 +2403,14 @@
                     "examples": []
                 },
                 {
+                    "name": "_destroy",
+                    "access": "",
+                    "virtual": false,
+                    "description": "Empty function to be overwritten within each element if necessary\nCalled by .kill()",
+                    "parameters": [],
+                    "examples": []
+                },
+                {
                     "name": "fade",
                     "access": "",
                     "virtual": false,
@@ -2317,6 +2437,14 @@
                 },
                 {
                     "name": "show",
+                    "access": "",
+                    "virtual": false,
+                    "description": "If the element is hidden, show it.",
+                    "parameters": [],
+                    "examples": []
+                },
+                {
+                    "name": "bomb",
                     "access": "",
                     "virtual": false,
                     "description": "If the element is hidden, show it.",
@@ -2507,6 +2635,14 @@
                     "examples": []
                 },
                 {
+                    "name": "_destroy",
+                    "access": "",
+                    "virtual": false,
+                    "description": "Empty function to be overwritten within each element if necessary\nCalled by .kill()",
+                    "parameters": [],
+                    "examples": []
+                },
+                {
                     "name": "fade",
                     "access": "",
                     "virtual": false,
@@ -2533,6 +2669,14 @@
                 },
                 {
                     "name": "show",
+                    "access": "",
+                    "virtual": false,
+                    "description": "If the element is hidden, show it.",
+                    "parameters": [],
+                    "examples": []
+                },
+                {
+                    "name": "bomb",
                     "access": "",
                     "virtual": false,
                     "description": "If the element is hidden, show it.",
@@ -2755,6 +2899,14 @@
                     "examples": []
                 },
                 {
+                    "name": "_destroy",
+                    "access": "",
+                    "virtual": false,
+                    "description": "Empty function to be overwritten within each element if necessary\nCalled by .kill()",
+                    "parameters": [],
+                    "examples": []
+                },
+                {
                     "name": "fade",
                     "access": "",
                     "virtual": false,
@@ -2781,6 +2933,14 @@
                 },
                 {
                     "name": "show",
+                    "access": "",
+                    "virtual": false,
+                    "description": "If the element is hidden, show it.",
+                    "parameters": [],
+                    "examples": []
+                },
+                {
+                    "name": "bomb",
                     "access": "",
                     "virtual": false,
                     "description": "If the element is hidden, show it.",
@@ -2955,6 +3115,14 @@
                     "examples": []
                 },
                 {
+                    "name": "_destroy",
+                    "access": "",
+                    "virtual": false,
+                    "description": "Empty function to be overwritten within each element if necessary\nCalled by .kill()",
+                    "parameters": [],
+                    "examples": []
+                },
+                {
                     "name": "fade",
                     "access": "",
                     "virtual": false,
@@ -2981,6 +3149,14 @@
                 },
                 {
                     "name": "show",
+                    "access": "",
+                    "virtual": false,
+                    "description": "If the element is hidden, show it.",
+                    "parameters": [],
+                    "examples": []
+                },
+                {
+                    "name": "bomb",
                     "access": "",
                     "virtual": false,
                     "description": "If the element is hidden, show it.",
@@ -3162,6 +3338,14 @@
                     "examples": []
                 },
                 {
+                    "name": "_destroy",
+                    "access": "",
+                    "virtual": false,
+                    "description": "Empty function to be overwritten within each element if necessary\nCalled by .kill()",
+                    "parameters": [],
+                    "examples": []
+                },
+                {
                     "name": "fade",
                     "access": "",
                     "virtual": false,
@@ -3188,6 +3372,14 @@
                 },
                 {
                     "name": "show",
+                    "access": "",
+                    "virtual": false,
+                    "description": "If the element is hidden, show it.",
+                    "parameters": [],
+                    "examples": []
+                },
+                {
+                    "name": "bomb",
                     "access": "",
                     "virtual": false,
                     "description": "If the element is hidden, show it.",
