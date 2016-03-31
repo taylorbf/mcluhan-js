@@ -354,6 +354,14 @@
                     "examples": []
                 },
                 {
+                    "name": "solo",
+                    "access": "",
+                    "virtual": false,
+                    "description": "",
+                    "parameters": [],
+                    "examples": []
+                },
+                {
                     "name": "loop",
                     "access": "",
                     "virtual": false,
@@ -422,6 +430,23 @@
                 },
                 {
                     "name": "speed",
+                    "access": "",
+                    "virtual": false,
+                    "description": "Change the audio file's playback rate (does not change pitch!)",
+                    "parameters": [
+                        {
+                            "name": "rate",
+                            "type": "float",
+                            "description": "Playback rate (0.25 - 4)",
+                            "default": "",
+                            "optional": "",
+                            "nullable": ""
+                        }
+                    ],
+                    "examples": []
+                },
+                {
+                    "name": "volume",
                     "access": "",
                     "virtual": false,
                     "description": "Change the audio file's playback rate (does not change pitch!)",
@@ -580,6 +605,308 @@
                 },
                 {
                     "name": "bomb",
+                    "access": "",
+                    "virtual": false,
+                    "description": "If the element is hidden, show it.",
+                    "parameters": [],
+                    "examples": []
+                }
+            ]
+        },
+        {
+            "name": "DJ",
+            "description": "",
+            "extends": [
+                "Medium"
+            ],
+            "access": "",
+            "virtual": false,
+            "fires": "",
+            "constructor": {
+                "name": "DJ",
+                "description": "Performative AUDIO media element",
+                "parameters": [
+                    {
+                        "name": "Params",
+                        "type": "object",
+                        "description": "(see Params)",
+                        "default": "",
+                        "optional": "",
+                        "nullable": ""
+                    }
+                ],
+                "examples": []
+            },
+            "functions": [
+                {
+                    "name": "load",
+                    "access": "",
+                    "virtual": false,
+                    "description": "Load an audio file via source string.",
+                    "parameters": [
+                        {
+                            "name": "src",
+                            "type": "String",
+                            "description": "name of .mp3 file in /media folder. For example, .load(\"piano\") will load \"/media/piano.mp3\"",
+                            "default": "",
+                            "optional": "",
+                            "nullable": ""
+                        }
+                    ],
+                    "examples": []
+                },
+                {
+                    "name": "play",
+                    "access": "",
+                    "virtual": false,
+                    "description": "Play audio file",
+                    "parameters": [
+                        {
+                            "name": "rate",
+                            "type": "float",
+                            "description": "Playback rate of audio file (0.25 - 4). DOES NOT CHANGE PITCH.",
+                            "default": "",
+                            "optional": "",
+                            "nullable": ""
+                        }
+                    ],
+                    "examples": []
+                },
+                {
+                    "name": "stop",
+                    "access": "",
+                    "virtual": false,
+                    "description": "Pause audio playback",
+                    "parameters": [],
+                    "examples": []
+                },
+                {
+                    "name": "loop",
+                    "access": "",
+                    "virtual": false,
+                    "description": "Turn audio looping on or off",
+                    "parameters": [
+                        {
+                            "name": "on",
+                            "type": "boolean",
+                            "description": "Looping on (true) or off (false)",
+                            "default": "",
+                            "optional": "",
+                            "nullable": ""
+                        }
+                    ],
+                    "examples": []
+                },
+                {
+                    "name": "skip",
+                    "access": "",
+                    "virtual": false,
+                    "description": "Loop audio between two points",
+                    "parameters": [
+                        {
+                            "name": "start",
+                            "type": "float",
+                            "description": "starting loop position",
+                            "default": "",
+                            "optional": "",
+                            "nullable": ""
+                        },
+                        {
+                            "name": "stop",
+                            "type": "float",
+                            "description": "ending loop position",
+                            "default": "",
+                            "optional": "",
+                            "nullable": ""
+                        }
+                    ],
+                    "examples": []
+                },
+                {
+                    "name": "unskip",
+                    "access": "",
+                    "virtual": false,
+                    "description": "Stop skipping the audio file",
+                    "parameters": [],
+                    "examples": []
+                },
+                {
+                    "name": "speed",
+                    "access": "",
+                    "virtual": false,
+                    "description": "Change the audio file's playback rate (does not change pitch!)",
+                    "parameters": [
+                        {
+                            "name": "rate",
+                            "type": "float",
+                            "description": "Playback rate (0.25 - 4)",
+                            "default": "",
+                            "optional": "",
+                            "nullable": ""
+                        }
+                    ],
+                    "examples": []
+                },
+                {
+                    "name": "volume",
+                    "access": "",
+                    "virtual": false,
+                    "description": "Change the audio file's playback rate (does not change pitch!)",
+                    "parameters": [
+                        {
+                            "name": "rate",
+                            "type": "float",
+                            "description": "Playback rate (0.25 - 4)",
+                            "default": "",
+                            "optional": "",
+                            "nullable": ""
+                        }
+                    ],
+                    "examples": []
+                },
+                {
+                    "name": "bomb",
+                    "access": "",
+                    "virtual": false,
+                    "description": "If the element is hidden, show it.",
+                    "parameters": [],
+                    "examples": []
+                },
+                {
+                    "name": "kill",
+                    "access": "",
+                    "virtual": false,
+                    "description": "Remove this element and destroy all references to it",
+                    "parameters": [],
+                    "examples": []
+                },
+                {
+                    "name": "setAll",
+                    "access": "",
+                    "virtual": false,
+                    "description": "Set a property on this media element in all windows",
+                    "parameters": [
+                        {
+                            "name": "property",
+                            "type": "String",
+                            "description": "key",
+                            "default": "",
+                            "optional": "",
+                            "nullable": ""
+                        },
+                        {
+                            "name": "value",
+                            "type": "Unknown",
+                            "description": "",
+                            "default": "",
+                            "optional": "",
+                            "nullable": ""
+                        }
+                    ],
+                    "examples": []
+                },
+                {
+                    "name": "all",
+                    "access": "",
+                    "virtual": false,
+                    "description": "Call a method on this media element in all windows",
+                    "parameters": [
+                        {
+                            "name": "method",
+                            "type": "String",
+                            "description": "name",
+                            "default": "",
+                            "optional": "",
+                            "nullable": ""
+                        }
+                    ],
+                    "examples": []
+                },
+                {
+                    "name": "size",
+                    "access": "",
+                    "virtual": false,
+                    "description": "Resize this media element",
+                    "parameters": [
+                        {
+                            "name": "w",
+                            "type": "number",
+                            "description": "width in px",
+                            "default": "",
+                            "optional": "",
+                            "nullable": ""
+                        },
+                        {
+                            "name": "h",
+                            "type": "number",
+                            "description": "height in px",
+                            "default": "",
+                            "optional": "",
+                            "nullable": ""
+                        }
+                    ],
+                    "examples": []
+                },
+                {
+                    "name": "move",
+                    "access": "",
+                    "virtual": false,
+                    "description": "Move this element",
+                    "parameters": [
+                        {
+                            "name": "x",
+                            "type": "number",
+                            "description": "x position in px",
+                            "default": "",
+                            "optional": "",
+                            "nullable": ""
+                        },
+                        {
+                            "name": "y",
+                            "type": "number",
+                            "description": "y position in px",
+                            "default": "",
+                            "optional": "",
+                            "nullable": ""
+                        }
+                    ],
+                    "examples": []
+                },
+                {
+                    "name": "_destroy",
+                    "access": "",
+                    "virtual": false,
+                    "description": "Empty function to be overwritten within each element if necessary\nCalled by .kill()",
+                    "parameters": [],
+                    "examples": []
+                },
+                {
+                    "name": "fade",
+                    "access": "",
+                    "virtual": false,
+                    "description": "Set the element's opacity",
+                    "parameters": [
+                        {
+                            "name": "level",
+                            "type": "number",
+                            "description": "opacity level",
+                            "default": "",
+                            "optional": "",
+                            "nullable": ""
+                        }
+                    ],
+                    "examples": []
+                },
+                {
+                    "name": "hide",
+                    "access": "",
+                    "virtual": false,
+                    "description": "Make the element disappear, but do not remove it. A/V files will keep playing and making sound.",
+                    "parameters": [],
+                    "examples": []
+                },
+                {
+                    "name": "show",
                     "access": "",
                     "virtual": false,
                     "description": "If the element is hidden, show it.",
@@ -2727,7 +3054,7 @@
                     "examples": []
                 },
                 {
-                    "name": "write",
+                    "name": "edit",
                     "access": "",
                     "virtual": false,
                     "description": ".",
@@ -3420,26 +3747,27 @@
                     "examples": []
                 },
                 {
-                    "name": "load",
-                    "access": "",
-                    "virtual": false,
-                    "description": ".",
-                    "parameters": [],
-                    "examples": []
-                },
-                {
                     "name": "play",
                     "access": "",
                     "virtual": false,
-                    "description": ".",
-                    "parameters": [],
+                    "description": "Play audio file",
+                    "parameters": [
+                        {
+                            "name": "rate",
+                            "type": "float",
+                            "description": "Playback rate of audio file (0.25 - 4). DOES NOT CHANGE PITCH.",
+                            "default": "",
+                            "optional": "",
+                            "nullable": ""
+                        }
+                    ],
                     "examples": []
                 },
                 {
                     "name": "stop",
                     "access": "",
                     "virtual": false,
-                    "description": ".",
+                    "description": "Pause audio playback",
                     "parameters": [],
                     "examples": []
                 },
@@ -3447,15 +3775,99 @@
                     "name": "loop",
                     "access": "",
                     "virtual": false,
-                    "description": ".",
+                    "description": "Turn audio looping on or off",
+                    "parameters": [
+                        {
+                            "name": "on",
+                            "type": "boolean",
+                            "description": "Looping on (true) or off (false)",
+                            "default": "",
+                            "optional": "",
+                            "nullable": ""
+                        }
+                    ],
+                    "examples": []
+                },
+                {
+                    "name": "skip",
+                    "access": "",
+                    "virtual": false,
+                    "description": "Loop audio between two points",
+                    "parameters": [
+                        {
+                            "name": "start",
+                            "type": "float",
+                            "description": "starting loop position",
+                            "default": "",
+                            "optional": "",
+                            "nullable": ""
+                        },
+                        {
+                            "name": "stop",
+                            "type": "float",
+                            "description": "ending loop position",
+                            "default": "",
+                            "optional": "",
+                            "nullable": ""
+                        }
+                    ],
+                    "examples": []
+                },
+                {
+                    "name": "unskip",
+                    "access": "",
+                    "virtual": false,
+                    "description": "Stop skipping the audio file",
                     "parameters": [],
                     "examples": []
                 },
                 {
-                    "name": "jumpTo",
+                    "name": "speed",
                     "access": "",
                     "virtual": false,
-                    "description": ".",
+                    "description": "Change the audio file's playback rate (does not change pitch!)",
+                    "parameters": [
+                        {
+                            "name": "rate",
+                            "type": "float",
+                            "description": "Playback rate (0.25 - 4)",
+                            "default": "",
+                            "optional": "",
+                            "nullable": ""
+                        }
+                    ],
+                    "examples": []
+                },
+                {
+                    "name": "volume",
+                    "access": "",
+                    "virtual": false,
+                    "description": "Change the audio file's playback rate (does not change pitch!)",
+                    "parameters": [
+                        {
+                            "name": "rate",
+                            "type": "float",
+                            "description": "Playback rate (0.25 - 4)",
+                            "default": "",
+                            "optional": "",
+                            "nullable": ""
+                        }
+                    ],
+                    "examples": []
+                },
+                {
+                    "name": "bomb",
+                    "access": "",
+                    "virtual": false,
+                    "description": "If the element is hidden, show it.",
+                    "parameters": [],
+                    "examples": []
+                },
+                {
+                    "name": "kill",
+                    "access": "",
+                    "virtual": false,
+                    "description": "Remove this element and destroy all references to it",
                     "parameters": [],
                     "examples": []
                 }
@@ -3576,6 +3988,18 @@
                     "examples": [],
                     "returns": {
                         "type": "Cassette",
+                        "description": ""
+                    }
+                },
+                {
+                    "name": "dj",
+                    "access": "",
+                    "virtual": false,
+                    "description": "Add a just intonation pitch lattice to the wall",
+                    "parameters": [],
+                    "examples": [],
+                    "returns": {
+                        "type": "Lattice",
                         "description": ""
                     }
                 },

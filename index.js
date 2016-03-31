@@ -31,16 +31,18 @@ for (var key in window.components) {
 }
 
 
-/* audio setup */
+/* audio setup */ 
 
 window.player = m.player;
-window.pitch = m.pitch;
+//window.pitch = m.pitch;
 window.bp = m.bp;
 window.echo = m.echo;
 window.hall = m.hall;
 window.vol = m.vol;
 window.pan = m.pan;
-
+window.fx = m.fx;
+window.sine = m.sine;
+window.noise = m.noise;
 
 
 window.siri = new voice()
@@ -113,8 +115,32 @@ Array.prototype.all = function(action,context) {
 	}
 } */
 
-window.random = function(scale) {
-	return Math.floor(Math.random()*scale)
+window.random = function(bound1,bound2) {
+	if (!bound2) {
+		bound2 = bound1
+		bound1 = 0
+	}
+	var low = Math.min(bound1,bound2)
+	var high = Math.max(bound1,bound2)
+	return Math.floor(Math.random()*(high-low)+low)
+}
+window.r = function(bound1,bound2) {
+	if (!bound2) {
+		bound2 = bound1
+		bound1 = 0
+	}
+	var low = Math.min(bound1,bound2)
+	var high = Math.max(bound1,bound2)
+	return Math.floor(Math.random()*(high-low)+low)
+}
+window.rf = function(bound1,bound2) {
+	if (!bound2) {
+		bound2 = bound1
+		bound1 = 0
+	}
+	var low = Math.min(bound1,bound2)
+	var high = Math.max(bound1,bound2)
+	return Math.random()*(high-low)+low
 }
 
 window.ramp = function(start,end,dur,callback) {
