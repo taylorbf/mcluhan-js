@@ -446,7 +446,7 @@
                     "examples": []
                 },
                 {
-                    "name": "volume",
+                    "name": "vol",
                     "access": "",
                     "virtual": false,
                     "description": "Change the audio file's playback rate (does not change pitch!)",
@@ -748,20 +748,11 @@
                     "examples": []
                 },
                 {
-                    "name": "volume",
+                    "name": "vol",
                     "access": "",
                     "virtual": false,
-                    "description": "Change the audio file's playback rate (does not change pitch!)",
-                    "parameters": [
-                        {
-                            "name": "rate",
-                            "type": "float",
-                            "description": "Playback rate (0.25 - 4)",
-                            "default": "",
-                            "optional": "",
-                            "nullable": ""
-                        }
-                    ],
+                    "description": "IN DECIBELS",
+                    "parameters": [],
                     "examples": []
                 },
                 {
