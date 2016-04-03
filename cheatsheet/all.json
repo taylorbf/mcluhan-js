@@ -379,7 +379,7 @@
                     "examples": []
                 },
                 {
-                    "name": "jumpTo",
+                    "name": "jump",
                     "access": "",
                     "virtual": false,
                     "description": "Scrub to location in audio file.",
@@ -1139,7 +1139,7 @@
                     "examples": []
                 },
                 {
-                    "name": "jumpTo",
+                    "name": "jump",
                     "access": "",
                     "virtual": false,
                     "description": "Scrub to specific point",
@@ -1622,7 +1622,7 @@
                     "examples": []
                 },
                 {
-                    "name": "jumpTo",
+                    "name": "jump",
                     "access": "",
                     "virtual": false,
                     "description": "Scrub to specific point",
@@ -1873,7 +1873,7 @@
             ]
         },
         {
-            "name": "Photo",
+            "name": "GIF",
             "description": "Gif",
             "extends": [
                 "Medium"
@@ -1882,7 +1882,7 @@
             "virtual": false,
             "fires": "",
             "constructor": {
-                "name": "Photo",
+                "name": "GIF",
                 "description": "Performative GIF media element",
                 "parameters": [
                     {
@@ -1899,38 +1899,6 @@
             "functions": [
                 {
                     "name": "load",
-                    "access": "",
-                    "virtual": false,
-                    "description": ".",
-                    "parameters": [],
-                    "examples": []
-                },
-                {
-                    "name": "load",
-                    "access": "",
-                    "virtual": false,
-                    "description": ".",
-                    "parameters": [],
-                    "examples": []
-                },
-                {
-                    "name": "propogateMaster",
-                    "access": "",
-                    "virtual": false,
-                    "description": ".",
-                    "parameters": [],
-                    "examples": []
-                },
-                {
-                    "name": "glitch",
-                    "access": "",
-                    "virtual": false,
-                    "description": ".",
-                    "parameters": [],
-                    "examples": []
-                },
-                {
-                    "name": "zoom",
                     "access": "",
                     "virtual": false,
                     "description": ".",
@@ -3093,7 +3061,15 @@
                     "examples": []
                 },
                 {
-                    "name": "wash",
+                    "name": "flash",
+                    "access": "",
+                    "virtual": false,
+                    "description": ".",
+                    "parameters": [],
+                    "examples": []
+                },
+                {
+                    "name": "flashOne",
                     "access": "",
                     "virtual": false,
                     "description": ".",
@@ -3292,14 +3268,6 @@
                 "examples": []
             },
             "functions": [
-                {
-                    "name": "load",
-                    "access": "",
-                    "virtual": false,
-                    "description": ".",
-                    "parameters": [],
-                    "examples": []
-                },
                 {
                     "name": "load",
                     "access": "",
@@ -3541,6 +3509,14 @@
                 },
                 {
                     "name": "scroll",
+                    "access": "",
+                    "virtual": false,
+                    "description": ".",
+                    "parameters": [],
+                    "examples": []
+                },
+                {
+                    "name": "unscroll",
                     "access": "",
                     "virtual": false,
                     "description": ".",
@@ -4095,6 +4071,27 @@
                     }
                 },
                 {
+                    "name": "wiki",
+                    "access": "",
+                    "virtual": false,
+                    "description": "Add an embedded wikipedia (iframe) to the wall",
+                    "parameters": [
+                        {
+                            "name": "path",
+                            "type": "String",
+                            "description": "article name (i.e. \"art\" for \"en.wikipedia.org/wiki/art/\"",
+                            "default": "",
+                            "optional": "",
+                            "nullable": ""
+                        }
+                    ],
+                    "examples": [],
+                    "returns": {
+                        "type": "Hack",
+                        "description": ""
+                    }
+                },
+                {
                     "name": "partch",
                     "access": "",
                     "virtual": false,
@@ -4220,6 +4217,18 @@
                     }
                 },
                 {
+                    "name": "scatter",
+                    "access": "",
+                    "virtual": false,
+                    "description": "Move all windows to a random x/y location within limits",
+                    "parameters": [],
+                    "examples": [],
+                    "returns": {
+                        "type": "Wall",
+                        "description": ""
+                    }
+                },
+                {
                     "name": "size",
                     "access": "",
                     "virtual": false,
@@ -4295,6 +4304,199 @@
                         "type": "Wall",
                         "description": ""
                     }
+                }
+            ]
+        },
+        {
+            "name": "Wiki",
+            "description": "Wiki",
+            "extends": [
+                "Medium"
+            ],
+            "access": "",
+            "virtual": false,
+            "fires": "",
+            "constructor": {
+                "name": "Wiki",
+                "description": "Performative WIKIPEDIA media element",
+                "parameters": [
+                    {
+                        "name": "Params",
+                        "type": "object",
+                        "description": "(see Params)",
+                        "default": "",
+                        "optional": "",
+                        "nullable": ""
+                    }
+                ],
+                "examples": []
+            },
+            "functions": [
+                {
+                    "name": "load",
+                    "access": "",
+                    "virtual": false,
+                    "description": "Load a URL.",
+                    "parameters": [
+                        {
+                            "name": "address",
+                            "type": "string",
+                            "description": "URL to load. No http:// necessary.",
+                            "default": "",
+                            "optional": true,
+                            "nullable": ""
+                        }
+                    ],
+                    "examples": []
+                },
+                {
+                    "name": "setAll",
+                    "access": "",
+                    "virtual": false,
+                    "description": "Set a property on this media element in all windows",
+                    "parameters": [
+                        {
+                            "name": "property",
+                            "type": "String",
+                            "description": "key",
+                            "default": "",
+                            "optional": "",
+                            "nullable": ""
+                        },
+                        {
+                            "name": "value",
+                            "type": "Unknown",
+                            "description": "",
+                            "default": "",
+                            "optional": "",
+                            "nullable": ""
+                        }
+                    ],
+                    "examples": []
+                },
+                {
+                    "name": "all",
+                    "access": "",
+                    "virtual": false,
+                    "description": "Call a method on this media element in all windows",
+                    "parameters": [
+                        {
+                            "name": "method",
+                            "type": "String",
+                            "description": "name",
+                            "default": "",
+                            "optional": "",
+                            "nullable": ""
+                        }
+                    ],
+                    "examples": []
+                },
+                {
+                    "name": "size",
+                    "access": "",
+                    "virtual": false,
+                    "description": "Resize this media element",
+                    "parameters": [
+                        {
+                            "name": "w",
+                            "type": "number",
+                            "description": "width in px",
+                            "default": "",
+                            "optional": "",
+                            "nullable": ""
+                        },
+                        {
+                            "name": "h",
+                            "type": "number",
+                            "description": "height in px",
+                            "default": "",
+                            "optional": "",
+                            "nullable": ""
+                        }
+                    ],
+                    "examples": []
+                },
+                {
+                    "name": "move",
+                    "access": "",
+                    "virtual": false,
+                    "description": "Move this element",
+                    "parameters": [
+                        {
+                            "name": "x",
+                            "type": "number",
+                            "description": "x position in px",
+                            "default": "",
+                            "optional": "",
+                            "nullable": ""
+                        },
+                        {
+                            "name": "y",
+                            "type": "number",
+                            "description": "y position in px",
+                            "default": "",
+                            "optional": "",
+                            "nullable": ""
+                        }
+                    ],
+                    "examples": []
+                },
+                {
+                    "name": "kill",
+                    "access": "",
+                    "virtual": false,
+                    "description": "Remove this element and destroy all references to it",
+                    "parameters": [],
+                    "examples": []
+                },
+                {
+                    "name": "_destroy",
+                    "access": "",
+                    "virtual": false,
+                    "description": "Empty function to be overwritten within each element if necessary\nCalled by .kill()",
+                    "parameters": [],
+                    "examples": []
+                },
+                {
+                    "name": "fade",
+                    "access": "",
+                    "virtual": false,
+                    "description": "Set the element's opacity",
+                    "parameters": [
+                        {
+                            "name": "level",
+                            "type": "number",
+                            "description": "opacity level",
+                            "default": "",
+                            "optional": "",
+                            "nullable": ""
+                        }
+                    ],
+                    "examples": []
+                },
+                {
+                    "name": "hide",
+                    "access": "",
+                    "virtual": false,
+                    "description": "Make the element disappear, but do not remove it. A/V files will keep playing and making sound.",
+                    "parameters": [],
+                    "examples": []
+                },
+                {
+                    "name": "show",
+                    "access": "",
+                    "virtual": false,
+                    "description": "If the element is hidden, show it.",
+                    "parameters": [],
+                    "examples": []
+                },
+                {
+                    "name": "bomb",
+                    "access": "",
+                    "virtual": false,
+                    "description": "If the element is hidden, show it.",
+                    "parameters": [],
+                    "examples": []
                 }
             ]
         },
