@@ -18,12 +18,96 @@
                     "name": "this.stage",
                     "access": "",
                     "virtual": false,
-                    "description": "Dimensions of the screen area to be used for the performance. Default 800x600.",
+                    "description": "Dimensions of the screen area to be used for the performance. Default 900x700. Properties: stage.w (width in px) and stage.h (height in px)",
                     "type": {
                         "names": [
                             "Object"
                         ]
                     }
+                },
+                {
+                    "name": "this.bp",
+                    "access": "",
+                    "virtual": false,
+                    "description": "A bandpass filter applied to audio.<br>\nbp.freq() changes the center frequency.<br>\nbp.q() changes the q.<br>\nBoth methods take arguments of (destination) or (destination,time) or (origin,destination,time)",
+                    "type": {
+                        "names": [
+                            "Object"
+                        ]
+                    }
+                },
+                {
+                    "name": "this.echo",
+                    "access": "",
+                    "virtual": false,
+                    "description": "A feedback delay applied to outgoing audio.<br>\necho.time() changes the delay time.<br>\necho.fb() changes the feedback level.<br>\necho.wet() changes the amount of signal routed through the delay<br>\nAll methods take arguments of (destination) or (destination,time) or (origin,destination,time)",
+                    "type": {
+                        "names": [
+                            "Object"
+                        ]
+                    }
+                },
+                {
+                    "name": "this.hall",
+                    "access": "",
+                    "virtual": false,
+                    "description": "A reverb applied to outgoing audio.<br>\nhall.size() changes the reverb's virtual room size.<br>\nhall.wet() changes the amount of signal passed into the reverb.<br>\nAll methods take arguments of (destination) or (destination,time) or (origin,destination,time)",
+                    "type": {
+                        "names": [
+                            "Object"
+                        ]
+                    }
+                },
+                {
+                    "name": "this.vol",
+                    "access": "",
+                    "virtual": false,
+                    "description": "A volume of outgoing audio.<br>\nvol.to() changes the outgoing volume level (0-1).<br>\nAll methods take arguments of (destination) or (destination,time) or (origin,destination,time)",
+                    "type": {
+                        "names": [
+                            "Object"
+                        ]
+                    }
+                },
+                {
+                    "name": "this.pan",
+                    "access": "",
+                    "virtual": false,
+                    "description": "Pan outgoing audio.<br>\npan.to() changes the outgoing pan level (0-1).<br>\nAll methods take arguments of (destination) or (destination,time) or (origin,destination,time)",
+                    "type": {
+                        "names": [
+                            "Object"
+                        ]
+                    }
+                },
+                {
+                    "name": "this.sine",
+                    "access": "",
+                    "virtual": false,
+                    "description": "A sine generator.<br>\nsine.freq() changes the frequency<br>\nsine.vol() changes the volume (0-1)<br>\nsine.start()<br>\nsine.stop()<br>\n.freq() and .vol() take arguments of (destination) or (destination,time) or (origin,destination,time)",
+                    "type": {
+                        "names": [
+                            "Object"
+                        ]
+                    }
+                },
+                {
+                    "name": "this.noise",
+                    "access": "",
+                    "virtual": false,
+                    "description": "A noise generator.<br>\nnoise.vol() changes the volume (0-1)<br>\nnoise.start()<br>\nnoise.stop()<br>\n.vol() takes arguments of (destination) or (destination,time) or (origin,destination,time)",
+                    "type": {
+                        "names": [
+                            "Object"
+                        ]
+                    }
+                },
+                {
+                    "name": "patterns",
+                    "access": "",
+                    "virtual": false,
+                    "description": "An object containing wall window arrangements as x,y,w,h.",
+                    "type": ""
                 }
             ],
             "functions": [
@@ -45,48 +129,7 @@
                     "examples": []
                 },
                 {
-                    "name": "start",
-                    "access": "",
-                    "virtual": false,
-                    "description": "*static mode only* Start the event timeline.",
-                    "parameters": [],
-                    "examples": []
-                },
-                {
-                    "name": "add",
-                    "access": "",
-                    "virtual": false,
-                    "description": "Add a new media object",
-                    "parameters": [
-                        {
-                            "name": "type",
-                            "type": "string",
-                            "description": "Type of media object to add",
-                            "default": "",
-                            "optional": "",
-                            "nullable": ""
-                        },
-                        {
-                            "name": "arr",
-                            "type": "Array",
-                            "description": "Array that this object is added into",
-                            "default": "",
-                            "optional": "",
-                            "nullable": ""
-                        },
-                        {
-                            "name": "params",
-                            "type": "object",
-                            "description": "parameters (x,y,w,h,spaces,parent)",
-                            "default": "",
-                            "optional": "",
-                            "nullable": ""
-                        }
-                    ],
-                    "examples": []
-                },
-                {
-                    "name": "googleimage",
+                    "name": "google",
                     "access": "",
                     "virtual": false,
                     "description": "Google image search and use the results in a callback func. Should this be made into adding it was a photo with wall.see()?",
@@ -135,48 +178,6 @@
                 "examples": []
             },
             "functions": [
-                {
-                    "name": "setAll",
-                    "access": "",
-                    "virtual": false,
-                    "description": "Set a property on this media element in all windows",
-                    "parameters": [
-                        {
-                            "name": "property",
-                            "type": "String",
-                            "description": "key",
-                            "default": "",
-                            "optional": "",
-                            "nullable": ""
-                        },
-                        {
-                            "name": "value",
-                            "type": "Unknown",
-                            "description": "",
-                            "default": "",
-                            "optional": "",
-                            "nullable": ""
-                        }
-                    ],
-                    "examples": []
-                },
-                {
-                    "name": "all",
-                    "access": "",
-                    "virtual": false,
-                    "description": "Call a method on this media element in all windows",
-                    "parameters": [
-                        {
-                            "name": "method",
-                            "type": "String",
-                            "description": "name",
-                            "default": "",
-                            "optional": "",
-                            "nullable": ""
-                        }
-                    ],
-                    "examples": []
-                },
                 {
                     "name": "size",
                     "access": "",
@@ -236,14 +237,6 @@
                     "examples": []
                 },
                 {
-                    "name": "_destroy",
-                    "access": "",
-                    "virtual": false,
-                    "description": "Empty function to be overwritten within each element if necessary\nCalled by .kill()",
-                    "parameters": [],
-                    "examples": []
-                },
-                {
                     "name": "fade",
                     "access": "",
                     "virtual": false,
@@ -252,7 +245,7 @@
                         {
                             "name": "level",
                             "type": "number",
-                            "description": "opacity level",
+                            "description": "opacity level 0-1",
                             "default": "",
                             "optional": "",
                             "nullable": ""
@@ -277,11 +270,28 @@
                     "examples": []
                 },
                 {
+                    "name": "toggle",
+                    "access": "",
+                    "virtual": false,
+                    "description": "If the element is hidden, show it. If it's visible, hide it.",
+                    "parameters": [],
+                    "examples": []
+                },
+                {
                     "name": "bomb",
                     "access": "",
                     "virtual": false,
-                    "description": "If the element is hidden, show it.",
-                    "parameters": [],
+                    "description": "Remove the element after a certain period of time",
+                    "parameters": [
+                        {
+                            "name": "delay",
+                            "type": "number",
+                            "description": "delay in ms before destroying the element",
+                            "default": "",
+                            "optional": "",
+                            "nullable": ""
+                        }
+                    ],
                     "examples": []
                 }
             ]
@@ -463,48 +473,6 @@
                     "examples": []
                 },
                 {
-                    "name": "setAll",
-                    "access": "",
-                    "virtual": false,
-                    "description": "Set a property on this media element in all windows",
-                    "parameters": [
-                        {
-                            "name": "property",
-                            "type": "String",
-                            "description": "key",
-                            "default": "",
-                            "optional": "",
-                            "nullable": ""
-                        },
-                        {
-                            "name": "value",
-                            "type": "Unknown",
-                            "description": "",
-                            "default": "",
-                            "optional": "",
-                            "nullable": ""
-                        }
-                    ],
-                    "examples": []
-                },
-                {
-                    "name": "all",
-                    "access": "",
-                    "virtual": false,
-                    "description": "Call a method on this media element in all windows",
-                    "parameters": [
-                        {
-                            "name": "method",
-                            "type": "String",
-                            "description": "name",
-                            "default": "",
-                            "optional": "",
-                            "nullable": ""
-                        }
-                    ],
-                    "examples": []
-                },
-                {
                     "name": "size",
                     "access": "",
                     "virtual": false,
@@ -563,14 +531,6 @@
                     "examples": []
                 },
                 {
-                    "name": "_destroy",
-                    "access": "",
-                    "virtual": false,
-                    "description": "Empty function to be overwritten within each element if necessary\nCalled by .kill()",
-                    "parameters": [],
-                    "examples": []
-                },
-                {
                     "name": "fade",
                     "access": "",
                     "virtual": false,
@@ -579,7 +539,7 @@
                         {
                             "name": "level",
                             "type": "number",
-                            "description": "opacity level",
+                            "description": "opacity level 0-1",
                             "default": "",
                             "optional": "",
                             "nullable": ""
@@ -604,11 +564,28 @@
                     "examples": []
                 },
                 {
+                    "name": "toggle",
+                    "access": "",
+                    "virtual": false,
+                    "description": "If the element is hidden, show it. If it's visible, hide it.",
+                    "parameters": [],
+                    "examples": []
+                },
+                {
                     "name": "bomb",
                     "access": "",
                     "virtual": false,
-                    "description": "If the element is hidden, show it.",
-                    "parameters": [],
+                    "description": "Remove the element after a certain period of time",
+                    "parameters": [
+                        {
+                            "name": "delay",
+                            "type": "number",
+                            "description": "delay in ms before destroying the element",
+                            "default": "",
+                            "optional": "",
+                            "nullable": ""
+                        }
+                    ],
                     "examples": []
                 }
             ]
@@ -772,48 +749,6 @@
                     "examples": []
                 },
                 {
-                    "name": "setAll",
-                    "access": "",
-                    "virtual": false,
-                    "description": "Set a property on this media element in all windows",
-                    "parameters": [
-                        {
-                            "name": "property",
-                            "type": "String",
-                            "description": "key",
-                            "default": "",
-                            "optional": "",
-                            "nullable": ""
-                        },
-                        {
-                            "name": "value",
-                            "type": "Unknown",
-                            "description": "",
-                            "default": "",
-                            "optional": "",
-                            "nullable": ""
-                        }
-                    ],
-                    "examples": []
-                },
-                {
-                    "name": "all",
-                    "access": "",
-                    "virtual": false,
-                    "description": "Call a method on this media element in all windows",
-                    "parameters": [
-                        {
-                            "name": "method",
-                            "type": "String",
-                            "description": "name",
-                            "default": "",
-                            "optional": "",
-                            "nullable": ""
-                        }
-                    ],
-                    "examples": []
-                },
-                {
                     "name": "size",
                     "access": "",
                     "virtual": false,
@@ -864,14 +799,6 @@
                     "examples": []
                 },
                 {
-                    "name": "_destroy",
-                    "access": "",
-                    "virtual": false,
-                    "description": "Empty function to be overwritten within each element if necessary\nCalled by .kill()",
-                    "parameters": [],
-                    "examples": []
-                },
-                {
                     "name": "fade",
                     "access": "",
                     "virtual": false,
@@ -880,7 +807,7 @@
                         {
                             "name": "level",
                             "type": "number",
-                            "description": "opacity level",
+                            "description": "opacity level 0-1",
                             "default": "",
                             "optional": "",
                             "nullable": ""
@@ -901,6 +828,14 @@
                     "access": "",
                     "virtual": false,
                     "description": "If the element is hidden, show it.",
+                    "parameters": [],
+                    "examples": []
+                },
+                {
+                    "name": "toggle",
+                    "access": "",
+                    "virtual": false,
+                    "description": "If the element is hidden, show it. If it's visible, hide it.",
                     "parameters": [],
                     "examples": []
                 }
@@ -935,7 +870,7 @@
                     "name": "load",
                     "access": "",
                     "virtual": false,
-                    "description": "Load a video via source string.",
+                    "description": "Load a video",
                     "parameters": [
                         {
                             "name": "src",
@@ -970,155 +905,6 @@
                     "access": "",
                     "virtual": false,
                     "description": "Pause video",
-                    "parameters": [],
-                    "examples": []
-                },
-                {
-                    "name": "loop",
-                    "access": "",
-                    "virtual": false,
-                    "description": "Loop video",
-                    "parameters": [],
-                    "examples": []
-                },
-                {
-                    "name": "unloop",
-                    "access": "",
-                    "virtual": false,
-                    "description": "Unloop video",
-                    "parameters": [],
-                    "examples": []
-                },
-                {
-                    "name": "jumpTo",
-                    "access": "",
-                    "virtual": false,
-                    "description": "Scrub to specific point",
-                    "parameters": [
-                        {
-                            "name": "start",
-                            "type": "integer",
-                            "description": "New start time of video, in seconds",
-                            "default": "",
-                            "optional": "",
-                            "nullable": ""
-                        }
-                    ],
-                    "examples": []
-                },
-                {
-                    "name": "skip",
-                    "access": "",
-                    "virtual": false,
-                    "description": "Loop video between two points",
-                    "parameters": [
-                        {
-                            "name": "start",
-                            "type": "float",
-                            "description": "starting loop position",
-                            "default": "",
-                            "optional": "",
-                            "nullable": ""
-                        },
-                        {
-                            "name": "stop",
-                            "type": "float",
-                            "description": "ending loop position",
-                            "default": "",
-                            "optional": "",
-                            "nullable": ""
-                        }
-                    ],
-                    "examples": []
-                },
-                {
-                    "name": "unskip",
-                    "access": "",
-                    "virtual": false,
-                    "description": "Stop skipping the video",
-                    "parameters": [],
-                    "examples": []
-                },
-                {
-                    "name": "speed",
-                    "access": "",
-                    "virtual": false,
-                    "description": "Change the video's playback rate",
-                    "parameters": [
-                        {
-                            "name": "rate",
-                            "type": "float",
-                            "description": "Playback rate (0.25 - 4)",
-                            "default": "",
-                            "optional": "",
-                            "nullable": ""
-                        }
-                    ],
-                    "examples": []
-                },
-                {
-                    "name": "ticker",
-                    "access": "",
-                    "virtual": false,
-                    "description": "Turn on film-strip frame visualization",
-                    "parameters": [],
-                    "examples": []
-                },
-                {
-                    "name": "unticker",
-                    "access": "",
-                    "virtual": false,
-                    "description": "Turn off film-strip ticker visualization",
-                    "parameters": [],
-                    "examples": []
-                },
-                {
-                    "name": "load",
-                    "access": "",
-                    "virtual": false,
-                    "description": "Load a video via source string.",
-                    "parameters": [
-                        {
-                            "name": "src",
-                            "type": "String",
-                            "description": "name of .mp4 file in /media folder. For example, .load(\"waves\") will load \"/media/waves.mp4\"",
-                            "default": "",
-                            "optional": "",
-                            "nullable": ""
-                        }
-                    ],
-                    "examples": []
-                },
-                {
-                    "name": "play",
-                    "access": "",
-                    "virtual": false,
-                    "description": "Play video",
-                    "parameters": [
-                        {
-                            "name": "rate",
-                            "type": "float",
-                            "description": "Playback rate of video (0.25 - 4)",
-                            "default": "",
-                            "optional": "",
-                            "nullable": ""
-                        }
-                    ],
-                    "examples": []
-                },
-                {
-                    "name": "stop",
-                    "access": "",
-                    "virtual": false,
-                    "description": "Pause video",
-                    "parameters": [],
-                    "examples": []
-                },
-                {
-                    "name": "propogateMaster",
-                    "access": "",
-                    "virtual": false,
-                    "description": ".",
                     "parameters": [],
                     "examples": []
                 },
@@ -1218,61 +1004,19 @@
                             "default": "",
                             "optional": "",
                             "nullable": ""
-                        }
-                    ],
-                    "examples": []
-                },
-                {
-                    "name": "ticker",
-                    "access": "",
-                    "virtual": false,
-                    "description": "Turn on film-strip frame visualization",
-                    "parameters": [],
-                    "examples": []
-                },
-                {
-                    "name": "unticker",
-                    "access": "",
-                    "virtual": false,
-                    "description": "Turn off film-strip ticker visualization",
-                    "parameters": [],
-                    "examples": []
-                },
-                {
-                    "name": "setAll",
-                    "access": "",
-                    "virtual": false,
-                    "description": "Set a property on this media element in all windows",
-                    "parameters": [
+                        },
                         {
-                            "name": "property",
-                            "type": "String",
-                            "description": "key",
+                            "name": "x",
+                            "type": "float",
+                            "description": "zoom x location",
                             "default": "",
                             "optional": "",
                             "nullable": ""
                         },
                         {
-                            "name": "value",
-                            "type": "Unknown",
-                            "description": "",
-                            "default": "",
-                            "optional": "",
-                            "nullable": ""
-                        }
-                    ],
-                    "examples": []
-                },
-                {
-                    "name": "all",
-                    "access": "",
-                    "virtual": false,
-                    "description": "Call a method on this media element in all windows",
-                    "parameters": [
-                        {
-                            "name": "method",
-                            "type": "String",
-                            "description": "name",
+                            "name": "y",
+                            "type": "float",
+                            "description": "zoom y location",
                             "default": "",
                             "optional": "",
                             "nullable": ""
@@ -1284,25 +1028,8 @@
                     "name": "size",
                     "access": "",
                     "virtual": false,
-                    "description": "Resize this media element",
-                    "parameters": [
-                        {
-                            "name": "w",
-                            "type": "number",
-                            "description": "width in px",
-                            "default": "",
-                            "optional": "",
-                            "nullable": ""
-                        },
-                        {
-                            "name": "h",
-                            "type": "number",
-                            "description": "height in px",
-                            "default": "",
-                            "optional": "",
-                            "nullable": ""
-                        }
-                    ],
+                    "description": "Resize the video",
+                    "parameters": [],
                     "examples": []
                 },
                 {
@@ -1339,14 +1066,6 @@
                     "examples": []
                 },
                 {
-                    "name": "_destroy",
-                    "access": "",
-                    "virtual": false,
-                    "description": "Empty function to be overwritten within each element if necessary\nCalled by .kill()",
-                    "parameters": [],
-                    "examples": []
-                },
-                {
                     "name": "fade",
                     "access": "",
                     "virtual": false,
@@ -1355,7 +1074,7 @@
                         {
                             "name": "level",
                             "type": "number",
-                            "description": "opacity level",
+                            "description": "opacity level 0-1",
                             "default": "",
                             "optional": "",
                             "nullable": ""
@@ -1380,485 +1099,10 @@
                     "examples": []
                 },
                 {
-                    "name": "bomb",
+                    "name": "toggle",
                     "access": "",
                     "virtual": false,
-                    "description": "If the element is hidden, show it.",
-                    "parameters": [],
-                    "examples": []
-                }
-            ]
-        },
-        {
-            "name": "Film",
-            "description": "",
-            "extends": [
-                "Medium"
-            ],
-            "access": "",
-            "virtual": false,
-            "fires": "",
-            "constructor": {
-                "name": "Film",
-                "description": "Performative VIDEO media element",
-                "parameters": [
-                    {
-                        "name": "Params",
-                        "type": "object",
-                        "description": "(see Params)",
-                        "default": "",
-                        "optional": "",
-                        "nullable": ""
-                    }
-                ],
-                "examples": []
-            },
-            "functions": [
-                {
-                    "name": "load",
-                    "access": "",
-                    "virtual": false,
-                    "description": "Load a video via source string.",
-                    "parameters": [
-                        {
-                            "name": "src",
-                            "type": "String",
-                            "description": "name of .mp4 file in /media folder. For example, .load(\"waves\") will load \"/media/waves.mp4\"",
-                            "default": "",
-                            "optional": "",
-                            "nullable": ""
-                        }
-                    ],
-                    "examples": []
-                },
-                {
-                    "name": "play",
-                    "access": "",
-                    "virtual": false,
-                    "description": "Play video",
-                    "parameters": [
-                        {
-                            "name": "rate",
-                            "type": "float",
-                            "description": "Playback rate of video (0.25 - 4)",
-                            "default": "",
-                            "optional": "",
-                            "nullable": ""
-                        }
-                    ],
-                    "examples": []
-                },
-                {
-                    "name": "stop",
-                    "access": "",
-                    "virtual": false,
-                    "description": "Pause video",
-                    "parameters": [],
-                    "examples": []
-                },
-                {
-                    "name": "loop",
-                    "access": "",
-                    "virtual": false,
-                    "description": "Loop video",
-                    "parameters": [],
-                    "examples": []
-                },
-                {
-                    "name": "unloop",
-                    "access": "",
-                    "virtual": false,
-                    "description": "Unloop video",
-                    "parameters": [],
-                    "examples": []
-                },
-                {
-                    "name": "jumpTo",
-                    "access": "",
-                    "virtual": false,
-                    "description": "Scrub to specific point",
-                    "parameters": [
-                        {
-                            "name": "start",
-                            "type": "integer",
-                            "description": "New start time of video, in seconds",
-                            "default": "",
-                            "optional": "",
-                            "nullable": ""
-                        }
-                    ],
-                    "examples": []
-                },
-                {
-                    "name": "skip",
-                    "access": "",
-                    "virtual": false,
-                    "description": "Loop video between two points",
-                    "parameters": [
-                        {
-                            "name": "start",
-                            "type": "float",
-                            "description": "starting loop position",
-                            "default": "",
-                            "optional": "",
-                            "nullable": ""
-                        },
-                        {
-                            "name": "stop",
-                            "type": "float",
-                            "description": "ending loop position",
-                            "default": "",
-                            "optional": "",
-                            "nullable": ""
-                        }
-                    ],
-                    "examples": []
-                },
-                {
-                    "name": "unskip",
-                    "access": "",
-                    "virtual": false,
-                    "description": "Stop skipping the video",
-                    "parameters": [],
-                    "examples": []
-                },
-                {
-                    "name": "speed",
-                    "access": "",
-                    "virtual": false,
-                    "description": "Change the video's playback rate",
-                    "parameters": [
-                        {
-                            "name": "rate",
-                            "type": "float",
-                            "description": "Playback rate (0.25 - 4)",
-                            "default": "",
-                            "optional": "",
-                            "nullable": ""
-                        }
-                    ],
-                    "examples": []
-                },
-                {
-                    "name": "ticker",
-                    "access": "",
-                    "virtual": false,
-                    "description": "Turn on film-strip frame visualization",
-                    "parameters": [],
-                    "examples": []
-                },
-                {
-                    "name": "unticker",
-                    "access": "",
-                    "virtual": false,
-                    "description": "Turn off film-strip ticker visualization",
-                    "parameters": [],
-                    "examples": []
-                },
-                {
-                    "name": "load",
-                    "access": "",
-                    "virtual": false,
-                    "description": "Load a video via source string.",
-                    "parameters": [
-                        {
-                            "name": "src",
-                            "type": "String",
-                            "description": "name of .mp4 file in /media folder. For example, .load(\"waves\") will load \"/media/waves.mp4\"",
-                            "default": "",
-                            "optional": "",
-                            "nullable": ""
-                        }
-                    ],
-                    "examples": []
-                },
-                {
-                    "name": "play",
-                    "access": "",
-                    "virtual": false,
-                    "description": "Play video",
-                    "parameters": [
-                        {
-                            "name": "rate",
-                            "type": "float",
-                            "description": "Playback rate of video (0.25 - 4)",
-                            "default": "",
-                            "optional": "",
-                            "nullable": ""
-                        }
-                    ],
-                    "examples": []
-                },
-                {
-                    "name": "stop",
-                    "access": "",
-                    "virtual": false,
-                    "description": "Pause video",
-                    "parameters": [],
-                    "examples": []
-                },
-                {
-                    "name": "propogateMaster",
-                    "access": "",
-                    "virtual": false,
-                    "description": ".",
-                    "parameters": [],
-                    "examples": []
-                },
-                {
-                    "name": "loop",
-                    "access": "",
-                    "virtual": false,
-                    "description": "Loop video",
-                    "parameters": [],
-                    "examples": []
-                },
-                {
-                    "name": "unloop",
-                    "access": "",
-                    "virtual": false,
-                    "description": "Unloop video",
-                    "parameters": [],
-                    "examples": []
-                },
-                {
-                    "name": "jump",
-                    "access": "",
-                    "virtual": false,
-                    "description": "Scrub to specific point",
-                    "parameters": [
-                        {
-                            "name": "start",
-                            "type": "integer",
-                            "description": "New start time of video, in seconds",
-                            "default": "",
-                            "optional": "",
-                            "nullable": ""
-                        }
-                    ],
-                    "examples": []
-                },
-                {
-                    "name": "skip",
-                    "access": "",
-                    "virtual": false,
-                    "description": "Loop video between two points",
-                    "parameters": [
-                        {
-                            "name": "start",
-                            "type": "float",
-                            "description": "starting loop position",
-                            "default": "",
-                            "optional": "",
-                            "nullable": ""
-                        },
-                        {
-                            "name": "stop",
-                            "type": "float",
-                            "description": "ending loop position",
-                            "default": "",
-                            "optional": "",
-                            "nullable": ""
-                        }
-                    ],
-                    "examples": []
-                },
-                {
-                    "name": "unskip",
-                    "access": "",
-                    "virtual": false,
-                    "description": "Stop skipping the video",
-                    "parameters": [],
-                    "examples": []
-                },
-                {
-                    "name": "speed",
-                    "access": "",
-                    "virtual": false,
-                    "description": "Change the video's playback rate",
-                    "parameters": [
-                        {
-                            "name": "rate",
-                            "type": "float",
-                            "description": "Playback rate (0.25 - 4)",
-                            "default": "",
-                            "optional": "",
-                            "nullable": ""
-                        }
-                    ],
-                    "examples": []
-                },
-                {
-                    "name": "zoom",
-                    "access": "",
-                    "virtual": false,
-                    "description": "Zoom in",
-                    "parameters": [
-                        {
-                            "name": "level",
-                            "type": "float",
-                            "description": "Zoom level",
-                            "default": "",
-                            "optional": "",
-                            "nullable": ""
-                        }
-                    ],
-                    "examples": []
-                },
-                {
-                    "name": "ticker",
-                    "access": "",
-                    "virtual": false,
-                    "description": "Turn on film-strip frame visualization",
-                    "parameters": [],
-                    "examples": []
-                },
-                {
-                    "name": "unticker",
-                    "access": "",
-                    "virtual": false,
-                    "description": "Turn off film-strip ticker visualization",
-                    "parameters": [],
-                    "examples": []
-                },
-                {
-                    "name": "setAll",
-                    "access": "",
-                    "virtual": false,
-                    "description": "Set a property on this media element in all windows",
-                    "parameters": [
-                        {
-                            "name": "property",
-                            "type": "String",
-                            "description": "key",
-                            "default": "",
-                            "optional": "",
-                            "nullable": ""
-                        },
-                        {
-                            "name": "value",
-                            "type": "Unknown",
-                            "description": "",
-                            "default": "",
-                            "optional": "",
-                            "nullable": ""
-                        }
-                    ],
-                    "examples": []
-                },
-                {
-                    "name": "all",
-                    "access": "",
-                    "virtual": false,
-                    "description": "Call a method on this media element in all windows",
-                    "parameters": [
-                        {
-                            "name": "method",
-                            "type": "String",
-                            "description": "name",
-                            "default": "",
-                            "optional": "",
-                            "nullable": ""
-                        }
-                    ],
-                    "examples": []
-                },
-                {
-                    "name": "size",
-                    "access": "",
-                    "virtual": false,
-                    "description": "Resize this media element",
-                    "parameters": [
-                        {
-                            "name": "w",
-                            "type": "number",
-                            "description": "width in px",
-                            "default": "",
-                            "optional": "",
-                            "nullable": ""
-                        },
-                        {
-                            "name": "h",
-                            "type": "number",
-                            "description": "height in px",
-                            "default": "",
-                            "optional": "",
-                            "nullable": ""
-                        }
-                    ],
-                    "examples": []
-                },
-                {
-                    "name": "move",
-                    "access": "",
-                    "virtual": false,
-                    "description": "Move this element",
-                    "parameters": [
-                        {
-                            "name": "x",
-                            "type": "number",
-                            "description": "x position in px",
-                            "default": "",
-                            "optional": "",
-                            "nullable": ""
-                        },
-                        {
-                            "name": "y",
-                            "type": "number",
-                            "description": "y position in px",
-                            "default": "",
-                            "optional": "",
-                            "nullable": ""
-                        }
-                    ],
-                    "examples": []
-                },
-                {
-                    "name": "kill",
-                    "access": "",
-                    "virtual": false,
-                    "description": "Remove this element and destroy all references to it",
-                    "parameters": [],
-                    "examples": []
-                },
-                {
-                    "name": "_destroy",
-                    "access": "",
-                    "virtual": false,
-                    "description": "Empty function to be overwritten within each element if necessary\nCalled by .kill()",
-                    "parameters": [],
-                    "examples": []
-                },
-                {
-                    "name": "fade",
-                    "access": "",
-                    "virtual": false,
-                    "description": "Set the element's opacity",
-                    "parameters": [
-                        {
-                            "name": "level",
-                            "type": "number",
-                            "description": "opacity level",
-                            "default": "",
-                            "optional": "",
-                            "nullable": ""
-                        }
-                    ],
-                    "examples": []
-                },
-                {
-                    "name": "hide",
-                    "access": "",
-                    "virtual": false,
-                    "description": "Make the element disappear, but do not remove it. A/V files will keep playing and making sound.",
-                    "parameters": [],
-                    "examples": []
-                },
-                {
-                    "name": "show",
-                    "access": "",
-                    "virtual": false,
-                    "description": "If the element is hidden, show it.",
+                    "description": "If the element is hidden, show it. If it's visible, hide it.",
                     "parameters": [],
                     "examples": []
                 },
@@ -1866,8 +1110,17 @@
                     "name": "bomb",
                     "access": "",
                     "virtual": false,
-                    "description": "If the element is hidden, show it.",
-                    "parameters": [],
+                    "description": "Remove the element after a certain period of time",
+                    "parameters": [
+                        {
+                            "name": "delay",
+                            "type": "number",
+                            "description": "delay in ms before destroying the element",
+                            "default": "",
+                            "optional": "",
+                            "nullable": ""
+                        }
+                    ],
                     "examples": []
                 }
             ]
@@ -1906,48 +1159,6 @@
                     "examples": []
                 },
                 {
-                    "name": "setAll",
-                    "access": "",
-                    "virtual": false,
-                    "description": "Set a property on this media element in all windows",
-                    "parameters": [
-                        {
-                            "name": "property",
-                            "type": "String",
-                            "description": "key",
-                            "default": "",
-                            "optional": "",
-                            "nullable": ""
-                        },
-                        {
-                            "name": "value",
-                            "type": "Unknown",
-                            "description": "",
-                            "default": "",
-                            "optional": "",
-                            "nullable": ""
-                        }
-                    ],
-                    "examples": []
-                },
-                {
-                    "name": "all",
-                    "access": "",
-                    "virtual": false,
-                    "description": "Call a method on this media element in all windows",
-                    "parameters": [
-                        {
-                            "name": "method",
-                            "type": "String",
-                            "description": "name",
-                            "default": "",
-                            "optional": "",
-                            "nullable": ""
-                        }
-                    ],
-                    "examples": []
-                },
-                {
                     "name": "size",
                     "access": "",
                     "virtual": false,
@@ -2006,14 +1217,6 @@
                     "examples": []
                 },
                 {
-                    "name": "_destroy",
-                    "access": "",
-                    "virtual": false,
-                    "description": "Empty function to be overwritten within each element if necessary\nCalled by .kill()",
-                    "parameters": [],
-                    "examples": []
-                },
-                {
                     "name": "fade",
                     "access": "",
                     "virtual": false,
@@ -2022,7 +1225,7 @@
                         {
                             "name": "level",
                             "type": "number",
-                            "description": "opacity level",
+                            "description": "opacity level 0-1",
                             "default": "",
                             "optional": "",
                             "nullable": ""
@@ -2047,11 +1250,28 @@
                     "examples": []
                 },
                 {
+                    "name": "toggle",
+                    "access": "",
+                    "virtual": false,
+                    "description": "If the element is hidden, show it. If it's visible, hide it.",
+                    "parameters": [],
+                    "examples": []
+                },
+                {
                     "name": "bomb",
                     "access": "",
                     "virtual": false,
-                    "description": "If the element is hidden, show it.",
-                    "parameters": [],
+                    "description": "Remove the element after a certain period of time",
+                    "parameters": [
+                        {
+                            "name": "delay",
+                            "type": "number",
+                            "description": "delay in ms before destroying the element",
+                            "default": "",
+                            "optional": "",
+                            "nullable": ""
+                        }
+                    ],
                     "examples": []
                 }
             ]
@@ -2141,48 +1361,6 @@
                     "examples": []
                 },
                 {
-                    "name": "setAll",
-                    "access": "",
-                    "virtual": false,
-                    "description": "Set a property on this media element in all windows",
-                    "parameters": [
-                        {
-                            "name": "property",
-                            "type": "String",
-                            "description": "key",
-                            "default": "",
-                            "optional": "",
-                            "nullable": ""
-                        },
-                        {
-                            "name": "value",
-                            "type": "Unknown",
-                            "description": "",
-                            "default": "",
-                            "optional": "",
-                            "nullable": ""
-                        }
-                    ],
-                    "examples": []
-                },
-                {
-                    "name": "all",
-                    "access": "",
-                    "virtual": false,
-                    "description": "Call a method on this media element in all windows",
-                    "parameters": [
-                        {
-                            "name": "method",
-                            "type": "String",
-                            "description": "name",
-                            "default": "",
-                            "optional": "",
-                            "nullable": ""
-                        }
-                    ],
-                    "examples": []
-                },
-                {
                     "name": "size",
                     "access": "",
                     "virtual": false,
@@ -2241,14 +1419,6 @@
                     "examples": []
                 },
                 {
-                    "name": "_destroy",
-                    "access": "",
-                    "virtual": false,
-                    "description": "Empty function to be overwritten within each element if necessary\nCalled by .kill()",
-                    "parameters": [],
-                    "examples": []
-                },
-                {
                     "name": "fade",
                     "access": "",
                     "virtual": false,
@@ -2257,7 +1427,7 @@
                         {
                             "name": "level",
                             "type": "number",
-                            "description": "opacity level",
+                            "description": "opacity level 0-1",
                             "default": "",
                             "optional": "",
                             "nullable": ""
@@ -2282,11 +1452,28 @@
                     "examples": []
                 },
                 {
+                    "name": "toggle",
+                    "access": "",
+                    "virtual": false,
+                    "description": "If the element is hidden, show it. If it's visible, hide it.",
+                    "parameters": [],
+                    "examples": []
+                },
+                {
                     "name": "bomb",
                     "access": "",
                     "virtual": false,
-                    "description": "If the element is hidden, show it.",
-                    "parameters": [],
+                    "description": "Remove the element after a certain period of time",
+                    "parameters": [
+                        {
+                            "name": "delay",
+                            "type": "number",
+                            "description": "delay in ms before destroying the element",
+                            "default": "",
+                            "optional": "",
+                            "nullable": ""
+                        }
+                    ],
                     "examples": []
                 }
             ]
@@ -2373,48 +1560,6 @@
                     "examples": []
                 },
                 {
-                    "name": "setAll",
-                    "access": "",
-                    "virtual": false,
-                    "description": "Set a property on this media element in all windows",
-                    "parameters": [
-                        {
-                            "name": "property",
-                            "type": "String",
-                            "description": "key",
-                            "default": "",
-                            "optional": "",
-                            "nullable": ""
-                        },
-                        {
-                            "name": "value",
-                            "type": "Unknown",
-                            "description": "",
-                            "default": "",
-                            "optional": "",
-                            "nullable": ""
-                        }
-                    ],
-                    "examples": []
-                },
-                {
-                    "name": "all",
-                    "access": "",
-                    "virtual": false,
-                    "description": "Call a method on this media element in all windows",
-                    "parameters": [
-                        {
-                            "name": "method",
-                            "type": "String",
-                            "description": "name",
-                            "default": "",
-                            "optional": "",
-                            "nullable": ""
-                        }
-                    ],
-                    "examples": []
-                },
-                {
                     "name": "size",
                     "access": "",
                     "virtual": false,
@@ -2473,14 +1618,6 @@
                     "examples": []
                 },
                 {
-                    "name": "_destroy",
-                    "access": "",
-                    "virtual": false,
-                    "description": "Empty function to be overwritten within each element if necessary\nCalled by .kill()",
-                    "parameters": [],
-                    "examples": []
-                },
-                {
                     "name": "fade",
                     "access": "",
                     "virtual": false,
@@ -2489,7 +1626,7 @@
                         {
                             "name": "level",
                             "type": "number",
-                            "description": "opacity level",
+                            "description": "opacity level 0-1",
                             "default": "",
                             "optional": "",
                             "nullable": ""
@@ -2514,11 +1651,28 @@
                     "examples": []
                 },
                 {
+                    "name": "toggle",
+                    "access": "",
+                    "virtual": false,
+                    "description": "If the element is hidden, show it. If it's visible, hide it.",
+                    "parameters": [],
+                    "examples": []
+                },
+                {
                     "name": "bomb",
                     "access": "",
                     "virtual": false,
-                    "description": "If the element is hidden, show it.",
-                    "parameters": [],
+                    "description": "Remove the element after a certain period of time",
+                    "parameters": [
+                        {
+                            "name": "delay",
+                            "type": "number",
+                            "description": "delay in ms before destroying the element",
+                            "default": "",
+                            "optional": "",
+                            "nullable": ""
+                        }
+                    ],
                     "examples": []
                 }
             ]
@@ -2589,48 +1743,6 @@
                     "examples": []
                 },
                 {
-                    "name": "setAll",
-                    "access": "",
-                    "virtual": false,
-                    "description": "Set a property on this media element in all windows",
-                    "parameters": [
-                        {
-                            "name": "property",
-                            "type": "String",
-                            "description": "key",
-                            "default": "",
-                            "optional": "",
-                            "nullable": ""
-                        },
-                        {
-                            "name": "value",
-                            "type": "Unknown",
-                            "description": "",
-                            "default": "",
-                            "optional": "",
-                            "nullable": ""
-                        }
-                    ],
-                    "examples": []
-                },
-                {
-                    "name": "all",
-                    "access": "",
-                    "virtual": false,
-                    "description": "Call a method on this media element in all windows",
-                    "parameters": [
-                        {
-                            "name": "method",
-                            "type": "String",
-                            "description": "name",
-                            "default": "",
-                            "optional": "",
-                            "nullable": ""
-                        }
-                    ],
-                    "examples": []
-                },
-                {
                     "name": "size",
                     "access": "",
                     "virtual": false,
@@ -2689,14 +1801,6 @@
                     "examples": []
                 },
                 {
-                    "name": "_destroy",
-                    "access": "",
-                    "virtual": false,
-                    "description": "Empty function to be overwritten within each element if necessary\nCalled by .kill()",
-                    "parameters": [],
-                    "examples": []
-                },
-                {
                     "name": "fade",
                     "access": "",
                     "virtual": false,
@@ -2705,7 +1809,7 @@
                         {
                             "name": "level",
                             "type": "number",
-                            "description": "opacity level",
+                            "description": "opacity level 0-1",
                             "default": "",
                             "optional": "",
                             "nullable": ""
@@ -2730,11 +1834,28 @@
                     "examples": []
                 },
                 {
+                    "name": "toggle",
+                    "access": "",
+                    "virtual": false,
+                    "description": "If the element is hidden, show it. If it's visible, hide it.",
+                    "parameters": [],
+                    "examples": []
+                },
+                {
                     "name": "bomb",
                     "access": "",
                     "virtual": false,
-                    "description": "If the element is hidden, show it.",
-                    "parameters": [],
+                    "description": "Remove the element after a certain period of time",
+                    "parameters": [
+                        {
+                            "name": "delay",
+                            "type": "number",
+                            "description": "delay in ms before destroying the element",
+                            "default": "",
+                            "optional": "",
+                            "nullable": ""
+                        }
+                    ],
                     "examples": []
                 }
             ]
@@ -2821,48 +1942,6 @@
                     "examples": []
                 },
                 {
-                    "name": "setAll",
-                    "access": "",
-                    "virtual": false,
-                    "description": "Set a property on this media element in all windows",
-                    "parameters": [
-                        {
-                            "name": "property",
-                            "type": "String",
-                            "description": "key",
-                            "default": "",
-                            "optional": "",
-                            "nullable": ""
-                        },
-                        {
-                            "name": "value",
-                            "type": "Unknown",
-                            "description": "",
-                            "default": "",
-                            "optional": "",
-                            "nullable": ""
-                        }
-                    ],
-                    "examples": []
-                },
-                {
-                    "name": "all",
-                    "access": "",
-                    "virtual": false,
-                    "description": "Call a method on this media element in all windows",
-                    "parameters": [
-                        {
-                            "name": "method",
-                            "type": "String",
-                            "description": "name",
-                            "default": "",
-                            "optional": "",
-                            "nullable": ""
-                        }
-                    ],
-                    "examples": []
-                },
-                {
                     "name": "size",
                     "access": "",
                     "virtual": false,
@@ -2921,14 +2000,6 @@
                     "examples": []
                 },
                 {
-                    "name": "_destroy",
-                    "access": "",
-                    "virtual": false,
-                    "description": "Empty function to be overwritten within each element if necessary\nCalled by .kill()",
-                    "parameters": [],
-                    "examples": []
-                },
-                {
                     "name": "fade",
                     "access": "",
                     "virtual": false,
@@ -2937,7 +2008,7 @@
                         {
                             "name": "level",
                             "type": "number",
-                            "description": "opacity level",
+                            "description": "opacity level 0-1",
                             "default": "",
                             "optional": "",
                             "nullable": ""
@@ -2962,11 +2033,28 @@
                     "examples": []
                 },
                 {
+                    "name": "toggle",
+                    "access": "",
+                    "virtual": false,
+                    "description": "If the element is hidden, show it. If it's visible, hide it.",
+                    "parameters": [],
+                    "examples": []
+                },
+                {
                     "name": "bomb",
                     "access": "",
                     "virtual": false,
-                    "description": "If the element is hidden, show it.",
-                    "parameters": [],
+                    "description": "Remove the element after a certain period of time",
+                    "parameters": [
+                        {
+                            "name": "delay",
+                            "type": "number",
+                            "description": "delay in ms before destroying the element",
+                            "default": "",
+                            "optional": "",
+                            "nullable": ""
+                        }
+                    ],
                     "examples": []
                 }
             ]
@@ -3000,63 +2088,61 @@
                     "name": "read",
                     "access": "",
                     "virtual": false,
-                    "description": ".",
-                    "parameters": [],
-                    "examples": []
-                },
-                {
-                    "name": "readFile",
-                    "access": "",
-                    "virtual": false,
-                    "description": ".",
-                    "parameters": [],
+                    "description": "Read a .txt file from the /text folder",
+                    "parameters": [
+                        {
+                            "name": "filename",
+                            "type": "String",
+                            "description": "Name of the file, sans .txt",
+                            "default": "",
+                            "optional": "",
+                            "nullable": ""
+                        }
+                    ],
                     "examples": []
                 },
                 {
                     "name": "edit",
                     "access": "",
                     "virtual": false,
-                    "description": ".",
-                    "parameters": [],
+                    "description": "Change the text current shown in the text element",
+                    "parameters": [
+                        {
+                            "name": "text",
+                            "type": "String",
+                            "description": "New text to show",
+                            "default": "",
+                            "optional": "",
+                            "nullable": ""
+                        }
+                    ],
                     "examples": []
                 },
                 {
                     "name": "and",
                     "access": "",
                     "virtual": false,
-                    "description": ".",
+                    "description": "Add text to the text element",
+                    "parameters": [],
+                    "examples": [],
+                    "returns": {
+                        "type": "String",
+                        "description": "text  New text"
+                    }
+                },
+                {
+                    "name": "spread",
+                    "access": "",
+                    "virtual": false,
+                    "description": "Write the text across all windows, one word per window",
                     "parameters": [],
                     "examples": []
                 },
                 {
-                    "name": "writeAcross",
+                    "name": "ticker",
                     "access": "",
                     "virtual": false,
-                    "description": ".",
-                    "parameters": [],
-                    "examples": []
-                },
-                {
-                    "name": "flip",
-                    "access": "",
-                    "virtual": false,
-                    "description": ".",
-                    "parameters": [],
-                    "examples": []
-                },
-                {
-                    "name": "flipOne",
-                    "access": "",
-                    "virtual": false,
-                    "description": ".",
-                    "parameters": [],
-                    "examples": []
-                },
-                {
-                    "name": "unflip",
-                    "access": "",
-                    "virtual": false,
-                    "description": ".",
+                    "description": "Spreads words across all windows and repeats with next set of words. Best if called repeatedly with an interval.",
                     "parameters": [],
                     "examples": []
                 },
@@ -3064,74 +2150,8 @@
                     "name": "flash",
                     "access": "",
                     "virtual": false,
-                    "description": ".",
+                    "description": "Strobes the text in all windows at once (use with interval)",
                     "parameters": [],
-                    "examples": []
-                },
-                {
-                    "name": "flashOne",
-                    "access": "",
-                    "virtual": false,
-                    "description": ".",
-                    "parameters": [],
-                    "examples": []
-                },
-                {
-                    "name": "washOne",
-                    "access": "",
-                    "virtual": false,
-                    "description": ".",
-                    "parameters": [],
-                    "examples": []
-                },
-                {
-                    "name": "unwash",
-                    "access": "",
-                    "virtual": false,
-                    "description": ".",
-                    "parameters": [],
-                    "examples": []
-                },
-                {
-                    "name": "setAll",
-                    "access": "",
-                    "virtual": false,
-                    "description": "Set a property on this media element in all windows",
-                    "parameters": [
-                        {
-                            "name": "property",
-                            "type": "String",
-                            "description": "key",
-                            "default": "",
-                            "optional": "",
-                            "nullable": ""
-                        },
-                        {
-                            "name": "value",
-                            "type": "Unknown",
-                            "description": "",
-                            "default": "",
-                            "optional": "",
-                            "nullable": ""
-                        }
-                    ],
-                    "examples": []
-                },
-                {
-                    "name": "all",
-                    "access": "",
-                    "virtual": false,
-                    "description": "Call a method on this media element in all windows",
-                    "parameters": [
-                        {
-                            "name": "method",
-                            "type": "String",
-                            "description": "name",
-                            "default": "",
-                            "optional": "",
-                            "nullable": ""
-                        }
-                    ],
                     "examples": []
                 },
                 {
@@ -3193,14 +2213,6 @@
                     "examples": []
                 },
                 {
-                    "name": "_destroy",
-                    "access": "",
-                    "virtual": false,
-                    "description": "Empty function to be overwritten within each element if necessary\nCalled by .kill()",
-                    "parameters": [],
-                    "examples": []
-                },
-                {
                     "name": "fade",
                     "access": "",
                     "virtual": false,
@@ -3209,7 +2221,7 @@
                         {
                             "name": "level",
                             "type": "number",
-                            "description": "opacity level",
+                            "description": "opacity level 0-1",
                             "default": "",
                             "optional": "",
                             "nullable": ""
@@ -3234,11 +2246,28 @@
                     "examples": []
                 },
                 {
+                    "name": "toggle",
+                    "access": "",
+                    "virtual": false,
+                    "description": "If the element is hidden, show it. If it's visible, hide it.",
+                    "parameters": [],
+                    "examples": []
+                },
+                {
                     "name": "bomb",
                     "access": "",
                     "virtual": false,
-                    "description": "If the element is hidden, show it.",
-                    "parameters": [],
+                    "description": "Remove the element after a certain period of time",
+                    "parameters": [
+                        {
+                            "name": "delay",
+                            "type": "number",
+                            "description": "delay in ms before destroying the element",
+                            "default": "",
+                            "optional": "",
+                            "nullable": ""
+                        }
+                    ],
                     "examples": []
                 }
             ]
@@ -3301,48 +2330,6 @@
                     "examples": []
                 },
                 {
-                    "name": "setAll",
-                    "access": "",
-                    "virtual": false,
-                    "description": "Set a property on this media element in all windows",
-                    "parameters": [
-                        {
-                            "name": "property",
-                            "type": "String",
-                            "description": "key",
-                            "default": "",
-                            "optional": "",
-                            "nullable": ""
-                        },
-                        {
-                            "name": "value",
-                            "type": "Unknown",
-                            "description": "",
-                            "default": "",
-                            "optional": "",
-                            "nullable": ""
-                        }
-                    ],
-                    "examples": []
-                },
-                {
-                    "name": "all",
-                    "access": "",
-                    "virtual": false,
-                    "description": "Call a method on this media element in all windows",
-                    "parameters": [
-                        {
-                            "name": "method",
-                            "type": "String",
-                            "description": "name",
-                            "default": "",
-                            "optional": "",
-                            "nullable": ""
-                        }
-                    ],
-                    "examples": []
-                },
-                {
                     "name": "size",
                     "access": "",
                     "virtual": false,
@@ -3401,14 +2388,6 @@
                     "examples": []
                 },
                 {
-                    "name": "_destroy",
-                    "access": "",
-                    "virtual": false,
-                    "description": "Empty function to be overwritten within each element if necessary\nCalled by .kill()",
-                    "parameters": [],
-                    "examples": []
-                },
-                {
                     "name": "fade",
                     "access": "",
                     "virtual": false,
@@ -3417,7 +2396,7 @@
                         {
                             "name": "level",
                             "type": "number",
-                            "description": "opacity level",
+                            "description": "opacity level 0-1",
                             "default": "",
                             "optional": "",
                             "nullable": ""
@@ -3442,11 +2421,28 @@
                     "examples": []
                 },
                 {
+                    "name": "toggle",
+                    "access": "",
+                    "virtual": false,
+                    "description": "If the element is hidden, show it. If it's visible, hide it.",
+                    "parameters": [],
+                    "examples": []
+                },
+                {
                     "name": "bomb",
                     "access": "",
                     "virtual": false,
-                    "description": "If the element is hidden, show it.",
-                    "parameters": [],
+                    "description": "Remove the element after a certain period of time",
+                    "parameters": [
+                        {
+                            "name": "delay",
+                            "type": "number",
+                            "description": "delay in ms before destroying the element",
+                            "default": "",
+                            "optional": "",
+                            "nullable": ""
+                        }
+                    ],
                     "examples": []
                 }
             ]
@@ -3532,48 +2528,6 @@
                     "examples": []
                 },
                 {
-                    "name": "setAll",
-                    "access": "",
-                    "virtual": false,
-                    "description": "Set a property on this media element in all windows",
-                    "parameters": [
-                        {
-                            "name": "property",
-                            "type": "String",
-                            "description": "key",
-                            "default": "",
-                            "optional": "",
-                            "nullable": ""
-                        },
-                        {
-                            "name": "value",
-                            "type": "Unknown",
-                            "description": "",
-                            "default": "",
-                            "optional": "",
-                            "nullable": ""
-                        }
-                    ],
-                    "examples": []
-                },
-                {
-                    "name": "all",
-                    "access": "",
-                    "virtual": false,
-                    "description": "Call a method on this media element in all windows",
-                    "parameters": [
-                        {
-                            "name": "method",
-                            "type": "String",
-                            "description": "name",
-                            "default": "",
-                            "optional": "",
-                            "nullable": ""
-                        }
-                    ],
-                    "examples": []
-                },
-                {
                     "name": "size",
                     "access": "",
                     "virtual": false,
@@ -3632,14 +2586,6 @@
                     "examples": []
                 },
                 {
-                    "name": "_destroy",
-                    "access": "",
-                    "virtual": false,
-                    "description": "Empty function to be overwritten within each element if necessary\nCalled by .kill()",
-                    "parameters": [],
-                    "examples": []
-                },
-                {
                     "name": "fade",
                     "access": "",
                     "virtual": false,
@@ -3648,7 +2594,7 @@
                         {
                             "name": "level",
                             "type": "number",
-                            "description": "opacity level",
+                            "description": "opacity level 0-1",
                             "default": "",
                             "optional": "",
                             "nullable": ""
@@ -3673,11 +2619,28 @@
                     "examples": []
                 },
                 {
+                    "name": "toggle",
+                    "access": "",
+                    "virtual": false,
+                    "description": "If the element is hidden, show it. If it's visible, hide it.",
+                    "parameters": [],
+                    "examples": []
+                },
+                {
                     "name": "bomb",
                     "access": "",
                     "virtual": false,
-                    "description": "If the element is hidden, show it.",
-                    "parameters": [],
+                    "description": "Remove the element after a certain period of time",
+                    "parameters": [
+                        {
+                            "name": "delay",
+                            "type": "number",
+                            "description": "delay in ms before destroying the element",
+                            "default": "",
+                            "optional": "",
+                            "nullable": ""
+                        }
+                    ],
                     "examples": []
                 }
             ]
@@ -3873,11 +2836,7 @@
                     "virtual": false,
                     "description": "Show all browser windows in this wall",
                     "parameters": [],
-                    "examples": [],
-                    "returns": {
-                        "type": "Wall",
-                        "description": "Should return this wall object but probably doesn't now."
-                    }
+                    "examples": []
                 },
                 {
                     "name": "hide",
@@ -3885,35 +2844,6 @@
                     "virtual": false,
                     "description": "Hide all browser windows in this wall (but keep them associated with this wall)",
                     "parameters": [],
-                    "examples": [],
-                    "returns": {
-                        "type": "Wall",
-                        "description": "Nothing yet"
-                    }
-                },
-                {
-                    "name": "add",
-                    "access": "",
-                    "virtual": false,
-                    "description": "Add a new media element to this wall",
-                    "parameters": [
-                        {
-                            "name": "type",
-                            "type": "String",
-                            "description": "",
-                            "default": "",
-                            "optional": "",
-                            "nullable": ""
-                        },
-                        {
-                            "name": "params",
-                            "type": "Object",
-                            "description": "(see Params)",
-                            "default": "",
-                            "optional": "",
-                            "nullable": ""
-                        }
-                    ],
                     "examples": []
                 },
                 {
@@ -3962,7 +2892,7 @@
                     "name": "dj",
                     "access": "",
                     "virtual": false,
-                    "description": "Add a just intonation pitch lattice to the wall",
+                    "description": "Add an invisible audio player that is routed through m.fx",
                     "parameters": [],
                     "examples": [],
                     "returns": {
@@ -4016,7 +2946,7 @@
                         {
                             "name": "source",
                             "type": "String",
-                            "description": "filename (w/o file extension, i.e. \"piano\" not \"piano.mp3\"",
+                            "description": "filename (w/o file extension if a jpg, i.e. \"mcluhan\" not \"mcluhan.jpg\")",
                             "default": "",
                             "optional": "",
                             "nullable": ""
@@ -4037,7 +2967,7 @@
                         {
                             "name": "source",
                             "type": "String",
-                            "description": "filename (w/o file extension, i.e. \"piano\" not \"piano.mp3\"",
+                            "description": "filename (w/o file extension, i.e. \"funny\" not \"funny.gif\"",
                             "default": "",
                             "optional": "",
                             "nullable": ""
@@ -4056,9 +2986,9 @@
                     "description": "Add an embedded webpage (iframe) to the wall",
                     "parameters": [
                         {
-                            "name": "source",
+                            "name": "url",
                             "type": "String",
-                            "description": "filename (w/o file extension, i.e. \"piano\" not \"piano.mp3\"",
+                            "description": "url of page to embed",
                             "default": "",
                             "optional": "",
                             "nullable": ""
@@ -4074,7 +3004,7 @@
                     "name": "wiki",
                     "access": "",
                     "virtual": false,
-                    "description": "Add an embedded wikipedia (iframe) to the wall",
+                    "description": "Add an embedded wikipedia iframe to the wall",
                     "parameters": [
                         {
                             "name": "path",
@@ -4092,23 +3022,83 @@
                     }
                 },
                 {
-                    "name": "partch",
+                    "name": "say",
                     "access": "",
                     "virtual": false,
-                    "description": "Add a just intonation pitch lattice to the wall",
-                    "parameters": [],
+                    "description": "Add a digital text-to-speech voice",
+                    "parameters": [
+                        {
+                            "name": "phrase",
+                            "type": "String",
+                            "description": "words to speak",
+                            "default": "",
+                            "optional": "",
+                            "nullable": ""
+                        }
+                    ],
                     "examples": [],
                     "returns": {
-                        "type": "Lattice",
+                        "type": "Voice",
                         "description": ""
                     }
                 },
                 {
-                    "name": "say",
+                    "name": "explore",
                     "access": "",
                     "virtual": false,
-                    "description": "Add a digital voice",
-                    "parameters": [],
+                    "description": "Add a Google Map",
+                    "parameters": [
+                        {
+                            "name": "place",
+                            "type": "String",
+                            "description": "Name of the place to map (i.e. \"Arkansas\")",
+                            "default": "",
+                            "optional": "",
+                            "nullable": ""
+                        }
+                    ],
+                    "examples": [],
+                    "returns": {
+                        "type": "Voice",
+                        "description": ""
+                    }
+                },
+                {
+                    "name": "text",
+                    "access": "",
+                    "virtual": false,
+                    "description": "Add a text message",
+                    "parameters": [
+                        {
+                            "name": "phrase",
+                            "type": "String",
+                            "description": "Words to write",
+                            "default": "",
+                            "optional": "",
+                            "nullable": ""
+                        }
+                    ],
+                    "examples": [],
+                    "returns": {
+                        "type": "Voice",
+                        "description": ""
+                    }
+                },
+                {
+                    "name": "log",
+                    "access": "",
+                    "virtual": false,
+                    "description": "Add a code log",
+                    "parameters": [
+                        {
+                            "name": "text",
+                            "type": "String",
+                            "description": "Text to write or name of URL or file name",
+                            "default": "",
+                            "optional": "",
+                            "nullable": ""
+                        }
+                    ],
                     "examples": [],
                     "returns": {
                         "type": "Voice",
@@ -4145,18 +3135,34 @@
                     }
                 },
                 {
+                    "name": "autoscroll",
+                    "access": "",
+                    "virtual": false,
+                    "description": "Xray automatically is called when windows move",
+                    "parameters": [],
+                    "examples": [],
+                    "returns": {
+                        "type": "Wall",
+                        "description": ""
+                    }
+                },
+                {
+                    "name": "noautoscroll",
+                    "access": "",
+                    "virtual": false,
+                    "description": "Turn off autoscroll",
+                    "parameters": [],
+                    "examples": [],
+                    "returns": {
+                        "type": "Wall",
+                        "description": ""
+                    }
+                },
+                {
                     "name": "kill",
                     "access": "",
                     "virtual": false,
                     "description": "Destroy this wall and return all windows to stack",
-                    "parameters": [],
-                    "examples": []
-                },
-                {
-                    "name": "killWindow",
-                    "access": "",
-                    "virtual": false,
-                    "description": "Destroy one window in the wall",
                     "parameters": [],
                     "examples": []
                 },
@@ -4196,8 +3202,17 @@
                     "name": "shape",
                     "access": "",
                     "virtual": false,
-                    "description": "Change the pattern of the wall",
-                    "parameters": [],
+                    "description": "Move and resize the wall's windows to a new pattern arrangement",
+                    "parameters": [
+                        {
+                            "name": "pattern",
+                            "type": "String",
+                            "description": "Name of the new pattern arrangement",
+                            "default": "",
+                            "optional": "",
+                            "nullable": ""
+                        }
+                    ],
                     "examples": [],
                     "returns": {
                         "type": "Wall",
@@ -4209,7 +3224,24 @@
                     "access": "",
                     "virtual": false,
                     "description": "Move all windows to an x/y location",
-                    "parameters": [],
+                    "parameters": [
+                        {
+                            "name": "x",
+                            "type": "String",
+                            "description": "New x location of the window",
+                            "default": "",
+                            "optional": "",
+                            "nullable": ""
+                        },
+                        {
+                            "name": "y",
+                            "type": "String",
+                            "description": "New y location of the window",
+                            "default": "",
+                            "optional": "",
+                            "nullable": ""
+                        }
+                    ],
                     "examples": [],
                     "returns": {
                         "type": "Wall",
@@ -4221,7 +3253,24 @@
                     "access": "",
                     "virtual": false,
                     "description": "Move all windows to a random x/y location within limits",
-                    "parameters": [],
+                    "parameters": [
+                        {
+                            "name": "x",
+                            "type": "String",
+                            "description": "x limit",
+                            "default": "",
+                            "optional": "",
+                            "nullable": ""
+                        },
+                        {
+                            "name": "y",
+                            "type": "String",
+                            "description": "y limit",
+                            "default": "",
+                            "optional": "",
+                            "nullable": ""
+                        }
+                    ],
                     "examples": [],
                     "returns": {
                         "type": "Wall",
@@ -4233,31 +3282,24 @@
                     "access": "",
                     "virtual": false,
                     "description": "Resize all windows to a specific w/h",
-                    "parameters": [],
-                    "examples": [],
-                    "returns": {
-                        "type": "Wall",
-                        "description": ""
-                    }
-                },
-                {
-                    "name": "moveby",
-                    "access": "",
-                    "virtual": false,
-                    "description": "Move all windows by an x/y amount",
-                    "parameters": [],
-                    "examples": [],
-                    "returns": {
-                        "type": "Wall",
-                        "description": ""
-                    }
-                },
-                {
-                    "name": "sizeby",
-                    "access": "",
-                    "virtual": false,
-                    "description": "Resize all windows by a w/h amount",
-                    "parameters": [],
+                    "parameters": [
+                        {
+                            "name": "w",
+                            "type": "String",
+                            "description": "New width",
+                            "default": "",
+                            "optional": "",
+                            "nullable": ""
+                        },
+                        {
+                            "name": "h",
+                            "type": "String",
+                            "description": "New height",
+                            "default": "",
+                            "optional": "",
+                            "nullable": ""
+                        }
+                    ],
                     "examples": [],
                     "returns": {
                         "type": "Wall",
@@ -4270,35 +3312,6 @@
                     "virtual": false,
                     "description": "Refresh all windows in this wall",
                     "parameters": [],
-                    "examples": [],
-                    "returns": {
-                        "type": "Wall",
-                        "description": ""
-                    }
-                },
-                {
-                    "name": "goto",
-                    "access": "",
-                    "virtual": false,
-                    "description": "Goto a URL",
-                    "parameters": [
-                        {
-                            "name": "URL",
-                            "type": "string",
-                            "description": "",
-                            "default": "",
-                            "optional": "",
-                            "nullable": ""
-                        },
-                        {
-                            "name": "number",
-                            "type": "number/array",
-                            "description": "of windows to use, or array of window numbers to use",
-                            "default": "",
-                            "optional": "",
-                            "nullable": ""
-                        }
-                    ],
                     "examples": [],
                     "returns": {
                         "type": "Wall",
@@ -4344,48 +3357,6 @@
                             "description": "URL to load. No http:// necessary.",
                             "default": "",
                             "optional": true,
-                            "nullable": ""
-                        }
-                    ],
-                    "examples": []
-                },
-                {
-                    "name": "setAll",
-                    "access": "",
-                    "virtual": false,
-                    "description": "Set a property on this media element in all windows",
-                    "parameters": [
-                        {
-                            "name": "property",
-                            "type": "String",
-                            "description": "key",
-                            "default": "",
-                            "optional": "",
-                            "nullable": ""
-                        },
-                        {
-                            "name": "value",
-                            "type": "Unknown",
-                            "description": "",
-                            "default": "",
-                            "optional": "",
-                            "nullable": ""
-                        }
-                    ],
-                    "examples": []
-                },
-                {
-                    "name": "all",
-                    "access": "",
-                    "virtual": false,
-                    "description": "Call a method on this media element in all windows",
-                    "parameters": [
-                        {
-                            "name": "method",
-                            "type": "String",
-                            "description": "name",
-                            "default": "",
-                            "optional": "",
                             "nullable": ""
                         }
                     ],
@@ -4450,14 +3421,6 @@
                     "examples": []
                 },
                 {
-                    "name": "_destroy",
-                    "access": "",
-                    "virtual": false,
-                    "description": "Empty function to be overwritten within each element if necessary\nCalled by .kill()",
-                    "parameters": [],
-                    "examples": []
-                },
-                {
                     "name": "fade",
                     "access": "",
                     "virtual": false,
@@ -4466,7 +3429,7 @@
                         {
                             "name": "level",
                             "type": "number",
-                            "description": "opacity level",
+                            "description": "opacity level 0-1",
                             "default": "",
                             "optional": "",
                             "nullable": ""
@@ -4491,11 +3454,28 @@
                     "examples": []
                 },
                 {
+                    "name": "toggle",
+                    "access": "",
+                    "virtual": false,
+                    "description": "If the element is hidden, show it. If it's visible, hide it.",
+                    "parameters": [],
+                    "examples": []
+                },
+                {
                     "name": "bomb",
                     "access": "",
                     "virtual": false,
-                    "description": "If the element is hidden, show it.",
-                    "parameters": [],
+                    "description": "Remove the element after a certain period of time",
+                    "parameters": [
+                        {
+                            "name": "delay",
+                            "type": "number",
+                            "description": "delay in ms before destroying the element",
+                            "default": "",
+                            "optional": "",
+                            "nullable": ""
+                        }
+                    ],
                     "examples": []
                 }
             ]
