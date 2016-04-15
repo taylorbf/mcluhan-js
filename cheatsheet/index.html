@@ -54,9 +54,9 @@
 	</style>
 
 	<div class="column" id="col1">
-		<div style="padding:10px;border-top:solid 1px #000;border-bottom:0px;line-height:1.5em;">
+	<!--	<div style="padding:10px;border-top:solid 1px #000;border-bottom:0px;line-height:1.5em;">
 			<b><a href="http://github.com/taylorbf/mcluhan-js">McLuhan.js</a> Cheatsheet</b>
-		</div>
+		</div> -->
 
 	</div>
 	<div class="column" id="col2"></div>
@@ -85,7 +85,7 @@
 		var lines = 0;
 		var tutspace = document.getElementById("tutspace")
 
-	  var seq;
+	  //var seq;
 	  var mediumclass = {
 	  	funcs: [],
 	  	props: []
@@ -100,7 +100,7 @@
 
 
 		function setup() {
-			seq = palette('tol-rainbow', core.classes.length);
+			//seq = palette('tol-rainbow', core.classes.length);
 			//seq = palette('cb-Set1', 9);
 			//
 			var order = ["wall"]
@@ -123,11 +123,11 @@
 			for (var i=0;i<core.classes.length;i++) {
 				lines+=4;
 				html = ""
-			  html += '<div style="padding:0px;border-top:solid 0px #'+seq[i]+';border-bottom:0px;line-height:1.5em;position:relative">'
+			  html += '<div style="padding:0px;border-bottom:0px;line-height:1.5em;position:relative">'
 
 				var thisclass = core.classes[i]
 				core.classes[i].items = 0
-			  html += "<div style='font-weight:bold;background-color:"+seq[i]+";color:white;width:100%;padding:5px 10px;box-sizing:border-box;background-color:#000;color:#0ff;'>"+ thisclass.name + "</div>"
+			  html += "<div style='font-weight:bold;color:white;width:100%;padding:5px 10px;box-sizing:border-box;background-color:#000;color:#0ff;'>"+ thisclass.name + "</div>"
 
 
 			  if (thisclass.functions) {
@@ -188,8 +188,8 @@
 			
 			lines+=4;
 			html = ""
-		  html += '<div style="padding:0px;border-top:solid 0px #'+seq[i]+';border-bottom:0px;line-height:1.5em;position:relative">'
-		  html += "<div style='font-weight:bold;background-color:"+seq[i]+";color:white;width:100%;padding:5px 10px;box-sizing:border-box;background-color:#000;color:#0ff;'>Global</div>"
+		  html += '<div style="padding:0px;border-bottom:0px;line-height:1.5em;position:relative">'
+		  html += "<div style='font-weight:bold;color:white;width:100%;padding:5px 10px;box-sizing:border-box;background-color:#000;color:#0ff;'>Global</div>"
 
 			for (var i=0;i<core.functions.length;i++) {
 				
