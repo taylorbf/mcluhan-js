@@ -2243,29 +2243,6 @@
             ]
         },
         {
-            "name": "Presence",
-            "description": "Presence",
-            "extends": [],
-            "access": "",
-            "virtual": false,
-            "fires": "",
-            "constructor": {
-                "name": "Presence",
-                "description": "Pixilated live video feed of performer",
-                "parameters": [
-                    {
-                        "name": "Params",
-                        "type": "object",
-                        "description": "(see Params)",
-                        "default": "",
-                        "optional": "",
-                        "nullable": ""
-                    }
-                ],
-                "examples": []
-            }
-        },
-        {
             "name": "TextMessage",
             "description": "TextMessage",
             "extends": [
@@ -2294,15 +2271,24 @@
                     "name": "text",
                     "access": "",
                     "virtual": false,
-                    "description": ".",
-                    "parameters": [],
+                    "description": "Add a new text message",
+                    "parameters": [
+                        {
+                            "name": "msg",
+                            "type": "String",
+                            "description": "New message",
+                            "default": "",
+                            "optional": "",
+                            "nullable": ""
+                        }
+                    ],
                     "examples": []
                 },
                 {
                     "name": "scroll",
                     "access": "",
                     "virtual": false,
-                    "description": ".",
+                    "description": "Start rapid texting (recycling past text)",
                     "parameters": [],
                     "examples": []
                 },
@@ -2310,16 +2296,25 @@
                     "name": "unscroll",
                     "access": "",
                     "virtual": false,
-                    "description": ".",
+                    "description": "Stop rapid texting",
                     "parameters": [],
                     "examples": []
                 },
                 {
-                    "name": "oneScroll",
+                    "name": "read",
                     "access": "",
                     "virtual": false,
-                    "description": ".",
-                    "parameters": [],
+                    "description": "Create collection of texts from a text file",
+                    "parameters": [
+                        {
+                            "name": "filename",
+                            "type": "STring",
+                            "description": "Name of .txt file in /text",
+                            "default": "",
+                            "optional": "",
+                            "nullable": ""
+                        }
+                    ],
                     "examples": []
                 },
                 {
@@ -2467,8 +2462,17 @@
                     "name": "say",
                     "access": "",
                     "virtual": false,
-                    "description": ".",
-                    "parameters": [],
+                    "description": "Speak a phrase using a computer voice",
+                    "parameters": [
+                        {
+                            "name": "phrase",
+                            "type": "String",
+                            "description": "The phrase to speak",
+                            "default": "",
+                            "optional": "",
+                            "nullable": ""
+                        }
+                    ],
                     "examples": []
                 },
                 {
@@ -3119,14 +3123,14 @@
                     "name": "load",
                     "access": "",
                     "virtual": false,
-                    "description": "Load a URL.",
+                    "description": "Load an embedded wikipedia page",
                     "parameters": [
                         {
-                            "name": "address",
+                            "name": "article",
                             "type": "string",
-                            "description": "URL to load. No http:// necessary.",
+                            "description": "Article to load (i.e. \"life\")",
                             "default": "",
-                            "optional": true,
+                            "optional": "",
                             "nullable": ""
                         }
                     ],
@@ -3274,18 +3278,10 @@
             },
             "functions": [
                 {
-                    "name": "show",
-                    "access": "",
-                    "virtual": false,
-                    "description": ".",
-                    "parameters": [],
-                    "examples": []
-                },
-                {
                     "name": "hide",
                     "access": "",
                     "virtual": false,
-                    "description": ".",
+                    "description": "Hide the window",
                     "parameters": [],
                     "examples": []
                 },
@@ -3293,15 +3289,7 @@
                     "name": "load",
                     "access": "",
                     "virtual": false,
-                    "description": ".",
-                    "parameters": [],
-                    "examples": []
-                },
-                {
-                    "name": "scroll",
-                    "access": "",
-                    "virtual": false,
-                    "description": ".",
+                    "description": "Load a new page",
                     "parameters": [],
                     "examples": []
                 },
@@ -3309,7 +3297,7 @@
                     "name": "kill",
                     "access": "",
                     "virtual": false,
-                    "description": ".",
+                    "description": "Close the window",
                     "parameters": [],
                     "examples": []
                 },
@@ -3317,7 +3305,7 @@
                     "name": "empty",
                     "access": "",
                     "virtual": false,
-                    "description": ".",
+                    "description": "Empty the window's body of all HTML",
                     "parameters": [],
                     "examples": []
                 },
@@ -3325,15 +3313,7 @@
                     "name": "scroll",
                     "access": "",
                     "virtual": false,
-                    "description": ".",
-                    "parameters": [],
-                    "examples": []
-                },
-                {
-                    "name": "xray",
-                    "access": "",
-                    "virtual": false,
-                    "description": ".",
+                    "description": "Scroll to a new x and y over a time period",
                     "parameters": [],
                     "examples": []
                 },
@@ -3341,15 +3321,7 @@
                     "name": "scramble",
                     "access": "",
                     "virtual": false,
-                    "description": ".",
-                    "parameters": [],
-                    "examples": []
-                },
-                {
-                    "name": "refresh",
-                    "access": "",
-                    "virtual": false,
-                    "description": ".",
+                    "description": "Scroll the window to a random location",
                     "parameters": [],
                     "examples": []
                 },
@@ -3357,7 +3329,7 @@
                     "name": "move",
                     "access": "",
                     "virtual": false,
-                    "description": ".",
+                    "description": "Move the window",
                     "parameters": [],
                     "examples": []
                 },
@@ -3365,7 +3337,7 @@
                     "name": "size",
                     "access": "",
                     "virtual": false,
-                    "description": ".",
+                    "description": "Resize the window",
                     "parameters": [],
                     "examples": []
                 }
@@ -3373,114 +3345,6 @@
         }
     ],
     "functions": [
-        {
-            "name": "toPolar",
-            "access": "",
-            "virtual": false,
-            "description": "Receives cartesian coordinates and returns polar coordinates as an object with 'radius' and 'angle' properties.",
-            "parameters": [
-                {
-                    "name": "x",
-                    "type": "float",
-                    "description": "",
-                    "default": "",
-                    "optional": true,
-                    "nullable": ""
-                },
-                {
-                    "name": "y",
-                    "type": "float",
-                    "description": "",
-                    "default": "",
-                    "optional": true,
-                    "nullable": ""
-                }
-            ],
-            "examples": []
-        },
-        {
-            "name": "toCartesian",
-            "access": "",
-            "virtual": false,
-            "description": "Receives polar coordinates and returns cartesian coordinates as an object with 'x' and 'y' properties.",
-            "parameters": [
-                {
-                    "name": "radius",
-                    "type": "float",
-                    "description": "",
-                    "default": "",
-                    "optional": true,
-                    "nullable": ""
-                },
-                {
-                    "name": "angle",
-                    "type": "float",
-                    "description": "",
-                    "default": "",
-                    "optional": true,
-                    "nullable": ""
-                }
-            ],
-            "examples": []
-        },
-        {
-            "name": "clip",
-            "access": "",
-            "virtual": false,
-            "description": "Limits a number to within low and high values.",
-            "parameters": [
-                {
-                    "name": "input value",
-                    "type": "float",
-                    "description": "",
-                    "default": "",
-                    "optional": true,
-                    "nullable": ""
-                },
-                {
-                    "name": "low limit",
-                    "type": "float",
-                    "description": "",
-                    "default": "",
-                    "optional": true,
-                    "nullable": ""
-                },
-                {
-                    "name": "high limit",
-                    "type": "float",
-                    "description": "",
-                    "default": "",
-                    "optional": true,
-                    "nullable": ""
-                }
-            ],
-            "examples": []
-        },
-        {
-            "name": "prune",
-            "access": "",
-            "virtual": false,
-            "description": "Limits a float to within a certain number of decimal places",
-            "parameters": [
-                {
-                    "name": "input value",
-                    "type": "float",
-                    "description": "",
-                    "default": "",
-                    "optional": true,
-                    "nullable": ""
-                },
-                {
-                    "name": "max decimal places",
-                    "type": "integer",
-                    "description": "",
-                    "default": "",
-                    "optional": true,
-                    "nullable": ""
-                }
-            ],
-            "examples": []
-        },
         {
             "name": "scale",
             "access": "",
@@ -3565,23 +3429,6 @@
             "examples": []
         },
         {
-            "name": "random",
-            "access": "",
-            "virtual": false,
-            "description": "Returns a random integer between 0 and a given scale parameter.",
-            "parameters": [
-                {
-                    "name": "scale",
-                    "type": "float",
-                    "description": "Upper limit of random range.",
-                    "default": "",
-                    "optional": true,
-                    "nullable": ""
-                }
-            ],
-            "examples": []
-        },
-        {
             "name": "interp",
             "access": "",
             "virtual": false,
@@ -3615,31 +3462,23 @@
             "examples": []
         },
         {
-            "name": "randomColor",
+            "name": "r",
             "access": "",
             "virtual": false,
-            "description": "SHOULD BE RENAMED/SHORTENED Get a random color value",
-            "parameters": [],
-            "examples": []
-        },
-        {
-            "name": "interval",
-            "access": "",
-            "virtual": false,
-            "description": "interval with controllable speed / interval time",
+            "description": "Returns a random integer between two given scale parameters. If only one argument, uses 0 as the minimum.",
             "parameters": [
                 {
-                    "name": "rate",
-                    "type": "number",
-                    "description": "",
+                    "name": "min",
+                    "type": "float",
+                    "description": "Lower limit of random range.",
                     "default": "",
                     "optional": true,
                     "nullable": ""
                 },
                 {
-                    "name": "callback",
-                    "type": "function",
-                    "description": "",
+                    "name": "max",
+                    "type": "float",
+                    "description": "Upper limit of random range.",
                     "default": "",
                     "optional": true,
                     "nullable": ""
@@ -3648,15 +3487,56 @@
             "examples": []
         },
         {
-            "name": "rand",
+            "name": "rf",
             "access": "",
             "virtual": false,
-            "description": "random function that executes (returns new num) each time",
+            "description": "Returns a random float between 0 and a given scale parameter. If only one argument, uses 0 as the minimum.",
             "parameters": [
                 {
-                    "name": "scale",
-                    "type": "number",
-                    "description": "",
+                    "name": "min",
+                    "type": "float",
+                    "description": "Lower limit of random range.",
+                    "default": "",
+                    "optional": true,
+                    "nullable": ""
+                },
+                {
+                    "name": "max",
+                    "type": "float",
+                    "description": "Upper limit of random range.",
+                    "default": "",
+                    "optional": true,
+                    "nullable": ""
+                }
+            ],
+            "examples": []
+        },
+        {
+            "name": "cycle",
+            "access": "",
+            "virtual": false,
+            "description": "Count a number upwards until it reaches a maximum, then send it back to a minimum value.<br>\n    I.e. cycle(x,0,5) will output 0,1,2,3,4,5,0,1,2... if called many times in succession",
+            "parameters": [
+                {
+                    "name": "min",
+                    "type": "float",
+                    "description": "Lower limit of random range.",
+                    "default": "",
+                    "optional": true,
+                    "nullable": ""
+                },
+                {
+                    "name": "min",
+                    "type": "float",
+                    "description": "Lower limit of random range.",
+                    "default": "",
+                    "optional": true,
+                    "nullable": ""
+                },
+                {
+                    "name": "max",
+                    "type": "float",
+                    "description": "Upper limit of random range.",
                     "default": "",
                     "optional": true,
                     "nullable": ""
