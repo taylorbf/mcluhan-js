@@ -15,7 +15,7 @@ McLuhan.js is a toolkit for controlling common web media such as audio players, 
 
 McLuhan.js continues to operate under heavy development. Please contribute issues and bug reports if you experience them.
 
-## McLuhan.js Interface & API
+## Interface & API
 
 This library forms the client-side architecture of the [McLuhan.js Interface](https://github.com/taylorbf/mcluhan.js-performance-environment), For an API and documentation of the library's methods, see that page.
 
