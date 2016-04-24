@@ -15,6 +15,10 @@ McLuhan.js is a toolkit for controlling common web media such as audio players, 
 
 McLuhan.js continues to operate under heavy development. Please contribute issues and bug reports if you experience them.
 
+## McLuhan.js Interface & API
+
+This library forms the client-side architecture of the [McLuhan.js Interface](https://github.com/taylorbf/mcluhan.js-performance-environment), For an API and documentation of the library's methods, see that page.
+
 ## Open-Source Debt
 
 McLuhan.js makes use of several existing JavaScript libraries for specific effects and events. **Thank you** to these creative coders:
@@ -26,8 +30,4 @@ McLuhan.js makes use of several existing JavaScript libraries for specific effec
 [glitch-canvas](https://github.com/snorpey/glitch-canvas)
 
 [speak.js](https://github.com/mattytemple/speak-js)
-
-## McLuhan.js Interface & API
-
-This library forms the client-side architecture of the [McLuhan.js Interface](https://github.com/taylorbf/mcluhan.js-performance-environment), For an API and documentation of the library's methods, see that page.
 
