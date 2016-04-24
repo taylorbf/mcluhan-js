@@ -7,8 +7,8 @@ var gulp = require('gulp')
 
   , runSequence = require('run-sequence')
 var path = require('path');
-//var jsdox = require("jsdox");
 var jsdoc = require("gulp-jsdoc");
+var shell = require("gulp-shell");
  
 
 var watcher = gulp.watch(['index.js','./lib/**/*.js', './lib/*.js'], ['default'])
@@ -22,18 +22,12 @@ gulp.task('browserify', function() {
     .on('error', gutil.log)
     .pipe(source('mcluhan.js'))
     .pipe(gulp.dest('./dist/'))
+    .pipe(gulp.dest('../mcluhan-perf/pages/js/'))
 })
 
-/*var logdox = function(err) { err ? console.log(err) : null }
-gulp.task('jsdox', function() {
-  jsdox.generateForDir("./dist/mcluhan.js", "./api/", logdox); 
-//  jsdox.generateForDir("./lib/core/", "./api/", logdox); 
-//  jsdox.generateForDir("./lib/media/wall.js", "./api/", logdox); 
-})*/
-
-gulp.task('jsdoc', function() {
-  gulp.src("./lib/**/*.js")
-    .pipe(jsdoc('./api/',{
+//gulp.task('jsdoc', function() {
+  //gulp.src("./lib/**/*.js")
+ /*   .pipe(jsdoc('./api/',{
     path: 'ink-docstrap',
     systemName      : "McLuhan.js",
     footer          : "McLuhan.js",
@@ -45,10 +39,22 @@ gulp.task('jsdoc', function() {
     inverseNav      : false
   })) 
     
-})
+}) */
+
+//gulp.task('jsdoc', function() {
+//  gulp.src("./lib/**/*.js")
+/*    .pipe(jsdoc.parser())
+    .pipe(gulp.dest('./somewhere'))
+}) */
+
+//jsdoc **/*.js -t templates/haruki -d console -q format=json > ../cheatsheet/all.json
+gulp.task('jsdoc', shell.task([
+  'jsdoc lib/**/*.js -t templates/haruki -d console -q format=json > cheatsheet/all.json'
+]))
 
 gulp.task('default', function(done) {
-  runSequence('browserify','jsdoc', done)
+  //,'jsdoc'
+  runSequence('browserify','jsdoc',done)
 })
 
 

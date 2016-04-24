@@ -1,0 +1,325 @@
+<html>
+<head>
+	<script src="jquery.js"></script>
+	<link href='https://fonts.googleapis.com/css?family=Lato:400,700' rel='stylesheet' type='text/css'>
+</head>
+<body>
+
+	<style>
+
+		body {
+			margin:0px;
+			padding:0px;
+			font-family:'Lato', arial;
+			background-color:#111;
+			color:white;
+			min-height: 100%;
+		}
+
+		.column {
+			width:170px;
+			float:left;
+			border-right:solid 1px #000;
+			height:600px;
+			font-size:11pt;
+		}
+
+		a {
+			cursor:pointer;
+			text-decoration:none;
+			color:inherit;
+			font-size:10.5pt;
+			line-height:2em;
+		}
+
+		a:hover {
+			font-weight:bold;
+			color:#0ff;
+			background-color:#000;
+		}
+
+		#tutspace {
+			background-color:#fff;
+			width:100%;
+			position:fixed;
+			right:0px;
+			bottom:0px;
+			border-top:solid 2px #eee;
+			padding:25px 25px 50px;
+			box-sizing:border-box;
+			display:none;
+			background-color:#111;
+		}
+
+	</style>
+
+	<div class="column" id="col1">
+	<!--	<div style="padding:10px;border-top:solid 1px #000;border-bottom:0px;line-height:1.5em;">
+			<b><a href="http://github.com/taylorbf/mcluhan-js">McLuhan.js</a> Cheatsheet</b>
+		</div> -->
+
+	</div>
+	<div class="column" id="col2"></div>
+	<div class="column" id="col3"></div>
+	<div class="column" id="col4"></div>
+	<div class="column" id="col5"></div>
+	<div class="column" id="col6"></div>
+	<div class="column" id="col7"></div>
+
+	<div id="tutspace"></div>
+	<script>
+
+		var core;
+
+		$.ajax({
+		  dataType: "json",
+		  url: "all.json",
+		  //data: data,
+		  success: function(data) {
+		  	core = data;
+		  	setup();
+		  }
+		});
+
+		var html = ""
+		var lines = 0;
+		var tutspace = document.getElementById("tutspace")
+
+	  //var seq;
+	  var mediumclass = {
+	  	funcs: [],
+	  	props: []
+	  }
+		var hashes = ["#171717","#1C1C1C"]
+
+			var col = 1
+			var colfills = [
+				0,0,0,0,0,0,0,0
+			]
+
+
+
+		function setup() {
+			//seq = palette('tol-rainbow', core.classes.length);
+			//seq = palette('cb-Set1', 9);
+			//
+			var order = ["wall"]
+
+
+
+			/*for (var i=0;i<core.classes.length;i++) {
+				var items = 0
+				if (core.classes[i].functions) {
+					items += core.classes[i].functions.length
+				}
+				if (core.classes[i].properties) {
+					items += core.classes[i].properties.length
+				}
+				core.classes[i].items = items
+			} */
+
+
+
+			for (var i=0;i<core.classes.length;i++) {
+				lines+=4;
+				html = ""
+			  html += '<div style="padding:0px;border-bottom:0px;line-height:1.5em;position:relative">'
+
+				var thisclass = core.classes[i]
+				core.classes[i].items = 0
+			  html += "<div style='font-weight:bold;color:white;width:100%;padding:5px 10px;box-sizing:border-box;background-color:#000;color:#0ff;'>"+ thisclass.name + "</div>"
+
+
+			  if (thisclass.functions) {
+					for (var j=0;j<thisclass.functions.length;j++) {
+						if (mediumclass.funcs.indexOf(thisclass.functions[j].name)==-1 || thisclass.name == "Wall") {
+							lines++;
+							var thisfunction = thisclass.functions[j]
+							var hashcolor = hashes[j%2]
+					  	html += "<a href='javascript:funkytut("+i+","+j+")' style='background-color:"+hashcolor+";display:block;padding:2px 10px'>"+thisfunction.name + "("
+
+					  	html += '<span style="font-size:8pt">'
+					  	for (var k=0;k<thisfunction.parameters.length;k++) {
+					  		if (k>=1) {
+					  			html += ", "
+					  		}
+					  		html += thisfunction.parameters[k].name
+
+					  	}
+					  	html += '</span>'
+
+
+					  	html +=	")</a>"
+
+							if (thisclass.name == "Medium") {
+								mediumclass.funcs.push(thisfunction.name)
+							}
+							core.classes[i].items++
+						}
+
+					}
+				}
+			  if (thisclass.properties) {
+					for (var j=0;j<thisclass.properties.length;j++) {
+						if (mediumclass.props.indexOf(thisclass.properties[j].name)==-1 || thisclass.name=="Wall") {
+							lines++;
+							var thisprop = thisclass.properties[j]
+							thisprop.name = thisprop.name.replace("this.","")
+					  	var hashcolor = hashes[j%2]
+					  	html += "<a href='javascript:funkyprop("+i+","+j+")' style='background-color:"+hashcolor+";display:block;padding:2px 10px;color:#ddd'>" + thisprop.name + "</a>"
+
+							if (thisclass.name == "Medium") {
+								mediumclass.funcs.push(thisfunction.name)
+							}
+							core.classes[i].items++
+						}
+					}
+				}
+
+				html += "</div>"
+			//	var thiscol = Math.floor(lines/30)+1
+			//	console.log(thisclass.name,lines,thiscol)
+			//	document.getElementById("col"+thiscol).innerHTML += html
+				
+				 core.classes[i].html = html	
+			}
+
+			// global functions
+			
+			lines+=4;
+			html = ""
+		  html += '<div style="padding:0px;border-bottom:0px;line-height:1.5em;position:relative">'
+		  html += "<div style='font-weight:bold;color:white;width:100%;padding:5px 10px;box-sizing:border-box;background-color:#000;color:#0ff;'>Global</div>"
+
+			for (var i=0;i<core.functions.length;i++) {
+				
+				var thisfunction = core.functions[i]
+				
+				lines++;
+				var hashcolor = hashes[j%2]
+		  	html += "<a href='javascript:funkytut("+i+","+j+")' style='background-color:"+hashcolor+";display:block;padding:2px 10px'>"+thisfunction.name + "("
+
+		  	html += '<span style="font-size:8pt">'
+		  	for (var k=0;k<thisfunction.parameters.length;k++) {
+		  		if (k>=1) {
+		  			html += ", "
+		  		}
+		  		html += thisfunction.parameters[k].name
+
+		  	}
+		  	html += '</span>'
+
+		  	html +=	")</a>"
+
+				core.classes[i].items++
+				colfills[7]++
+
+			}
+
+
+			html += "</div>"
+			var thiscol = Math.floor(lines/35)+1
+			document.getElementById("col7").innerHTML += html
+
+			for (var i=50;i>=0;i--) {
+				for (var j=0;j<core.classes.length;j++) {
+					if (core.classes[j].items==i) {
+
+						var currentlowest = 200
+						var currentcol = 1
+						for (var k=1;k<colfills.length;k++) {
+							if (colfills[k]<currentlowest) {
+								currentcol = k
+								currentlowest = colfills[k]
+							}
+						}
+						console.log(currentcol)
+						document.getElementById("col"+currentcol).innerHTML += core.classes[j].html
+						colfills[currentcol] += core.classes[j].items
+
+						console.log(colfills)
+						
+					}
+				}
+			}
+
+/*
+			var col = 1
+			var coldir = 1
+
+			for (var i=50;i>=0;i--) {
+				for (var j=0;j<core.classes.length;j++) {
+					if (core.classes[j].items==i) {
+
+						document.getElementById("col"+col).innerHTML += core.classes[j].html
+						if (col >= 7) {
+							coldir = -1
+						}
+						if (col < 1) {
+							coldir = 1
+						}
+						col += coldir
+					}
+
+				}
+			}
+		 */
+		
+
+		}
+			
+
+
+
+
+		var funkytut = function(classi,funci) {
+
+				var tutstr = "<div style='border-bottom:solid 1px #666;padding-bottom:5px;margin-bottom:5px'>"+core.classes[classi].name + "."+core.classes[classi].functions[funci].name+"("
+
+			  tutstr += '<span style="font-size:8pt">'
+		  	for (var k=0;k<core.classes[classi].functions[funci].parameters.length;k++) {
+		  		if (k>=1) {
+		  			tutstr += ", "
+		  		}
+		  		tutstr += core.classes[classi].functions[funci].parameters[k].name
+
+		  	}
+		  	tutstr += '</span>'
+
+
+				tutstr +=	")</div>"
+
+				tutstr += core.classes[classi].functions[funci].description
+
+
+				tutstr +=	"<br><br>"
+
+				for (var k=0;k<core.classes[classi].functions[funci].parameters.length;k++) {
+		  		var thisparam = core.classes[classi].functions[funci].parameters[k]
+		  		tutstr += "<b>"+thisparam.name+":</b>"
+		  		tutstr += "&nbsp;&nbsp;&nbsp;"+thisparam.type
+		  		tutstr += "&nbsp;&nbsp;&nbsp;"+thisparam.description
+		  		tutstr += "<br>"
+
+		  	}
+
+				tutspace.innerHTML = tutstr;
+				tutspace.style.display = "block"
+		}
+
+
+
+		var funkyprop = function(classi,funci) {
+
+				var tutstr = "<div style='border-bottom:solid 1px #666;padding-bottom:5px;margin-bottom:5px'>"+core.classes[classi].name + "."+core.classes[classi].properties[funci].name + "</div>"
+
+				tutstr += core.classes[classi].properties[funci].description
+
+				tutstr +=	"<br><br>"
+
+				tutspace.innerHTML = tutstr;
+				tutspace.style.display = "block"
+		}
+	</script>
+</body>
+</html>

@@ -3,17 +3,28 @@
 <head>
 	<title>dream</title>
 	<link href='http://fonts.googleapis.com/css?family=Josefin+Sans:100,400' rel='stylesheet' type='text/css'>
+	<link href="css/space.css" rel="stylesheet" type="text/css">
+	<!--<script src="https://maps.googleapis.com/maps/api/js?v=3.exp"></script> -->
 </head>
 <body>
 
 <style>
-	body,div {
+	body {
+		width:100%;
+		height:100%;
+		margin:0px;
+		padding:0px;
+		overflow:hidden;
+	}
+
+	body, .media {
 		font-family:'Josefin Sans';
 		font-size:25px;
 		font-weight:100;
 		position:absolute;
 		top:0px;
 		left:0px;
+		display:block;
 	}
 	.fullScreen {
 		width:100%;
@@ -23,16 +34,30 @@
 	.normal {
 		padding:10px;
 	}
+
+	/* iframe zoom test */
+	iframe {
+		zoom: 2;
+	    -moz-transform:scale(2);
+	    -moz-transform-origin: 0 0;
+	    -o-transform: scale(2);
+	    -o-transform-origin: 0 0;
+	    -webkit-transform: scale(2);
+	    -webkit-transform-origin: 0 0; 
+	}
+
+	#allmedia {
+		width:100%;
+		height:100%;
+	}
+
+
+
 </style>
 
-<canvas id="c" style="position:absolute;height:3000px;width:1500px;z-index:100"></canvas>
+<div id="allmedia"></div>
 
-	<style>
-		body{
-			margin:0px;
-			padding:0px;
-		}
-	</style>
+	<canvas id="c" style="position:absolute;height:3000px;width:1500px;z-index:100;top:0px;left:0px;"></canvas>
 
 
 	<script>
@@ -43,10 +68,10 @@
 	canvas.height = 3000;
 
 
-	function defineCanvas() {
+	/*function defineCanvas() {
 		space.canvas = canvas;
 		space.context = context;
-	}
+	}*/
 
 	opener.console.log(name+ " says hello");
 
@@ -54,4 +79,5 @@
 	</script>
 
 </body>
+<script src="js/theNewAesthetic.js"></script>
 </html>
