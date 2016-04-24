@@ -2,24 +2,24 @@
 
 **Author:** Ben Taylor
 
-**Overview:** A platform for live web art performance in remote browsers.
+**Overview:** A client-side library for making net art across multiple browser windows. This library is intended to be used to create live performances in remote browsers using the [McLuhan.js Interface](https://github.com/taylorbf/mcluhan.js-performance-environment).
 
-**Project Site:** http://taylorbf.github.io/mcluhan-js/example/
+**Demo:** http://taylorbf.github.io/mcluhan-js/example/
 
 **License:** McLuhan.js is licensed as open source software under the terms of the "New BSD License", http://creativecommons.org/licenses/BSD/
 
 
 ## About
 
-McLuhan.js is a toolkit for making browser art (a.k.a. web art or net.art). The library focuses especially on enabling live performances of browser art to remote viewers.
+McLuhan.js is a toolkit for controlling common web media such as audio players, video players, images, and text. The library focuses especially on enabling live performances of browser art to remote viewers.
 
-[Examples](http://taylorbf.github.io/mcluhan-js/example/)
+McLuhan.js continues to operate under heavy development. Please contribute issues and bug reports if you experience them.
 
-McLuhan.js is under heavy development and will be released later in 2015.
+## Open-Source Debt
 
-### Open-Source Debt
+McLuhan.js makes use of several existing JavaScript libraries for specific effects and events. **Thank you** to these creative coders:
 
-McLuhan.js makes use of several existing JavaScript libraries for specific effects and events. There's no reason to reinvent the wheel. **Thank you** to these creative coders:
+[Tone.js](https://github.com/TONEnoTONE/Tone.js/) by Yotam Mann
 
 [theNewAesthetic.js](http://nickbriz.com/thenewaesthetic/) by Nick Briz
 
@@ -27,125 +27,7 @@ McLuhan.js makes use of several existing JavaScript libraries for specific effec
 
 [speak.js](https://github.com/mattytemple/speak-js)
 
-[Tone.js](https://github.com/TONEnoTONE/Tone.js/) by Yotam Mann
+## McLuhan.js Interface & API
 
-[NexusUI](http://nexusosc.com)
-
-# How to Use
-
-This documentation conveys basic use patterns of methods that have existed at some point in time. The API is in constant revision and any methods here may no longer work.
-
-## Wall Object
-
-Wall is the central object of the library, because it creates a space for other materials to be added.
-
-Create a wall (collection of browser windows).
-
-`var a = new Wall()`
-
-With no argument, it creates one new browser window. 
-
-A few predefined window configurations are available. This creates four new browser windows in a line:
-
-`var a = new Wall("line")`
-
-Move the wall by an x/y amount
-
-`a.move(100,50)`
-
-Resize all windows to a specific w/h
-
-`a.size(100,100)`
-
-Scroll each window to an x/y coordinate
-
-`a.scroll(50,50)`
-
-Scroll each window equal to its x/y coordinate on the desktop. This can create an interesting illusion of 'seeing through' the wall to a website behind it.
-
-`a.scrollSight()`
-
-Hide and show the collection of browser windows:
-
-`a.hide()`
-
-`a.show()`
-
-Refresh all windows in the wall:
-
-`a.refresh()`
-
-Empty all content from a Wall:
-
-`a.empty()`
-
-Destroy the wall and return all windows to the window stack
-
-`a.kill()`
-
-## Media
-
-### URLs
-
-Send all windows in the wall to a URL
-
-`a.goto("www.google.com")`
-
-Send the first and third window in the wall to a URL
-
-`a.goto("www.google.com",[0,2])`
-
-### Video
-
-Create a new video element in all browser windows of a Wall. This will load the file *media/waves.mp4*
-
-`a.a = a.see("waves")`
-
-Make the video loop from 1 sec to 2 sec
-
-`a.a.skip(1,2)`
-
-### Audio
-
-Create a new audio element in all browser windows of a Wall. This will load the file *media/piano.mp3*
-
-`a.a = a.hear("piano")`
-
-Make the video loop from 1 sec to 2 sec
-
-`a.a.skip(1,2)`
-
-### Text
-
-Create a new text element in all browser windows of a Wall.
-
-`a.a = a.read("Hello world")`
-
-### Just Intonation Pitch Lattice
-
-Create a new 3-dimensional just intonation pitch lattice with algorithmic automation methods.
-
-`a.a = a.partch()`
-
-Wander through the lattice.
-
-`a.a.wander()`
-
-## Global (non-Wall) Media
-
-### Text-To-Speech
-
-We offer a built-in text-to-speech system.
-
-`say("Bonjour")`
-
-Our TTS is connected to Tone.JS, meaning any Tone effects can be applied to it. Currently the voice is run through a ping pong delay; a more complete API for connecting effects is planned.
-
-This is not a property of a Wall; it is only one voice and is envoked by a global `say` method.
-
-### Pixelated Video Stream
-
-Start a pixelated, black-and-white, low-frame rate video stream from the performer. Data is sent as a binary list (011100etc...) where each digit denotes if a pixel in the video is black or white.
-
-`var me = new presence()`
+This library forms the client-side architecture of the [McLuhan.js Interface](https://github.com/taylorbf/mcluhan.js-performance-environment), For an API and documentation of the library's methods, see that page.
 
