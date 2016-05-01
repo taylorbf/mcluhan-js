@@ -112,6 +112,14 @@
             ],
             "functions": [
                 {
+                    "name": "nofx",
+                    "access": "",
+                    "virtual": false,
+                    "description": "",
+                    "parameters": [],
+                    "examples": []
+                },
+                {
                     "name": "deck",
                     "access": "",
                     "virtual": false,
@@ -1474,7 +1482,7 @@
                     "name": "load",
                     "access": "",
                     "virtual": false,
-                    "description": "Load a text file via URL (i.e. \"js/mcluhan.js\") and print it line by line as a code log",
+                    "description": "Load a text file via URL (i.e. \"client.html\") and print it line by line as a code log",
                     "parameters": [],
                     "examples": []
                 },
@@ -2113,7 +2121,7 @@
                     "name": "load",
                     "access": "",
                     "virtual": false,
-                    "description": ".",
+                    "description": "Load an image",
                     "parameters": [],
                     "examples": []
                 },
@@ -2121,15 +2129,7 @@
                     "name": "glitch",
                     "access": "",
                     "virtual": false,
-                    "description": ".",
-                    "parameters": [],
-                    "examples": []
-                },
-                {
-                    "name": "zoom",
-                    "access": "",
-                    "virtual": false,
-                    "description": ".",
+                    "description": "Glitch the image using glitch.js",
                     "parameters": [],
                     "examples": []
                 },
@@ -2137,7 +2137,7 @@
                     "name": "pixelate",
                     "access": "",
                     "virtual": false,
-                    "description": ".",
+                    "description": "Pixelate",
                     "parameters": [],
                     "examples": []
                 },
@@ -2145,7 +2145,7 @@
                     "name": "size",
                     "access": "",
                     "virtual": false,
-                    "description": ".",
+                    "description": "Resize",
                     "parameters": [],
                     "examples": []
                 },
@@ -2949,6 +2949,14 @@
                     "examples": []
                 },
                 {
+                    "name": "emptyAll",
+                    "access": "",
+                    "virtual": false,
+                    "description": "Remove all media elements and content from all windows in this wall",
+                    "parameters": [],
+                    "examples": []
+                },
+                {
                     "name": "xray",
                     "access": "",
                     "virtual": false,
@@ -3011,6 +3019,35 @@
                             "name": "y",
                             "type": "String",
                             "description": "New y location of the window",
+                            "default": "",
+                            "optional": "",
+                            "nullable": ""
+                        }
+                    ],
+                    "examples": [],
+                    "returns": {
+                        "type": "Wall",
+                        "description": ""
+                    }
+                },
+                {
+                    "name": "wander",
+                    "access": "",
+                    "virtual": false,
+                    "description": "Move all windows by an x/y amount",
+                    "parameters": [
+                        {
+                            "name": "x",
+                            "type": "String",
+                            "description": "x offset",
+                            "default": "",
+                            "optional": "",
+                            "nullable": ""
+                        },
+                        {
+                            "name": "y",
+                            "type": "String",
+                            "description": "y offset",
                             "default": "",
                             "optional": "",
                             "nullable": ""
